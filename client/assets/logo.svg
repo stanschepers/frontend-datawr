@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 202.16 201.83">
+    <defs>
+        <style>
+            .vue-green, .vue-grey {
+                fill: none;
+                stroke-miterlimit: 10;
+                stroke-width: 8px;
+            }
+
+            .vue-green {
+                stroke: #42b883;
+            }
+
+            .vue-grey {
+                stroke: #35495e;
+            }
+        </style>
+    </defs>
+    <title>logo</title>
+    <g id="circle">
+        <path class="vue-green" d="M191.1,65.37a96.92,96.92,0,1,1-180.37,0"/>
+        <path class="vue-green" d="M158.71,23.11A97.68,97.68,0,0,1,179.39,44h0"/>
+        <path class="vue-green" d="M64.58,11a97.29,97.29,0,0,1,72.67,0"/>
+        <path class="vue-green" d="M22.44,44A97.45,97.45,0,0,1,43.12,23.11"/>
+    </g>
+    <g id="leaves">
+        <circle class="vue-grey" cx="100.58" cy="101.92" r="12.41"/>
+        <circle class="vue-grey" cx="52.29" cy="17.41" r="12.41"/>
+        <circle class="vue-grey" cx="16.74" cy="53.63" r="12.41"/>
+        <circle class="vue-grey" cx="149.54" cy="17.41" r="12.41"/>
+        <circle class="vue-grey" cx="185.76" cy="52.96" r="12.41"/>
+    </g>
+
+    <line id="root" class="vue-grey" x1="101.25" y1="113.99" x2="101.25" y2="194"/>
+    <g id="big-branches">
+        <line class="vue-grey" x1="52.29" y1="52.96" x2="93.54" y2="94.88"/>
+        <line class="vue-grey" x1="148.87" y1="52.96" x2="107.62" y2="94.88"/>
+    </g>
+    <g id="small-branches">
+        <line class="vue-grey" x1="52.63" y1="29.15" x2="52.29" y2="52.96"/>
+        <line class="vue-grey" x1="28.48" y1="53.3" x2="52.29" y2="52.96"/>
+        <line class="vue-grey" x1="149.2" y1="29.15" x2="148.87" y2="52.96"/>
+        <line class="vue-grey" x1="173.35" y1="53.3" x2="148.87" y2="52.96"/>
+    </g>
+</svg>

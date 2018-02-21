@@ -1,0 +1,17 @@
+{
+  "name": "Data Wrangler",
+  "short_name": "DataWr",
+  "description": "Data Wrangler of ADReM",
+  "lang": "en-US",
+  "start_url": "/",
+  "display": "fullscreen",
+  "theme_color": "#00D1B2",
+  "background_color": "#F5F5F5",
+  "icons": [
+    {
+      "src": "logo.png",
+      "sizes": "203x203",
+      "type": "image/png"
+    }
+  ]
+}
