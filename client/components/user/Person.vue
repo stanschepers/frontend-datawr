@@ -18,15 +18,18 @@
             </div>
             <nav class="level is-mobile">
                 <div class="level-left">
+                    <a class="level-item" @click="toggleShowEdit">
+                        <span class="icon is-small has-text-gray"><i class="fa fa-gear"></i></span>
+                    </a>
                     <a class="level-item" :href="'mailto:' + person.email">
                         <span class="icon is-small"><i class="fa fa-envelope"></i></span>
                     </a>
                 </div>
             </nav>
         </div>
-        <div v-if="!showEdit" class="media-right">
-            <a @click="toggleShowEdit"> <span class="icon is-small has-text-dark"><i class="fa fa-gear"></i></span> </a>
-        </div>
+        <!--<div v-if="!showEdit" class="media-right">-->
+            <!--&lt;!&ndash;<a @click="toggleShowEdit"> <span class="icon is-small has-text-success"><i class="fa fa-user-plus"></i></span> </a>&ndash;&gt;-->
+        <!--</div>-->
     </article>
 </template>
 

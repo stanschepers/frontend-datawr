@@ -2,16 +2,15 @@
     <base-card
             :title="item.name"
             :content="getDescription(item)">
-        <card-footer-item slot="footer" :href="item.meta && item.meta.repository">
+        <card-footer-item slot="footer" element='link' :to="{name: item.name}">
                       <span class="icon is-small">
                         <i aria-hidden="true" class="fa fa-line-chart"></i>
-                      </span> &nbsp;View
+                      </span>&nbsp;View
         </card-footer-item>
-        <card-footer-item slot="footer" element='link' :to="{name: item.name}">
-
+        <card-footer-item class="has-text-dark" slot="footer" element='link' :to="{name: item.name}">
                   <span class="icon is-small">
-                    <i aria-hidden="true" class="fa fa-edit"></i>
-                  </span>&nbsp;&nbsp;Edit
+                    <i aria-hidden="true" class="fa fa-gear"></i>
+                  </span>&nbsp;&nbsp;Settings
         </card-footer-item>
         <card-footer-item class="has-text-danger" slot="footer" element='link' :to="{name: item.name}">
                   <span class="icon is-small">

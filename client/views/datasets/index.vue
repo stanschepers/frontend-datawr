@@ -58,7 +58,7 @@
                 }
             },
             {
-                name: 'Dataset Cool',
+                name: 'Dataset Ckjfdk',
                 meta: {
                     description: 'Hey',
                     repository: 'Hey'

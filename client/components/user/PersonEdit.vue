@@ -1,8 +1,14 @@
 <template>
     <form @input="has_changed" v-on:submit.prevent="send_changes" :method="'post'">
     <div class="block">
-        <div class="media-right"></div>
-        <h3 style="width: 100%" class="subtitle">Edit your profile <span style="align-items: right"><a class="delete is-small" @click="close"></a> </span> </h3>
+        <div class="level">
+            <div class="level-left">
+                <h3 class="subtitle level-item">Edit your profile </h3>
+            </div>
+            <div class="level-right">
+                <a class="delete is-small level-item" @click="close"></a>
+            </div>
+        </div>
         <div class="field">
             <div class="control">
                 <input class="input"  v-model="person.name" type="text" name="name"/>
@@ -89,8 +95,9 @@
                 this.person.about = this.oldPerson.about
             },
             send_changes: function () {
-                window.alert('Test')
+                this.$emit('save')
                 this.unsaved_changed = false
+                this.close()
             },
             close: function () {
                 if (this.unsaved_changed) {
@@ -118,7 +125,7 @@
                 return this.aboutIsEmpty || this.MAX_LENGTH_ABOUT < this.person.about.length
             },
             formIsNotValid: function () {
-                return this.nameIsEmpty || this.aboutIsOutOfRange || this.emailIsEmpty
+                return this.nameIsEmpty || this.aboutIsOutOfRange || this.emailIsEmpty || !this.unsaved_changed
             }
         }
     }
