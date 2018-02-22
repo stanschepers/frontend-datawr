@@ -2,7 +2,7 @@
     <div class="tile is-ancestor">
         <div class="tile is-parent is-vertical">
             <div class="tile is-child box">
-                <person-view :person="person" :me="true" :showEdit="showEdit" v-on:toggleShowEdit="[showEdit = !showEdit]"/>
+                <person-view :person="person" :me="true" :showEdit="showEdit" v-on:toggleShowEdit="[showEdit = true]"/>
             </div>
             <div class="tile is-child box">
                 <p>
@@ -12,7 +12,7 @@
         </div>
         <div v-if="showEdit" class="tile is-parent">
             <div class="tile is-child box">
-                <person-edit :person="person"/>
+                <person-edit :person="person" v-on:close="[showEdit = false]"/>
             </div>
         </div>
     </div>

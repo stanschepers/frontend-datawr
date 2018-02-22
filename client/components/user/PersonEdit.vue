@@ -2,7 +2,7 @@
     <form @input="has_changed" v-on:submit.prevent="send_changes" :method="'post'">
     <div class="block">
         <div class="media-right"></div>
-        <h3 style="width: 100%" class="subtitle">Edit your profile <span style="align-items: right"><a class="delete"></a> </span> </h3>
+        <h3 style="width: 100%" class="subtitle">Edit your profile <span style="align-items: right"><a class="delete is-small" @click="close"></a> </span> </h3>
         <div class="field">
             <div class="control">
                 <input class="input"  v-model="person.name" type="text" name="name"/>
@@ -33,7 +33,7 @@
                         </button>
                     </div>
                     <div class="control level-item">
-                        <button type="reset" class="button is-light" v-if="changed">
+                        <button type="reset" class="button is-light" v-if="unsaved_changed">
                             Back &nbsp;
                             <span class="icon is-small"><i class="fa fa-undo"></i></span>
                         </button>
@@ -62,6 +62,7 @@
 
 <script>
     /* eslint-disable indent */
+    /* eslint-disable brace-style */
 
     import Person from './Person'
 
@@ -73,14 +74,14 @@
         },
         data () {
             return {
-                changed: false,
+                unsaved_changed: false,
                 MAX_LENGTH_ABOUT: 140,
                 deleted: ''
             }
         },
         methods: {
             has_changed: function () {
-                this.changed = true
+                this.unsaved_changed = true
             },
             cancel: function () {
                 this.person.name = this.oldPerson.name
@@ -89,6 +90,15 @@
             },
             send_changes: function () {
                 window.alert('Test')
+                this.unsaved_changed = false
+            },
+            close: function () {
+                if (this.unsaved_changed) {
+                    window.alert('There are unsaved fields')
+                }
+                else {
+                    this.$emit('close')
+                }
             }
         },
         computed: {
