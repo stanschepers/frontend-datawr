@@ -11,21 +11,21 @@
         </div>
         <div class="field">
             <div class="control">
-                <input class="input"  v-model="person.name" type="text" name="name"/>
+                <input class="input" maxlength="63" v-model="person.name" type="text" name="name" placeholder="Name"/>
             </div>
             <p class="help is-danger" v-if="nameIsEmpty">Name can not be empty</p>
         </div>
         <div class="field">
 
             <div class="control">
-                <input class="input" v-model="person.email" type="email" name="email"/>
+                <input class="input" maxlength="63" v-model="person.email" type="email" name="email" placeholder="Email"/>
             </div>
             <p class="help is-danger" v-if="emailIsEmpty">Email can not be empty</p>
 
         </div>
         <div class="field">
             <div class="control">
-                <textarea v-bind:maxlength="MAX_LENGTH_ABOUT + 1"  class="textarea" v-model="person.about"></textarea>
+                <textarea v-bind:maxlength="MAX_LENGTH_ABOUT + 1"  class="textarea" v-model="person.about" placeholder="About me"></textarea>
             </div>
             <p class="help" :class="[aboutIsOutOfRange ? 'is-danger': 'is-info']">{{ MAX_LENGTH_ABOUT - aboutRemaingChars}} / {{ MAX_LENGTH_ABOUT}} </p>
 
@@ -71,6 +71,7 @@
     /* eslint-disable brace-style */
 
     import Person from './Person'
+
 
     export default {
         name: 'person-edit',

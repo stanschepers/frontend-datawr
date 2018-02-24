@@ -24,6 +24,9 @@
                     <a class="level-item" :href="'mailto:' + person.email">
                         <span class="icon is-small"><i class="fa fa-envelope"></i></span>
                     </a>
+                    <a class="level-item" :href="'mailto:' + person.email">
+                        <small class="has-text-grey">{{ person.email }}</small>
+                    </a>
                 </div>
             </nav>
         </div>
@@ -53,9 +56,9 @@
 
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+    @import "~bulma/sass/utilities/variables";
     .profile_pic {
         border-radius: 50%;
     }
-
 </style>

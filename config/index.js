@@ -21,13 +21,20 @@ module.exports = {
   dev: {
     env: require('./dev.env'),
     port: process.env.DEV_PORT || 8080,
-    autoOpenBrowser: true,
+    autoOpenBrowser: false,
     assetsSubDirectory: 'assets',
     assetsPublicPath: '/',
     proxyTable: {
       '/MODApis': {
             target: 'http://dev.markitondemand.com',
             changeOrigin: true
+        },
+        '/API': {
+            target: 'http://stan.local:8000',
+            changeOrigin: false,
+            pathRewrite: {
+                '^/API': ''
+            }
         }
     },
     // CSS Sourcemaps off by default because relative paths are "buggy"
