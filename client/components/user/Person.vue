@@ -18,7 +18,7 @@
             </div>
             <nav class="level is-mobile">
                 <div class="level-left">
-                    <a class="level-item" @click="toggleShowEdit">
+                    <a v-if="me" class="level-item" @click="toggleShowEdit">
                         <span class="icon is-small has-text-gray"><i class="fa fa-gear"></i></span>
                     </a>
                     <a class="level-item" :href="'mailto:' + person.email">

@@ -38,12 +38,12 @@
                             Change
                         </button>
                     </div>
-                    <div class="control level-item">
-                        <button type="reset" class="button is-light" v-if="unsaved_changed">
-                            Back &nbsp;
-                            <span class="icon is-small"><i class="fa fa-undo"></i></span>
-                        </button>
-                    </div>
+                    <!--<div class="control level-item">-->
+                        <!--<button type="reset" class="button is-light" v-if="unsaved_changed">-->
+                            <!--Back &nbsp;-->
+                            <!--<span class="icon is-small"><i class="fa fa-undo"></i></span>-->
+                        <!--</button>-->
+                    <!--</div>-->
                 </div>
                 <div class="level-right is-hidden-touch">
                     <div class="control level-item">

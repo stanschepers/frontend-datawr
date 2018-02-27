@@ -1,7 +1,7 @@
 <template>
     <div class="tile is-ancestor">
         <div class="tile is-parent is-vertical">
-            <div v-if="person" class="tile is-child box">
+            <div v-if="person" class="tile is-child box person-view">
                 <person-view :person="person" :me="true" :showEdit="showEdit" v-on:toggleShowEdit="toggleShowEdit"/>
             </div>
             <div v-if="showEdit" class="tile is-child box animated"
@@ -15,8 +15,19 @@
                     Nullam id dolor id nibh ultricies vehicula ut id elit. Donec id elit non mi porta gravida at eget
                     metus.
                 </p>
+                <br/>
+                <div class="level is-mobile">
+                    <div class="level-left">
+                    </div>
+                    <div class="level-right">
+                        <a class="level-item button is-outlined is-dark">Logout</a>
+                    </div>
+                </div>
             </div>
-            <div v-if="showEdit" class="tile is-child">
+            <div class="tile is-parent is-vertical">
+            <div class="tile is-child person-view" v-for="p in persons" :key="p.name">
+            <person-view class="box" :person="p" v-if="!me(p)"></person-view>
+            </div>
             </div>
         </div>
     </div>
@@ -30,7 +41,8 @@
 
     const MessageComponent = Vue.extend(Message)
 
-    const api1 = 'http://stan.local:8000/profiles/1/?format=json'
+    const api1 = '/API/profiles/1/?format=json'
+    const api2 = '/API/profiles/?format=json'
 
     const openMessage = (propsData = {
         title: '',
@@ -52,6 +64,7 @@
         data() {
             return {
                 person: null,
+                persons: null,
                 showEdit: false,
                 firstTime: true,
                 isloading: false
@@ -60,8 +73,15 @@
         created() {
             this.isloading = true
             this.$http.get(api1).then((response) => {
-                this.isloading = false
                 this.person = response.data;
+                // this.$http.get(api2).then( (response) => {
+                //     this.persons = response.data
+                // }).catch( (error) => {
+                //     openMessage({
+                //         message: 'Something went wrong in getting the profiles',
+                //         type: 'danger'
+                //     })
+                // })
             }).catch((error) => {
                 this.isloading = false
                 openMessage({
@@ -88,11 +108,18 @@
                         type: 'danger'
                     })
                 })
+            },
+            me: function (person2) {
+                return this.person.email === person2.email
             }
-        }
+        },
+        computed: {}
     }
 </script>
 
 <style scoped>
+    .person-view {
+        max-height: 2em;
+    }
 
 </style>

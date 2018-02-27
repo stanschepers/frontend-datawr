@@ -34,8 +34,7 @@ export default {
 </script>
 
 <style lang="scss">
-  @import '~bulma/sass/utilities/initial-variables';
-  @import '~bulma/sass/utilities/derived-variables';
+  @import '~bulma/sass/utilities/variables';
   @import '~bulma/sass/utilities/mixins';
 
 .app-main {

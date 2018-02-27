@@ -25,7 +25,22 @@ export default new Router({
             path: '/profile',
             component: require('../views/user/Profile')
         },
-        ...generateRoutesFromMenu(menuModule.state.items),
+        {
+            name: 'Dataset',
+            path: '/data',
+            component: require('../views/datasets/index')
+        },
+        // {
+        //     name: 'Datasets',
+        //     path: '/data/:id',
+        //     component: require('../views/datasets/Dataset')
+        // },
+        // ...generateRoutesFromMenu(menuModule.state.items),
+        // {
+        //     name: 'Other Profile',
+        //     path: '/profile/:id',
+        //     component: require('../views/user/OtherProfile')
+        // },
         {
             path: '*',
             redirect: '/'

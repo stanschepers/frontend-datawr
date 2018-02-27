@@ -1,31 +1,38 @@
 <template>
     <nav class="level is-white navbar app-navbar is-mobile animated" role="navigation" aria-label="main navigation"
          :class="{ slideInDown: show, slideOutDown: !show }">
-        <div class="level-item has-text-left">
-            <a class="is-hidden-tablet"  @click="toggleSidebar({opened: !sidebar.opened})">
-                <i class="fa fa-bars" aria-hidden="true" v-show="!sidebar.hidden"></i>
-            </a>
-        </div>
-
-        <div class="level-item is-centered">
-            <a class="navbar-item" href="/">
-                <img class="logo" src="~assets/logo.png" alt="Data Wrangler" >
-            </a>
-                <div class="is-hidden-mobile">
-                    <a href="/"> <span class="has-text-primary">Data Wrangler</span> </a> <a> <tooltip :label="'About Us'" placement="right" type="dark" size="small" :no-animate="true" :always="false" :rounded="true">
-                <span class="has-text-dark">• ADReM</span>
-            </tooltip> </a>
-                </div>
-        </div>
-
         <div class="level-item">
-            <!--<router-link v-if="!$auth.check()" to="/login" class="nav-item">Login</router-link>-->
-            <!--<a v-if="$auth.check()" @click="logout" class="nav-item">Logout</a>-->
-            <router-link class="nav-item" to="/profile">
-                <span class="icon has-text-dark">
-                    <i class="fa fa-user-circle fa-lg"></i>
-                </span>
+                        <router-link to="/" class="has-text-centered">
+            <i class="fa fa-heart  has-text-danger"></i> &nbsp;
+            <span class="has-text-dark is-hidden-touch">Favorites</span>
+                        </router-link>
+        </div>
+        <div class="level-item">
+            <router-link to="/" class="has-text-centered">
+            <i class="fa fa-database has-text-link"></i> &nbsp;
+            <span class="has-text-dark is-hidden-touch">Datasets</span>
             </router-link>
+        </div>
+        <div class="level-item">
+                        <span class="has-text-centered">
+            <router-link to="/" class="has-text-grey is-hidden-touch subtitle">DataWr</router-link> &nbsp; &nbsp;
+            <router-link to="/"><i class="fa fa-home fa-2x has-text-primary"></i> </router-link> &nbsp; &nbsp;
+            <router-link to="/" class="has-text-grey-darker is-hidden-touch subtitle">ADReM</router-link>
+                        </span>
+        </div>
+        <div class="level-item">
+                        <router-link to="/profile" class="has-text-centered">
+
+            <i class="fa fa-user fa-lg has-text-info"></i> &nbsp;
+            <span class="has-text-dark is-hidden-touch">Profile</span>
+                        </router-link>
+        </div>
+        <div class="level-item">
+                        <router-link to="/settings" class="has-text-centered">
+
+            <i class="fa fa-gear fa-lg has-text-grey-light"></i> &nbsp;
+            <span class="has-text-dark is-hidden-touch">Settings</span>
+                        </router-link>
         </div>
     </nav>
 </template>

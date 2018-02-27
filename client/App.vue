@@ -61,6 +61,7 @@ export default {
 }
 
 @import '~bulma';
+@import '~bulma/sass/utilities/variables';
 
 @import '~wysiwyg.css/wysiwyg.sass';
 
@@ -68,7 +69,7 @@ $fa-font-path: '~font-awesome/fonts/';
 @import '~font-awesome/scss/font-awesome';
 
 html {
-  background-color: whitesmoke;
+  background-color: $light;
 }
 
 .nprogress-container {
@@ -79,7 +80,7 @@ html {
   pointer-events: none;
 
   #nprogress {
-    $color: #48e79a;
+    $color: $primary;
 
     .bar {
       background: $color;

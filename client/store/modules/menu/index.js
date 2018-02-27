@@ -36,16 +36,7 @@ const state = {
     charts,
     uifeatures,
     components,
-    tables,
-      {
-          name: 'Profile',
-          path: '/profile',
-          meta: {
-              icon: 'fa-user-circle',
-              link: 'user/profile'
-          },
-          component: lazyLoading('user/profile')
-      }
+    tables
   ]
 }
 
