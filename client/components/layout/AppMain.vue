@@ -39,7 +39,7 @@ export default {
 
 .app-main {
   padding-top: 50px;
-  margin-left: 180px;
+  /*margin-left: 180px;*/
   transform: translate3d(0, 0, 0);
 
   @include mobile() {
@@ -50,5 +50,8 @@ export default {
 
 .app-content {
   padding: 20px;
+  @include mobile() {
+    padding: 10px;
+  }
 }
 </style>

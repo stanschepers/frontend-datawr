@@ -1,7 +1,7 @@
 <template>
     <form @input="has_changed" v-on:submit.prevent="send_changes" :method="'post'">
     <div class="block">
-        <div class="level">
+        <div class="level is-mobile">
             <div class="level-left">
                 <h3 class="subtitle level-item">Edit your profile </h3>
             </div>
@@ -31,35 +31,21 @@
 
         </div>
         <div class="field">
-            <div class=" control level is-mobile">
+            <div class="control level is-mobile">
                 <div class="level-left">
                     <div class="control level-item">
                         <button type="submit" class="button is-primary" :disabled="formIsNotValid">
                             Change
                         </button>
                     </div>
-                    <!--<div class="control level-item">-->
-                        <!--<button type="reset" class="button is-light" v-if="unsaved_changed">-->
-                            <!--Back &nbsp;-->
-                            <!--<span class="icon is-small"><i class="fa fa-undo"></i></span>-->
-                        <!--</button>-->
-                    <!--</div>-->
                 </div>
-                <div class="level-right is-hidden-touch">
+                <div class="level-right">
                     <div class="control level-item">
-                        <button class="button is-danger">
+                        <button @click="deleteAccount" class="button is-danger">
                             Delete Account
                         </button>
                     </div>
                 </div>
-            </div>
-        </div>
-        <div class="field is-hidden-desktop">
-            <div class="control">
-                <a class="button is-danger">
-                    Delete Account
-                    <!--<span class="icon is-small"><i class="fa fa-times-circle"></i></span>-->
-                </a>
             </div>
         </div>
     </div>
@@ -71,6 +57,8 @@
     /* eslint-disable brace-style */
 
     import Person from './Person'
+
+    const api1 = '/API/profiles/1/'
 
 
     export default {
@@ -107,6 +95,10 @@
                 else {
                     this.$emit('close')
                 }
+            },
+            deleteAccount () {
+                this.$http.delete(api1)
+                this.$router.back()
             }
         },
         computed: {

@@ -1,11 +1,20 @@
 <template>
-    <div class="columns is-multiline is-mobile">
+    <div>
+    <div class="level is-mobile">
+        <div class="level-left">
 
+
+        </div>
+        <div class="level-right">
+            <router-link class="button is-primary is-fullwidth"> <i class="fa fa-plus"></i> &nbsp; Add new dataset</router-link>
+        </div>
+    </div>
+    <div class="columns is-multiline is-mobile">
         <div class="column is-full-mobile is-one-third-tablet is-one-third-desktop" v-for="item in items"
              v-if="item.name">
             <data-card :item="item"/>
         </div>
-
+    </div>
     </div>
 </template>
 

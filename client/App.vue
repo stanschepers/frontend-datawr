@@ -1,17 +1,15 @@
 <template>
   <div id="app">
-    <nprogress-container></nprogress-container>
-    <navbar :show="true"></navbar>
-    <sidebar :show="sidebar.opened && !sidebar.hidden"></sidebar>
-    <app-main></app-main>
-    <footer-bar></footer-bar>
+    <nprogress-container/>
+    <navbar :show="true"/>
+    <app-main/>
+    <footer-bar/>
   </div>
 </template>
 
 <script>
 import NprogressContainer from 'vue-nprogress/src/NprogressContainer'
-import { Navbar, Sidebar, AppMain, FooterBar } from 'components/layout/'
-import { mapGetters, mapActions } from 'vuex'
+import { Navbar, Sidebar, AppMain, FooterBar } from 'components/layout'
 
 export default {
   components: {
@@ -41,16 +39,7 @@ export default {
     document.addEventListener('visibilitychange', handler)
     window.addEventListener('DOMContentLoaded', handler)
     window.addEventListener('resize', handler)
-  },
-
-  computed: mapGetters({
-    sidebar: 'sidebar'
-  }),
-
-  methods: mapActions([
-    'toggleDevice',
-    'toggleSidebar'
-  ])
+  }
 }
 </script>
 

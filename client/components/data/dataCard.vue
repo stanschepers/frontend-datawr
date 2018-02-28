@@ -2,12 +2,12 @@
     <base-card
             :title="item.name"
             :content="item.description">
-        <card-footer-item slot="footer" element='link' :to="{name: item.name}">
+        <card-footer-item slot="footer" element='link' :to="{name: 'Dataset', params:{id: item.id}}">
                       <span class="icon is-small">
                         <i aria-hidden="true" class="fa fa-line-chart"></i>
                       </span>&nbsp;View
         </card-footer-item>
-        <card-footer-item class="has-text-dark" slot="footer" element='link' :to="{name: item.name}">
+        <card-footer-item class="has-text-dark" slot="footer" element='link' :to="{name: 'Dataset', params:{id: item.id}}">
                   <span class="icon is-small">
                     <i aria-hidden="true" class="fa fa-gear"></i>
                   </span>&nbsp;&nbsp;Settings

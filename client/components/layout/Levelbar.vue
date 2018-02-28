@@ -1,22 +1,18 @@
 <template>
-  <nav class="level app-levelbar">
+  <nav class="level app-levelbar is-mobile">
     <div class="level-left">
+      <div class="level-item">
+        <a @click="backward"><i class="fa fa-arrow-left has-text-grey-darker"></i></a>
+      </div>
+      <div class="level-item">
+        <a @click="forward"><i class="fa fa-arrow-right has-text-grey-darker"></i></a>
+      </div>
       <div class="level-item">
         <h3 class="subtitle is-5">
           <strong>{{ name }}</strong>
         </h3>
       </div>
-      <div class="level-item" v-if="!!codelink">
-        <tooltip label="View code" placement="right" size="small" :rounded="true">
-          <span class="icon">
-            <a  :href="codelink">
-              <i class="fa fa-github"></i>
-            </a>
-          </span>
-        </tooltip>
-      </div>
     </div>
-
     <div class="level-right is-hidden-mobile">
       <breadcrumb :list="list"></breadcrumb>
     </div>
@@ -29,8 +25,7 @@ import Tooltip from 'vue-bulma-tooltip'
 
 export default {
   components: {
-    Breadcrumb,
-    Tooltip
+    Breadcrumb
   },
 
   data () {
@@ -44,13 +39,6 @@ export default {
   },
 
   computed: {
-    codelink () {
-      if (this.$route.meta && this.$route.meta.link) {
-        return 'https://github.com/vue-bulma/vue-admin/blob/master/client/views/' + this.$route.meta.link
-      } else {
-        return null
-      }
-    },
     name () {
       return this.$route.name
     }
@@ -64,7 +52,14 @@ export default {
         matched = [{ name: 'Home', path: '/' }].concat(matched)
       }
       this.list = matched
-    }
+    },
+      backward() {
+        this.$router.go(-1)
+      },
+      forward() {
+        this.$router.go(1)
+      }
+
   },
 
   watch: {

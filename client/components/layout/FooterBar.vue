@@ -2,6 +2,7 @@
   <footer class="footer">
     <div class="container">
       <div class="content has-text-centered">
+        <!--DataWrangler made by Mats Present, Mathias Ooms, Laurens Van Damme, Luckas Declerck, Stan Schepers.-->
       </div>
     </div>
   </footer>
@@ -22,7 +23,7 @@ export default {
   @import '~bulma/sass/utilities/mixins';
 
 .footer {
-  margin-left: 180px;
+  /*margin-left: 180px;*/
   
   @include mobile() {
     margin-left: 0;
