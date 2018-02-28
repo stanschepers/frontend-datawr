@@ -9,6 +9,7 @@ import router from './router'
 import store from './store'
 import * as filters from './filters'
 import { TOGGLE_SIDEBAR } from 'vuex-store/mutation-types'
+import jwt_decode from 'jwt-decode'
 
 Vue.router = router
 Vue.use(VueAxios, axios)
@@ -24,9 +25,10 @@ Vue.use(VueAuth, {
   },
   http: require('@websanova/vue-auth/drivers/http/axios.1.x.js'),
   router: require('@websanova/vue-auth/drivers/router/vue-router.2.x.js'),
-  loginData: { url: 'http://localhost:6789/login', fetchUser: false },
+  loginData: { url: 'http://localhost:8000/auth/obtain_token/', fetchUser: false },
   refreshData: { enabled: false }
 })
+
 
 Vue.use(NProgress)
 

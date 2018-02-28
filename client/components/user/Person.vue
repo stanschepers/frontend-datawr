@@ -12,7 +12,7 @@
                     <small>{{ person.title }}</small>
                     <small v-if="me">(me)</small>
                     <br>
-                    {{ person.about }}
+                     {{ person.about }}
                     <br>
                 </p>
             </div>

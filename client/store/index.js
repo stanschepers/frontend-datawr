@@ -9,6 +9,8 @@ import menu from './modules/menu'
 
 Vue.use(Vuex)
 
+
+
 const store = new Vuex.Store({
   strict: true,  // process.env.NODE_ENV !== 'production',
   actions,
@@ -23,5 +25,6 @@ const store = new Vuex.Store({
   mutations: {
   }
 })
+
 
 export default store

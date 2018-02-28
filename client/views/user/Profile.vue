@@ -74,14 +74,14 @@
             this.isloading = true
             this.$http.get(api1).then((response) => {
                 this.person = response.data;
-                // this.$http.get(api2).then( (response) => {
-                //     this.persons = response.data
-                // }).catch( (error) => {
-                //     openMessage({
-                //         message: 'Something went wrong in getting the profiles',
-                //         type: 'danger'
-                //     })
-                // })
+                this.$http.get(api2).then( (response) => {
+                    this.persons = response.data
+                }).catch( (error) => {
+                    openMessage({
+                        message: 'Something went wrong in getting the profiles',
+                        type: 'danger'
+                    })
+                })
             }).catch((error) => {
                 this.isloading = false
                 openMessage({
