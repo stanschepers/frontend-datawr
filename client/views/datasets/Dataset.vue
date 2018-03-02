@@ -10,7 +10,7 @@
                                 <span class="title level-item">{{ myDataset.name }}</span>
                             </div>
                             <div class="level-item">
-                                <span class="subtitle level-item">{{ myDataset.owner.name}}</span>
+                                <span class="subtitle level-item">&lt;Owner&gt;</span>
                             </div>
                         </div>
                         <div class="level-right">
@@ -240,9 +240,10 @@
                 }
             }
         },
-        created () {
+        beforeMount () {
             this.isloading = true
             this.$http.get( api + this.id + '/?format=json').then((response) => {
+                console.log(response.data)
                 this.myDataset = response.data
             }).catch((error) => {
                 this.error = true
