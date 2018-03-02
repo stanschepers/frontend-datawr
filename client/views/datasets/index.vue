@@ -1,12 +1,12 @@
 <template>
     <div>
+
     <div class="level is-mobile">
         <div class="level-left">
-
-
+           <h5 All your datasets
         </div>
         <div class="level-right">
-            <router-link class="button is-primary is-fullwidth"> <i class="fa fa-plus"></i> &nbsp; Add new dataset</router-link>
+            <router-link to="/" class="button is-primary is-fullwidth"> <i class="fa fa-plus"></i> &nbsp; Add new dataset</router-link>
         </div>
     </div>
     <div class="columns is-multiline is-mobile">
@@ -21,7 +21,7 @@
 <script>
     import DataCard from '../../components/data/dataCard'
 
-    const api = '/API/datasets/?format=json'
+    const api = 'datasets/?format=json'
 
     export default {
         components: {DataCard},

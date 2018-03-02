@@ -24,11 +24,11 @@
                     </div>
                 </div>
             </div>
-            <div class="tile is-parent is-vertical">
-            <div class="tile is-child person-view" v-for="p in persons" :key="p.name">
-            <person-view class="box" :person="p" v-if="!me(p)"></person-view>
-            </div>
-            </div>
+            <!--<div class="tile is-parent is-vertical">-->
+            <!--<div class="tile is-child person-view" v-for="p in persons" :key="p.name">-->
+            <!--<person-view class="box" :person="p" v-if="!me(p)"></person-view>-->
+            <!--</div>-->
+            <!--</div>-->
         </div>
     </div>
 </template>
@@ -41,8 +41,8 @@
 
     const MessageComponent = Vue.extend(Message)
 
-    const api1 = '/API/profiles/4/?format=json'
-    const api2 = '/API/profiles/?format=json'
+    const api1 = '/profiles/4/?format=json'
+    const api2 = 'profiles/?format=json'
 
     const openMessage = (propsData = {
         title: '',
@@ -70,18 +70,18 @@
                 isloading: false
             }
         },
-        created() {
+        beforeMount() {
             this.isloading = true
             this.$http.get(api1).then((response) => {
                 this.person = response.data;
-                this.$http.get(api2).then( (response) => {
-                    this.persons = response.data
-                }).catch( (error) => {
-                    openMessage({
-                        message: 'Something went wrong in getting the profiles',
-                        type: 'danger'
-                    })
-                })
+                // this.$http.get(api2).then( (response) => {
+                //     this.persons = response.data
+                // }).catch( (error) => {
+                //     openMessage({
+                //         message: 'Something went wrong in getting the profiles',
+                //         type: 'danger'
+                //     })
+                // })
             }).catch((error) => {
                 this.isloading = false
                 openMessage({
@@ -119,7 +119,7 @@
 
 <style scoped>
     .person-view {
-        max-height: 2em;
+        max-height: 5rem;
     }
 
 </style>

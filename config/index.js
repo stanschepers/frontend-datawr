@@ -29,13 +29,13 @@ module.exports = {
             target: 'http://dev.markitondemand.com',
             changeOrigin: true
         },
-        '/API': {
-            target: 'http://stan.local:8000',
-            changeOrigin: false,
-            pathRewrite: {
-                '^/API': ''
-            }
-        }
+        // '/API': {
+        //     target: 'http://stan.local:8000',
+        //     changeOrigin: false,
+        //     pathRewrite: {
+        //         '^/API': ''
+        //     }
+        // }
     },
     // CSS Sourcemaps off by default because relative paths are "buggy"
     // with this option, according to the CSS-Loader README
