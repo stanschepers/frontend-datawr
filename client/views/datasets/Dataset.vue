@@ -13,13 +13,20 @@
                                 <span class="subtitle level-item">&lt;Owner&gt;</span>
                             </div>
                         </div>
-                        <div class="level-right">
-                            <router-link to=""><i class="fa fa-gear level-item"></i></router-link>
-                        </div>
                     </div>
                     <div class="content">
                         <p>{{myDataset.description}}</p>
                     </div>
+                    <div class="level is-mobile">
+                    <div class="level-left">
+                        <div class="level-item">
+                            <a><i class="fa fa-heart"></i></a>
+                        </div>
+                        <div class="level-item">
+                            <router-link to=""><i class="fa fa-gear"></i></router-link>
+                        </div>
+                    </div>
+            </div>
                 </article>
             </div>
             <div class="tile is-parent">
