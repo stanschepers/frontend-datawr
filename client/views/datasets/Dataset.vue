@@ -32,56 +32,72 @@
             <div class="tile is-parent">
             <div class="tile is-child box">
                 <nav class="level is-mobile">
+                    <div class="level-item has-text-left">
+                        <div class="select">
+                            <select>
+                                <option selected>Column 1</option>
+                                <option>Column 2</option>
+                            </select>
+                        </div>
+                    </div>
                     <div class="level-item has-text-centered">
                         <div>
-                            <p class="heading">Tweets</p>
+                            <p class="heading">Average</p>
                             <p class="title">3,456</p>
                         </div>
                     </div>
                     <div class="level-item has-text-centered">
                         <div>
-                            <p class="heading">Following</p>
+                            <p class="heading">Max</p>
                             <p class="title">123</p>
                         </div>
                     </div>
                     <div class="level-item has-text-centered">
                         <div>
-                            <p class="heading">Followers</p>
-                            <p class="title">456K</p>
+                            <p class="heading">Median</p>
+                            <p class="title">456</p>
                         </div>
                     </div>
                     <div class="level-item has-text-centered">
                         <div>
-                            <p class="heading">Likes</p>
+                            <p class="heading">Min</p>
                             <p class="title">789</p>
                         </div>
                     </div>
                 </nav>
                 <nav class="level is-mobile">
+                    <div class="level-item has-text-left">
+                        <div class="select">
+                            <select>
+                                <option>Column 1</option>
+                                <option selected>Column 2</option>
+                            </select>
+                        </div>
+                    </div>
                     <div class="level-item has-text-centered">
                         <div>
-                            <p class="heading">Tweets</p>
+                            <p class="heading">Average</p>
                             <p class="title">3,456</p>
                         </div>
                     </div>
                     <div class="level-item has-text-centered">
                         <div>
-                            <p class="heading">Following</p>
+                            <p class="heading">Max</p>
                             <p class="title">123</p>
                         </div>
                     </div>
                     <div class="level-item has-text-centered">
                         <div>
-                            <p class="heading">Followers</p>
-                            <p class="title">456K</p>
-                            <p><small class="has-text-danger">OFFICIAL</small></p>
+                            <p class="heading">Median</p>
+                            <p class="title">456</p>
+                            <p><small class="has-text-danger">INCOMPLETE</small></p>
                         </div>
                     </div>
                     <div class="level-item has-text-centered">
                         <div>
-                            <p class="heading">Likes</p>
+                            <p class="heading">Min</p>
                             <p class="title">789</p>
-                            <p><small>POP</small></p>
+                            <p><small class="has-text-success">UPDATED</small></p>
                         </div>
                     </div>
                 </nav>
