@@ -64,18 +64,17 @@
                     (response) => {
                         // if(this.rememberMe)
                         this.$store.commit(types.LOGIN, response.data.token)
-
+                        localStorage.setItem('token', response.data.token)
                     }
                 ).catch(
                     (error) => {
                         this.error = true
                     }
                 )
-                let promise = this.setToken(this.$store.getToken)
-                promise.then(this.$router.push('Profile'))
+                window.setTimeout(this.$router.push('Profile'), 3000)
             },
             setToken(token) {
-                return new Promise(localStorage.setItem('token', token))
+                return new Promise()
             }
         }
     }
