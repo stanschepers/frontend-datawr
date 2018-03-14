@@ -14,6 +14,7 @@ const state = {
   }
 }
 
+
 const mutations = {
   [types.TOGGLE_DEVICE] (state, device) {
     state.device.isMobile = device === 'mobile'

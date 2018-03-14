@@ -5,26 +5,26 @@
         <div class="columns is-vcentered">
             <div class="column is-6 is-offset-3">
                 <div class="box">
-                    <div v-show="error" style="color:red; word-wrap:break-word;">{{ error }}</div>
+                    <div v-show="error" style="color:red; word-wrap:break-word;">Check username/password</div>
                     <form v-on:submit.prevent="login">
                         <div class="field">
                             <label class="label">Username</label>
                             <p class="control">
-                                <input v-model="data.body.username" class="input" type="text"
+                                <input v-model="username" class="input" type="text"
                                        placeholder="Your Username">
                             </p>
                         </div>
                         <div class="field">
                             <label class="label">Password</label>
                             <p class="control">
-                                <input v-model="data.body.password" class="input" type="password"
+                                <input v-model="password" class="input" type="password"
                                        placeholder="Your Password">
                             </p>
                         </div>
                         <div class="field">
                             <p class="control">
                                 <label class="checkbox">
-                                    <input type="checkbox" v-model="data.rememberMe">
+                                    <input type="checkbox" v-model="rememberMe">
                                     Remember me
                                 </label>
                             </p>
@@ -41,27 +41,41 @@
 </template>
 
 <script>
+    import * as qs from "qs";
+    import * as types from "../../store/mutation-types"
+
+    let wait = ms => new Promise((r, j)=>setTimeout(r, ms))
+
+
+    const loginURL = 'obtain_token/'
     export default {
         data() {
             return {
-                data: {
-                    body: {
-                        username: null,
-                        password: null
-                    },
-                    rememberMe: false
-                },
-                error: null
-            }
-        },
-        mounted() {
-            if (this.$auth.redirect()) {
-                console.log('Redirect from: ' + this.$auth.redirect().from.name)
+                username: null,
+                password: null,
+                rememberMe: false,
+                error: false
             }
         },
         methods: {
             login() {
+                let new_axios = this.$http.create({ headers: {'Authorization': ''}})
+                new_axios.post(loginURL, qs.stringify({username: this.username, password: this.password})).then(
+                    (response) => {
+                        // if(this.rememberMe)
+                        this.$store.commit(types.LOGIN, response.data.token)
 
+                    }
+                ).catch(
+                    (error) => {
+                        this.error = true
+                    }
+                )
+                let promise = this.setToken(this.$store.getToken)
+                promise.then(this.$router.push('Profile'))
+            },
+            setToken(token) {
+                return new Promise(localStorage.setItem('token', token))
             }
         }
     }

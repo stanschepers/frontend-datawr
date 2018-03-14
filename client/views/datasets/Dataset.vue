@@ -10,7 +10,7 @@
                                 <span class="title level-item">{{ myDataset.name }}</span>
                             </div>
                             <div class="level-item">
-                                <span class="subtitle level-item">&lt;Owner&gt;</span>
+                                <span class="subtitle level-item">{{ myDataset.owner.name }}</span>
                             </div>
                         </div>
                     </div>
@@ -31,7 +31,7 @@
             </div>
             <div class="tile is-parent">
             <div class="tile is-child box">
-                <nav class="level is-mobile">
+                <nav class="level ">
                     <div class="level-item has-text-left">
                         <div class="select">
                             <select>
@@ -65,42 +65,7 @@
                         </div>
                     </div>
                 </nav>
-                <nav class="level is-mobile">
-                    <div class="level-item has-text-left">
-                        <div class="select">
-                            <select>
-                                <option>Column 1</option>
-                                <option selected>Column 2</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="level-item has-text-centered">
-                        <div>
-                            <p class="heading">Average</p>
-                            <p class="title">3,456</p>
-                        </div>
-                    </div>
-                    <div class="level-item has-text-centered">
-                        <div>
-                            <p class="heading">Max</p>
-                            <p class="title">123</p>
-                        </div>
-                    </div>
-                    <div class="level-item has-text-centered">
-                        <div>
-                            <p class="heading">Median</p>
-                            <p class="title">456</p>
-                            <p><small class="has-text-danger">INCOMPLETE</small></p>
-                        </div>
-                    </div>
-                    <div class="level-item has-text-centered">
-                        <div>
-                            <p class="heading">Min</p>
-                            <p class="title">789</p>
-                            <p><small class="has-text-success">UPDATED</small></p>
-                        </div>
-                    </div>
-                </nav>
+
             </div>
         </div>
         </div>

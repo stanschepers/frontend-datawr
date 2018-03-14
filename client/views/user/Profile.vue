@@ -20,7 +20,7 @@
                     <div class="level-left">
                     </div>
                     <div class="level-right">
-                        <a class="level-item button is-outlined is-dark">Logout</a>
+                        <router-link v-bind:to="logout" class="level-item button is-outlined is-dark">Logout</router-link>
                     </div>
                 </div>
             </div>
@@ -38,6 +38,7 @@
     import PersonEdit from '../../components/user/PersonEdit'
     import Vue from 'vue'
     import Message from 'vue-bulma-message'
+    import * as types from '../../store/mutation-types'
 
     const MessageComponent = Vue.extend(Message)
 
@@ -67,7 +68,8 @@
                 persons: null,
                 showEdit: false,
                 firstTime: true,
-                isloading: false
+                isloading: false,
+                logout: "Logout"
             }
         },
         beforeMount() {
