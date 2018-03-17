@@ -30,7 +30,8 @@
     "gh": "npm run build && gh-pages -d dist",
     "lint": "eslint --ext .js .vue client/*",
     "lint:fix": "eslint --fix --ext .js .vue electron.js client/* build/* config/*",
-    "test": "echo lol"
+    "test":  "testcafe chrome,firefox client/",
+    "test-dev":  "testcafe chrome-canary,firefox client/"
   },
   "dependencies": {
     "@websanova/vue-auth": "^2.8.2-beta",
@@ -44,6 +45,7 @@
     "mdi": "^1.8.36",
     "plotly.js": "^1.24.2",
     "qs": "^6.5.1",
+    "testcafe": "^0.19.1",
     "vue": "^2.5.13",
     "vue-axios": "^2.0.2",
     "vue-bulma-brace": "^0.1.0",

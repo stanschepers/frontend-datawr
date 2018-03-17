@@ -48,6 +48,7 @@
 
 
     const loginURL = 'obtain_token/'
+
     export default {
         data() {
             return {

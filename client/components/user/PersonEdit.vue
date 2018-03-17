@@ -96,10 +96,10 @@
                     this.$emit('close')
                 }
             },
-            deleteAccount () {
-                this.$http.delete(api1)
-                this.$router.back()
-            }
+            // deleteAccount () {
+            //     this.$http.delete(api1)
+            //     this.$router.back()
+            // }
         },
         computed: {
             nameIsEmpty: function () {

@@ -25,10 +25,10 @@ module.exports = {
     assetsSubDirectory: 'assets',
     assetsPublicPath: '/',
     proxyTable: {
-      '/MODApis': {
-            target: 'http://dev.markitondemand.com',
-            changeOrigin: true
-        },
+      // '/MODApis': {
+      //       target: 'http://dev.markitondemand.com',
+      //       changeOrigin: true
+      //   },
         // '/API': {
         //     target: 'http://stan.local:8000',
         //     changeOrigin: false,
