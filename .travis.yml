@@ -22,8 +22,8 @@ before_script:
 before_install:
   - npm install npm@latest -g
 
-script:
-  - node --version
-  - npm --version
-  - npm run build
+#script:
+#  - node --version
+#  - npm --version
+#  - npm run build
 
