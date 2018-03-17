@@ -1,7 +1,8 @@
 dist: trusty
 sudo: required
 language: node_js
-node_js: latest
+node_js:
+  - "latest"
 
 addons:
   firefox: latest
