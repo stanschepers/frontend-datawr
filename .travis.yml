@@ -20,7 +20,7 @@ before_script:
 before_install:
   - npm install npm@latest -g
 
-#script:
+script:
   - node --version
   - npm --version
   - npm run dev
