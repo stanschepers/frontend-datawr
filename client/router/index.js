@@ -46,6 +46,18 @@ export default new Router({
 
         },
         {
+            name: 'Create Dataset',
+            path: '/createdataset',
+            component: require('../views/datasets/CreateDataset')
+
+        },
+        {
+            name: 'Transformations',
+            path: '/transformations',
+            component: require('../views/tables/ColumnTransformations')
+
+        },
+        {
             path: '*',
             redirect: '/'
         }

@@ -35,8 +35,7 @@
                     <div class="level-item has-text-left">
                         <div class="select">
                             <select>
-                                <option selected>Column 1</option>
-                                <option>Column 2</option>
+                                <option v-for="heading in columnTypes">{{heading.name}}</option>
                             </select>
                         </div>
                     </div>
@@ -69,316 +68,29 @@
             </div>
         </div>
         </div>
-            <div class="tile is-ancestor">
-                <div class="tile is-parent is-8">
-                    <article class="tile is-child box">
-                        <h4 class="title">Table Responsive</h4>
-                        <div class="table-responsive">
-                            <table class="table is-bordered is-striped is-narrow">
-                                <tbody>
-                                <tr>
-                                    <td>rownum</td>
-                                    <td>weight</td>
-                                    <td>Time</td>
-                                    <td>Chick</td>
-                                    <td>Diet</td>
-                                    <td>rownum</td>
-                                    <td>weight</td>
-                                    <td>Time</td>
-                                    <td>Chick</td>
-                                    <td>Diet</td>
-                                </tr>
-                                <tr>
-                                    <td>1</td>
-                                    <td>42</td>
-                                    <td>0</td>
-                                    <td>1</td>
-                                    <td>1</td>
-                                    <td>1</td>
-                                    <td>42</td>
-                                    <td>0</td>
-                                    <td>1</td>
-                                    <td>1</td>
-                                </tr>
-                                <tr>
-                                    <td>2</td>
-                                    <td>51</td>
-                                    <td>2</td>
-                                    <td>1</td>
-                                    <td>1</td>
-                                    <td>1</td>
-                                    <td>42</td>
-                                    <td>0</td>
-                                    <td>1</td>
-                                    <td>1</td>
-                                </tr>
-                                <tr>
-                                    <td>3</td>
-                                    <td>59</td>
-                                    <td>4</td>
-                                    <td>1</td>
-                                    <td>1</td>
-                                    <td>1</td>
-                                    <td>42</td>
-                                    <td>0</td>
-                                    <td>1</td>
-                                    <td>1</td>
-                                </tr>
-                                <tr>
-                                    <td>4</td>
-                                    <td>64</td>
-                                    <td>6</td>
-                                    <td>1</td>
-                                    <td>1</td>
-                                    <td>1</td>
-                                    <td>42</td>
-                                    <td>0</td>
-                                    <td>1</td>
-                                    <td>1</td>
-                                </tr>
-                                <tr>
-                                    <td>5</td>
-                                    <td>76</td>
-                                    <td>8</td>
-                                    <td>1</td>
-                                    <td>1</td>
-                                    <td>1</td>
-                                    <td>42</td>
-                                    <td>0</td>
-                                    <td>1</td>
-                                    <td>1</td>
-                                </tr>
-                                <tr>
-                                    <td>6</td>
-                                    <td>93</td>
-                                    <td>10</td>
-                                    <td>1</td>
-                                    <td>1</td>
-                                    <td>1</td>
-                                    <td>42</td>
-                                    <td>0</td>
-                                    <td>1</td>
-                                    <td>1</td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </article>
-                </div>
-                <div class="tile is-parent">
-                    <article class="tile is-child box">
-                        <h4 class="title">Transormations</h4>
-                        <div class="block is-flex">
-                            <collapse accordion>
-                                <collapse-item title="Table changes">
-                                    <collapse accordion>
-                                        <collapse-item title="Change Attribute">
+        <div class="tile is-ancestor">
+            <div class="tile is-parent">
+                <article class="tile is-child box">
 
-                                            <div class="field">
-                                                <div class="control is-grouped">
-                                                    <div class="control-label">
-                                                        <label class="label">Select column to change</label>
-                                                    </div>
-                                                    <div class="select is-fullwidth">
-                                                        <select>
-                                                            <option>registration_id</option>
-                                                            <option>client_id</option>
-                                                            <option>checkin_time</option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                            </div>
+                    <best-table :columntypes="columnTypes" :setid="myDataset.id"></best-table>
 
-                                            <div class="field">
-                                                <div class="control is-grouped">
-                                                    <div class="control-label">
-                                                        <label class="label">Select attribute type</label>
-                                                    </div>
-                                                    <div class="select is-fullwidth">
-                                                        <select>
-                                                            <option>integer</option>
-                                                            <option>text</option>
-                                                            <option>date</option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div class="field">
-                                                <div class="block">
-                                                    <button class="button is-info">Update Attribute</button>
-                                                </div>
-                                            </div>
-
-
-
-                                        </collapse-item>
-
-                                        <collapse-item title="Remove attribute">
-
-                                            <div class="field">
-                                                <div class="control is-grouped">
-                                                    <div class="control-label">
-                                                        <label class="label">Select column to delete</label>
-                                                </div>
-                                                    <div class="select is-fullwidth">
-                                                        <select>
-                                                            <option>registration_id</option>
-                                                            <option>client_id</option>
-                                                            <option>checkin_time</option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div class="field">
-                                                <div class="block">
-                                                    <button class="button is-danger">Delete Attribute</button>
-                                                </div>
-                                            </div>
-                                        </collapse-item>
-                                        <collapse-item title="Join operations">
-                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec iaculis mauris. @bulmaio. #css #responsive
-                                        </collapse-item>
-
-                                    </collapse>
-                                </collapse-item>
-
-                                <collapse-item title="Numerical transformations">
-                                    <collapse accordion>
-                                        <collapse-item title="Normalise">
-                                            <div class="block">
-                                                Normalise numerical columns between 0 and 1.
-
-                                                <div class="control is-horizontal">
-                                                    <div class="control-label">
-                                                        <label class="label">Column</label>
-                                                    </div>
-                                                    <div class="control">
-                                                        <div class="select is-fullwidth">
-                                                            <select>
-                                                                <option>registration_id</option>
-                                                                <option>client_id</option>
-                                                                <option>checkin_time</option>
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="control is-horizontal">
-                                                    <div class="control-label">
-                                                        <label class="label">Mean</label>
-                                                    </div>
-                                                    <div class="control is-grouped">
-                                                        <p class="control is-expanded">
-                                                            <input class="input" type="number" placeholder="mean">
-                                                        </p>
-                                                    </div>
-                                                </div>
-
-                                                <div class="control is-horizontal">
-                                                    <div class="control-label">
-                                                        <label class="label">Standard deviation</label>
-                                                    </div>
-                                                    <div class="control is-grouped">
-                                                        <p class="control is-expanded">
-                                                            <p></p>
-                                                            <input class="input" type="number" placeholder="standard deviation">
-                                                        </p>
-                                                    </div>
-                                                </div>
-
-
-                                                <div class="control is-grouped">
-                                                    <div class="control-label">
-                                                        <label class="label"></label>
-                                                    </div>
-                                                    <div class="control">
-                                                        <button class="button is-primary">Normalise</button>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-
-
-
-                                        </collapse-item>
-                                        <collapse-item title="Discretise">
-                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec iaculis mauris. @bulmaio. #css #responsive
-                                        </collapse-item>
-                                        <collapse-item title="Remove outliers">
-                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec iaculis mauris. @bulmaio. #css #responsive
-                                        </collapse-item>
-                                    </collapse>
-                                </collapse-item>
-
-                                <collapse-item title="Date | time parsing">
-                                    <collapse accordion>
-                                        <collapse-item title="Parse date/time values">
-                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec iaculis mauris. @bulmaio. #css #responsive
-                                        </collapse-item>
-                                        <collapse-item title="....">
-                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec iaculis mauris. @bulmaio. #css #responsive
-                                        </collapse-item>
-                                    </collapse>
-                                </collapse-item>
-
-                                <collapse-item title="One-hot-encoding">
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec iaculis mauris. @bulmaio. #css #responsive
-                                </collapse-item>
-
-                                <collapse-item title="Find-and-replace">
-                                    <div class="field">
-                                        <p class="control">
-                                            <input class="input" type="text" placeholder="Find">
-                                        </p>
-                                    </div>
-
-                                    <div class="field">
-                                        <p class="control">
-                                            <input class="input" type="text" placeholder="Replace by">
-                                        </p>
-                                    </div>
-
-                                    <div class="field">
-                                        <p class="control">
-
-                                        <div class="field is-grouped">
-                                            <div class="b-checkbox is-default is-inline">
-                                                <input id="matchcase" class="styled" checked type="checkbox">
-                                                <label for="matchcase">
-                                                    Match case
-                                                </label>
-                                            </div>
-                                            <div class="b-checkbox is-default is-inline">
-                                                <input id="word" class="styled" checked type="checkbox">
-                                                <label for="word">
-                                                    Word
-                                                </label>
-                                            </div>
-                                            <div class="b-checkbox is-default is-inline">
-                                                <input id="regex" class="styled" checked type="checkbox">
-                                                <label for="regex">
-                                                    Regex
-                                                </label>
-                                            </div>
-                                        </div>
-                                        <div class="field is-grouped">
-                                            <div class="block">
-                                                <button class="button is-primary">Find</button>
-                                                <button class="button is-primary is-outlined">Find & Replace</button>
-                                                <button class="button is-primary is-outlined">Replace All</button>
-                                            </div>
-                                        </div>
-                                        </p>
-                                    </div>
-
-                                </collapse-item>
-                            </collapse>
-                        </div>
-                    </article>
-                </div>
+                </article>
+            </div>
         </div>
+
+
+        <div class="tile is-ancestor">
+            <div class="tile is-parent">
+                <article class="tile is-child box">
+
+                    <column-transformations :columntypes="columnTypes" :setid="myDataset.id"></column-transformations>
+
+                </article>
+            </div>
+
+        </div>
+
+
         <div class="tile is-ancestor">
 
 
@@ -421,17 +133,21 @@
     import DataCard from '../../components/data/dataCard'
     import Chart from 'vue-bulma-chartjs'
     import { Collapse, Item as CollapseItem } from 'vue-bulma-collapse'
-
+    import BestTable from '../tables/BestTable'
+    import ColumnTransformations  from '../tables/ColumnTransformations'
 
 
     const api = 'datasets/'
 
     export default {
         name: 'dataset',
-        components: {DataCard, Chart, Collapse, CollapseItem},
+        components: {
+            ColumnTransformations,
+            DataCard, Chart, Collapse, CollapseItem, BestTable},
         data () {
             return {
                 myDataset: null,
+                columnTypes: [],
                 id: this.$route.params.id,
                 labels: ['Sleeping', 'Designing', 'Coding', 'Cycling'],
                 data: [3, 22, 70, 5],
@@ -495,19 +211,30 @@
                 return data
             }
         },
-        beforeMount () {
+        created() {
             this.isloading = true
             this.$http.get( api + this.id + '/?format=json').then((response) => {
                 console.log(response.data)
                 this.myDataset = response.data
             }).catch((error) => {
                 this.error = true
-            })
-        }
+            });
+
+            this.$http.get('data/types/' + '?dataset_id=' + this.id).then((response) => {
+                this.columnTypes = response.data;
+                console.log(response.data)
+
+            }).catch((error) => {
+                window.alert("Something went wrong with getting the datasets")
+            });
+
+
+        },
+
     }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
     @import "~cool-checkboxes-for-bulma.io";
     .table-responsive {
         display: block;

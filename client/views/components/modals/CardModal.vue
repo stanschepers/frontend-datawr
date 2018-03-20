@@ -1,7 +1,13 @@
 <template>
   <card-modal :visible="visible" @close="close" :title="title" transition="zoom">
-    <div class="content has-text-centered"><img :src="src" height="120" alt="Vue Admin"></div>
+
+    <div class="content has-text-centered">
+
+      <img :src="src" height="120" alt="Vue Admin">
+
+    </div>
     <a @click="open(url)">Vue Admin on GitHub</a>
+
   </card-modal>
 </template>
 

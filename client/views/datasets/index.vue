@@ -9,9 +9,11 @@
                 </div>
             </div>
             <div class="level-right">
-                <router-link to="/" class="button is-primary is-fullwidth"><i class="fa fa-plus"></i> &nbsp; Add new
+
+                <button class="button is-primary is-fullwidth" @click="openModalCard()"><i class="fa fa-plus"></i> &nbsp; Add new
                     dataset
-                </router-link>
+                </button>
+
             </div>
         </div>
         <div class="columns is-multiline is-mobile">
@@ -26,8 +28,22 @@
 <script>
     import DataCard from '../../components/data/dataCard'
     import vbSwitch from 'vue-bulma-switch'
+    import CardModal from '../components/modals/CardModal'
+    import Vue from 'vue';
+
+
+    const CardModalComponent = Vue.extend(CardModal)
 
     const api = 'datasets/?format=json'
+
+    const openCardModal = (propsData = {
+        visible: true
+    }) => {
+        return new CardModalComponent({
+            el: document.createElement('div'),
+            propsData
+        })
+    }
 
     export default {
         components: {DataCard, vbSwitch},
@@ -37,12 +53,21 @@
                 switchOn: false,
                 view: {
                     ordeningList: false
-                }
+                },
+                cardModal: null,
+
             }
         },
         methods: {
             changeOrdening() {
                 this.view.ordeningList = !this.view.ordeningList
+            },
+            openModalCard () {
+                const cardModal = this.cardModal || (this.cardModal = openCardModal({
+                    title: 'Modal title',
+                    url: this.$store.state.pkg.homepage
+                }))
+                cardModal.$children[0].active()
             }
         },
         created() {
