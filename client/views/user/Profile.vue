@@ -51,7 +51,7 @@
             el: document.createElement('div'),
             propsData
         })
-    }
+    };
 
     export default {
         components: {PersonEdit, PersonView},

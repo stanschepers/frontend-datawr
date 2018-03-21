@@ -214,7 +214,7 @@
                     <i class="fa fa-firefox"></i>
                   </td>
                   <td>
-                    <a href="#">Firefox</a>
+                    <a href="#">FirefoxyfoxyfoxyfoxyfoxFirefoxyfoxyfoxyfoxyfox</a>
                   </td>
                   <td>
                     2003

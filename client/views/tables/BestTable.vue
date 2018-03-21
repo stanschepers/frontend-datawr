@@ -3,7 +3,7 @@
     <div class="block">
         <div class="table-responsive" >
 
-            <table class="table is-striped is-fullwidth">
+            <table class="table is-striped is-fullwidth is-hoverable">
                 <thead>
                 <tr>
                     <th v-for="heading in columntypes">{{heading.name}}</th>
@@ -22,31 +22,45 @@
         </div>
 
             <nav class="pagination" role="navigation" aria-label="pagination">
-                <a class="pagination-previous">Previous</a>
-                <a class="pagination-next">Next page</a>
+                <a class="pagination-previous" v-on:click="goToPage(currentPage - 1)">Previous</a>
+                <a class="pagination-next" v-on:click="goToPage(currentPage + 1)">Next page</a>
                 <ul class="pagination-list">
                     <li>
-                        <a class="pagination-link" aria-label="Goto page 1">1</a>
+                        <a class="pagination-link" v-on:click="goToPage(1)" aria-label="Goto page 1">1</a>
                     </li>
                     <li>
                         <span class="pagination-ellipsis">&hellip;</span>
                     </li>
                     <li>
-                        <a class="pagination-link" aria-label="Goto page 45">45</a>
+                        <a class="pagination-link" v-on:click="goToPage(currentPage - 1)" aria-label="Goto previous page">{{this.currentPage - 1}}</a>
                     </li>
                     <li>
-                        <a class="pagination-link is-current" aria-label="Page 46" aria-current="page">46</a>
+                        <a class="pagination-link is-current" aria-label="Page" aria-current="page">{{this.currentPage}}</a>
                     </li>
                     <li>
-                        <a class="pagination-link" aria-label="Goto page 47">47</a>
+                        <a class="pagination-link" v-on:click="goToPage(currentPage + 1)" aria-label="Goto next page ">{{this.currentPage + 1}}</a>
                     </li>
                     <li>
                         <span class="pagination-ellipsis">&hellip;</span>
                     </li>
                     <li>
-                        <a class="pagination-link" aria-label="Goto page 86">86</a>
+                        <a class="pagination-link" v-on:click="goToPage(amountOfPages)" aria-label="Goto last page">{{this.amountOfPages}}</a>
                     </li>
                 </ul>
+
+                <div class="field is-centered">
+                    <div class="control">
+                        <div class="select">
+                            <select v-model="amount" @change="changeAmount()">
+                                <option :value="5">5</option>
+                                <option :value="10">10</option>
+                                <option :value="25">25</option>
+                                <option :value="50">50</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
             </nav>
 
         </div>
@@ -71,8 +85,13 @@
                 data: null,
                 columnClicked: null,
                 entries: [],
+
+                amountOfEntries: 10000,
                 offset: 1,
                 amount: 5,
+
+                currentPage: 1,
+
 
             }
         },
@@ -89,61 +108,51 @@
 
             },
 
-            onPerPageChange: function (evt) {
-                // { currentPage: 1, currentPerPage: 10, total: 5 }
-                this.$http.get('data/view/' + '?dataset_id=' + this.setid + '&offset=' + ((evt.currentPage * evt.currentPerPage) - evt.currentPerPage) + '&amount=' + evt.currentPerPage
-                ).then((response) => {
-                    this.entries = response.data;
-                    console.log(response.data)
-
-                }).catch((error) => {
-                    window.alert("Something went wrong with getting the datasets")
-                });
-                console.log(evt);
-            },
-
-            onPageChange: function (evt) {
-                // { currentPage: 1, currentPerPage: 10, total: 5 }
-                this.$http.get('data/view/' + '?dataset_id=' + this.setid + '&offset=' + ((evt.currentPage * evt.currentPerPage) - evt.currentPerPage) + '&amount=' + evt.currentPerPage
-                ).then((response) => {
-                    this.entries = response.data;
-                    console.log(response.data)
-
-                }).catch((error) => {
-                    window.alert("Something went wrong with getting the datasets")
-                });
-                console.log(evt);
-            },
-
-            calculateColumns: function() {
-
-                let finalColumns = [];
-
-                for (let i = 0; i < this.columntypes.length; i++) {
-
-                    let name = this.columntypes[i].name;
-                    let type = this.columntypes[i].type;
-
-                    let newcol = {
-                        label: name,
-                        field: name,
-                        type: type,
-                        filterable: false,
-                        sortable: false,
-                    };
-
-                    finalColumns.push(newcol);
+            goToPage: function(index) {
+                if(index < 1){
+                    this.currentPage = 1;
+                    return;
                 }
+                else if (index > this.amountOfPages) {
+                    this.currentPage = this.amountOfPages;
+                    return;
+                }
+                this.currentPage = index;
 
-                return finalColumns;
+                this.$http.get('data/view/' + '?dataset_id=' + this.setid + '&offset=' + ((this.currentPage * this.amount) - this.amount) + '&amount=' + this.amount
+                ).then((response) => {
+                    this.entries = response.data;
+                    console.log(response.data)
+
+                }).catch((error) => {
+                    window.alert("Something went wrong with getting the dataset")
+                });
             },
+
+            changeAmount: function() {
+
+                this.$http.get('data/view/' + '?dataset_id=' + this.setid + '&offset=' + ((this.currentPage * this.amount) - this.amount) + '&amount=' + this.amount
+                ).then((response) => {
+                    this.entries = response.data;
+                    console.log(response.data)
+
+                }).catch((error) => {
+                    window.alert("Something went wrong with getting the dataset")
+                });
+            }
+
+
+
         },
 
         computed: {
 
-            giveId: function () {
-                return 2
+            amountOfPages: function () {
+                return Math.ceil(this.amountOfEntries / this.amount);
+
             },
+
+
 
         },
 

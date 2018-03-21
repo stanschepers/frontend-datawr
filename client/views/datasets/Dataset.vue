@@ -228,10 +228,9 @@
                 window.alert("Something went wrong with getting the datasets")
             });
 
-
         },
-
     }
+
 </script>
 
 <style scoped lang="scss">
