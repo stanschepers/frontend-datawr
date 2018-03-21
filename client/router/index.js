@@ -2,7 +2,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import store from '../store/index'
-import * as types from '../store/mutation-types'
+import {getters} from '../auth/index'
 
 Vue.use(Router)
 
@@ -24,9 +24,9 @@ export default new Router({
         {
             name: 'Logout',
             path: '/logout',
-            beforeEnter (from, to, next) {
-                store.commit(types.LOGOUT)
-                next('Login')
+            beforeEnter(from, to, next) {
+                localStorage.removeItem('token')
+                next({name: 'Login'})
             }
         },
         {
@@ -61,7 +61,15 @@ export default new Router({
             path: '*',
             redirect: '/'
         }
-    ]
+    ],
+    // beforeEach: (to, from, next) => {
+    //     if (true) {
+    //         console.log("jij")
+    //         next("/login")
+    //     } else {
+    //         next("/profile")
+    //     }
+    // }
 })
 
 

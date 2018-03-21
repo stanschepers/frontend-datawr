@@ -5,7 +5,7 @@
         <article class="tile is-child box">
           <h4 class="title">LINES</h4>
           <div class="block">
-            <chartist class="lines-bars" :type="'Line'" :data="linesData" :options="linesOptions"></chartist>
+            <chartist class="lines-bars" :type="'Line'" :data="linesData" :options="linesOptions"/>
           </div>
           <div class="block">
             <chartist class="lines-bars" :type="'Line'" :data="lineAreaData" :options="lineAreaOptions"></chartist>

@@ -20,15 +20,10 @@
                     <div class="level-left">
                     </div>
                     <div class="level-right">
-                        <router-link v-bind:to="logout" class="level-item button is-outlined is-dark">Logout</router-link>
+                        <router-link :to="{name: 'Logout'}" class="level-item button is-outlined is-dark">Logout</router-link>
                     </div>
                 </div>
             </div>
-            <!--<div class="tile is-parent is-vertical">-->
-            <!--<div class="tile is-child person-view" v-for="p in persons" :key="p.name">-->
-            <!--<person-view class="box" :person="p" v-if="!me(p)"></person-view>-->
-            <!--</div>-->
-            <!--</div>-->
         </div>
     </div>
 </template>
@@ -38,11 +33,10 @@
     import PersonEdit from '../../components/user/PersonEdit'
     import Vue from 'vue'
     import Message from 'vue-bulma-message'
-    import * as types from '../../store/mutation-types'
 
     const MessageComponent = Vue.extend(Message)
 
-    const api1 = '/profiles/4/?format=json'
+    const api1 = '/profiles/1/?format=json'
     const api2 = 'profiles/?format=json'
 
     const openMessage = (propsData = {
@@ -69,21 +63,12 @@
                 showEdit: false,
                 firstTime: true,
                 isloading: false,
-                logout: "Logout"
             }
         },
         beforeMount() {
             this.isloading = true
             this.$http.get(api1).then((response) => {
                 this.person = response.data;
-                // this.$http.get(api2).then( (response) => {
-                //     this.persons = response.data
-                // }).catch( (error) => {
-                //     openMessage({
-                //         message: 'Something went wrong in getting the profiles',
-                //         type: 'danger'
-                //     })
-                // })
             }).catch((error) => {
                 this.isloading = false
                 openMessage({

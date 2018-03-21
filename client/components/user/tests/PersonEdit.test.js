@@ -5,11 +5,11 @@ const getWindowLocation = ClientFunction(() => window.location.href);
 
 fixture`Example 1: Home page`.page`https://sardless.com/`;
 
-test("Name is displayed", async test => {
-    const latestReviews = await Selector(".home__review-container");
-    const count = await latestReviews.count;
-    await test.expect(count).eql(6);
-});
+// test("Name is displayed", async test => {
+//     const latestReviews = await Selector(".home__review-container");
+//     const count = await latestReviews.count;
+//     await test.expect(count).eql(6);
+// });
 
 // test("The review cards ratings are between 0 and 10", async t => {
 //     const latestReviews = await Selector(".home__review-container");

@@ -39,13 +39,13 @@
                         </button>
                     </div>
                 </div>
-                <div class="level-right">
-                    <div class="control level-item">
-                        <button @click="deleteAccount" class="button is-danger">
-                            Delete Account
-                        </button>
-                    </div>
-                </div>
+                <!--<div class="level-right">-->
+                    <!--<div class="control level-item">-->
+                        <!--<button @click="deleteAccount" class="button is-danger">-->
+                            <!--Delete Account-->
+                        <!--</button>-->
+                    <!--</div>-->
+                <!--</div>-->
             </div>
         </div>
     </div>
@@ -100,6 +100,7 @@
             //     this.$http.delete(api1)
             //     this.$router.back()
             // }
+
         },
         computed: {
             nameIsEmpty: function () {

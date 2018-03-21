@@ -1,7 +1,6 @@
 import Vue from 'vue'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
-import VueAuth from '@websanova/vue-auth'
 import NProgress from 'vue-nprogress'
 import { sync } from 'vuex-router-sync'
 import App from './App.vue'
@@ -9,7 +8,14 @@ import router from './router'
 import store from './store'
 import * as filters from './filters'
 import { TOGGLE_SIDEBAR } from 'vuex-store/mutation-types'
-import jwt_decode from 'jwt-decode'
+
+router.beforeEach((to, from, next) => {
+  if(!!!localStorage.getItem('token') && to.name !== 'Login'  && to.name !== 'Home'){
+    next('/login')
+  } else {
+    next()
+  }
+})
 
 Vue.router = router
 Vue.use(VueAxios, axios)

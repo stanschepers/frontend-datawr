@@ -42,9 +42,9 @@
 
 <script>
     import * as qs from "qs";
-    import * as types from "../../store/mutation-types"
+    import login from '../../auth'
+    import OBTAIN_TOKEN_URL  from '../../api/api'
 
-    let wait = ms => new Promise((r, j)=>setTimeout(r, ms))
 
 
     const loginURL = 'obtain_token/'
@@ -63,8 +63,7 @@
                 let new_axios = this.$http.create({ headers: {'Authorization': ''}})
                 new_axios.post(loginURL, qs.stringify({username: this.username, password: this.password})).then(
                     (response) => {
-                        // if(this.rememberMe)
-                        this.$store.commit(types.LOGIN, response.data.token)
+                        console.log(response)
                         localStorage.setItem('token', response.data.token)
                     }
                 ).catch(
