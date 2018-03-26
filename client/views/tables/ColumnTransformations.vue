@@ -28,7 +28,6 @@
                     </div>
                 </div>
 
-
             <div class="steps-content">
 
                 <div class="step-content has-text-centered"

@@ -53,7 +53,7 @@
                             </div>
 
                             <button class="button is-primary" v-on:click="submitFile()">
-                                Upload Photo
+                                Upload File
                             </button>
 
 
@@ -137,7 +137,7 @@
                 /*
                   Make the request to the POST /single-file URL
                 */
-                this.$http.post('/single-file',
+                this.$http.post('/data/create/',
                     formData,
                     {
                         headers: {

@@ -3,6 +3,48 @@
     <div class="block">
         <div class="table-responsive" >
 
+            <nav class="pagination" role="navigation" aria-label="pagination">
+                <a class="pagination-previous" v-on:click="goToPage(currentPage - 1)">Previous</a>
+                <a class="pagination-next" v-on:click="goToPage(currentPage + 1)">Next page</a>
+                <ul class="pagination-list">
+                    <li>
+                        <a class="pagination-link" v-on:click="goToPage(1)" aria-label="Goto page 1">1</a>
+                    </li>
+                    <li>
+                        <span class="pagination-ellipsis">&hellip;</span>
+                    </li>
+                    <li>
+                        <a class="pagination-link" v-on:click="goToPage(currentPage - 1)" aria-label="Goto previous page">{{this.currentPage - 1}}</a>
+                    </li>
+                    <li>
+                        <a class="pagination-link is-current" aria-label="Page" aria-current="page">{{this.currentPage}}</a>
+                    </li>
+                    <li>
+                        <a class="pagination-link" v-on:click="goToPage(currentPage + 1)" aria-label="Goto next page ">{{this.currentPage + 1}}</a>
+                    </li>
+                    <li>
+                        <span class="pagination-ellipsis">&hellip;</span>
+                    </li>
+                    <li>
+                        <a class="pagination-link" v-on:click="goToPage(amountOfPages)" aria-label="Goto last page">{{this.amountOfPages}}</a>
+                    </li>
+                </ul>
+
+                <div class="field is-centered">
+                    <div class="control">
+                        <div class="select">
+                            <select v-model="amount" @change="changeAmount()">
+                                <option :value="5">5</option>
+                                <option :value="10">10</option>
+                                <option :value="25">25</option>
+                                <option :value="50">50</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+            </nav>
+
             <table class="table is-striped is-fullwidth is-hoverable">
                 <thead>
                 <tr>
@@ -86,7 +128,7 @@
                 columnClicked: null,
                 entries: [],
 
-                amountOfEntries: 10000,
+                amountOfEntries: 0,
                 offset: 1,
                 amount: 5,
 
@@ -168,6 +210,16 @@
             }).catch((error) => {
                 window.alert("Something went wrong with getting the datasets")
             });
+
+            this.isloading = true
+            this.$http.get( 'data/entries/' + '?dataset_id=' + this.setid).then((response) => {
+                this.amountOfEntries = response.data
+                console.log(response.data)
+
+            }).catch((error) => {
+                this.error = true
+            });
+
 
         },
 
