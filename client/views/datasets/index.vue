@@ -10,9 +10,9 @@
             </div>
             <div class="level-right">
 
-                <button class="button is-primary is-fullwidth" @click="openModalCard()"><i class="fa fa-plus"></i> &nbsp; Add new
-                    dataset
-                </button>
+                <router-link :to="{name: 'Create Dataset'}" class="has-text-centered">
+                    <button class="button is-primary is-fullwidth"><i class="fa fa-plus"></i> Add new dataset </button>
+                </router-link>
 
             </div>
         </div>

@@ -39,6 +39,7 @@
     "animejs": "^2.0.1",
     "axios": "^0.15.3",
     "bulma": "^0.6.2",
+    "bulma-divider": "^1.0.1",
     "bulma-steps": "^1.0.1",
     "cool-checkboxes-for-bulma.io": "^1.1.0",
     "font-awesome": "4.7.0",
