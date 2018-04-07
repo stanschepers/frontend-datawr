@@ -239,10 +239,9 @@
 
 <script>
     import Vue from 'vue'
-    import Join from "./Join";
 
     export default {
-        components: {Join},
+        components: {},
         name: "create-dataset",
         data() {
             return {

@@ -36,8 +36,7 @@
 
     const MessageComponent = Vue.extend(Message)
 
-    const api1 = '/profiles/1/?format=json'
-    const api2 = 'profiles/?format=json'
+    const api1 = '/profiles/1/?format=json' /*'/core/profile/'*/
 
     const openMessage = (propsData = {
         title: '',
