@@ -129,7 +129,7 @@
                 entries: [],
 
                 amountOfEntries: 0,
-                offset: 1,
+                offset: 0,
                 amount: 5,
 
                 currentPage: 1,

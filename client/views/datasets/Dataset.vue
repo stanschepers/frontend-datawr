@@ -147,6 +147,7 @@
         data () {
             return {
                 myDataset: null,
+                max: null,
                 columnTypes: [],
                 id: this.$route.params.id,
                 labels: ['Sleeping', 'Designing', 'Coding', 'Cycling'],
@@ -226,6 +227,13 @@
 
             }).catch((error) => {
                 window.alert("Something went wrong with getting the datasets")
+            });
+
+            this.$http.get( 'data/stats/' + '?dataset_id=' + this.id+ '&type=max' + '&column=index').then((response) => {
+                console.log(response.data);
+                this.max = response.data
+            }).catch((error) => {
+                this.error = true
             });
 
         },
