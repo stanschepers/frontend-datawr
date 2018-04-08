@@ -11,7 +11,14 @@
             <div class="level-right">
 
                 <router-link :to="{name: 'Create Dataset'}" class="has-text-centered">
-                    <button class="button is-primary is-fullwidth"><i class="fa fa-plus"></i> Add new dataset </button>
+                    <button class="button is-primary">
+                        <span class="icon">
+                            <i class="fa fa-plus"></i>
+                        </span>
+                        <span>
+                            Create new Dataset
+                        </span>
+                    </button>
                 </router-link>
 
             </div>

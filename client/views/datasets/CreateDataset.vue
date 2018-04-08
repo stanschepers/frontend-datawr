@@ -42,6 +42,10 @@
 
                         <article class="tile is-child is-fullwidth">
                             <div class="block">
+
+                                <div class="content has-text-centered has-addons-centered">
+                                    <h1>Dataset metadata</h1>
+                                    <p></p>
                                     <label class="label is-centered">Dataset Name</label>
                                     <p class="control">
                                         <input class="input" v-model="dataset.name"  type="text" placeholder="e.g. My Dataset"
@@ -61,6 +65,8 @@
                                     </p>
 
                                 </div>
+
+                            </div>
                         </article>
 
 
@@ -73,8 +79,12 @@
 
                             <div class="columns">
                                 <div class="column">
-                                    <div class="block">
-                                    <h3 class="title">Import existing table</h3>
+                                    <div class="content has-text-centered">
+                                    <h1 class="title">Import existing table</h1>
+                                        <p class="is-italic">Select a csv file or a zip file containing multiple csv's. Each file needs to
+                                            be formatted with the same separator, which you can select below. Once you've
+                                            uploaded a zip file, you will be redirected to the 'Join' step.
+                                        </p>
 
                                     <div class="file has-name is-boxed is-centered">
                                         <label class="file-label">
@@ -93,19 +103,20 @@
                                         </label>
                                     </div>
 
-                                    <div class="field has-name is-boxed is-centered">
+                                    <div class="field has-name is-boxed has-text-centered">
                                         <p class="label">select separator</p>
-                                        <p class="control has-icons-left is-centered">
+                                        <p class="control has-icons-left has-addons-centered has-text-centered">
                                             <span class="select">
                                               <select class="is-centered" v-model="dataset.separator">
                                                 <option selected>,</option>
                                                 <option>;</option>
                                                 <option>|</option>
                                               </select>
-                                            </span>
-                                               <span class="icon is-small is-left">
+                                                <span class="icon is-small is-left">
                                               <i class="fa fa-columns"></i>
                                             </span>
+                                            </span>
+
                                         </p>
                                     </div>
 
@@ -119,14 +130,15 @@
 
                                 <div class="is-divider-vertical" data-content="OR"></div>
                                 <div class="column">
-                                    <h3 class="title">Start with an empty one</h3>
+                                    <div class="content">
+                                        <h1 class="title">Start with an empty one</h1>
 
-                                    <p class="control is-centered">
-                                        <h1 class="title is-centered"></h1>
-                                        <button class="button is-primary" v-on:click="">Generate Empty Dataset</button>
-                                    </p>
+                                        <p class="control is-centered">
+                                            <h1 class="title is-centered"></h1>
+                                            <button class="button is-primary" v-on:click="">Generate Empty Dataset</button>
+                                        </p>
 
-
+                                    </div>
                                 </div>
                             </div>
                         </article>
@@ -148,16 +160,19 @@
                         </div>
 
                         <div class="content">
-                            <h3>Select two tables to join: </h3>
-                            <a class="button" v-for="table in joinData" v-on:click="selectTable(table.name)">
+                            <h3>1. Select two tables to join: </h3>
+                            <p>
+                                <button class="button" v-for="table in joinData" v-on:click="selectTable(table.name)">
 
-                                <span class="icon is-small"> <i class="fa fa-table"></i></span>
-                                <span>{{table.name}}</span>
-                            </a>
+                                    <span class="icon is-small"> <i class="fa fa-table"></i></span>
+                                    <span>{{table.name}}</span>
+                                </button>
+                            </p>
+
                         </div>
 
-                        <div class="content">
-                            <h3>Select where you want to join on: </h3>
+                        <div class="content" v-bind:class="{'is-hidden' : selection1 == null || selection2 == null}">
+                            <h3>2. Select where you want to join on: </h3>
 
                             <h5> <i>
                                 <span>{{selection1}}.{{joinOn1}} ⋈ {{selection2}}.{{joinOn2}} </span>
@@ -194,7 +209,14 @@
                             <div class="content">
 
                                 <p>
-                                    <button class="button is-primary" v-on:click="join()">Join</button>
+                                    <button class="button is-primary" v-on:click="join()" v-bind:class="{'is-hidden' : joinOn1 == null || joinOn2 == null}">Join</button>
+                                </p>
+
+                                <h3>3. Select which table(s) you want to keep: </h3>
+
+                                <p>
+                                    <button class="button" v-on:click="incrementStep(1)">Keep all tables...</button>
+                                    <button class="button" v-on:click="selectFinalTable()">Keep only one table...</button>
                                 </p>
 
                             </div>
@@ -208,7 +230,27 @@
                     <div class="step-content has-text-centered"
                          v-bind:class="{ 'is-active': activeStep===4, 'is-hidden': activeStep !== 4  }">
 
-                        <h1 class="title is-4">Final Step !</h1>
+                        <div class="content">
+                            <h1>Import complete</h1>
+                            <p>
+                                Congratulations! Your dataset(s) have been imported. Errors will be displayed soon.
+                            </p>
+                            <p>
+                                <router-link :to="{name: 'Datasets'}" class="has-text-centered">
+                                    <button class="button is-primary">
+                                        <span class="icon">
+                                            <i class="fa fa-table"></i>
+                                        </span>
+                                        <span>
+                                            My Datasets
+                                        </span>
+                                    </button>
+                                </router-link>
+
+                            </p>
+                        </div>
+
+
                     </div>
 
                 </div>
@@ -217,10 +259,10 @@
                 <div class="steps-actions">
 
                     <div class="steps-action" v-on:click="incrementStep(-1)">
-                        <a class="button" v-bind:class="{'is-disabled': activeStep===1}" >Previous</a>
+                        <a class="button" v-bind:class="{'is-disabled': activeStep===1 || activeStep === 4}" >Previous</a>
                     </div>
                     <div class="steps-action" v-on:click="incrementStep(1)">
-                        <a class="button" v-bind:class="{'is-disabled': activeStep===4,  'is-hidden': activeStep > 2 }">Next</a>
+                        <a class="button" v-bind:class="{'is-disabled': activeStep===4,  'is-hidden': activeStep > 1 }">Next</a>
                     </div>
 
                 </div>
@@ -256,14 +298,13 @@
                     separator: ',',
                     zip: false,
                 },
-                // used by Join
 
+                // used by Join
                 joinData: null,
                 selection1: null,
                 selection2: null,
                 joinOn1: null,
                 joinOn2: null,
-                joinedTables: [],
 
 
             }
@@ -357,7 +398,6 @@
                     }
                     else {
                         console.log('Not good, boo!');
-                        console.log(response.data)
                         this.joinData = response.data;
                     }
                 })
@@ -398,6 +438,10 @@
                 else if(type === 'id') {
                     return this.joinData[this.joinData.findIndex(table => table.name === selection)].id
                 }
+            },
+
+            selectFinalTable: function () {
+
 
 
             },
@@ -427,8 +471,7 @@
                     }
                     else {
                         console.log('Not good, boo!');
-                        console.log(response.data)
-                        this.joinedTables = response.data;
+                        this.joinData.push(response.data);
 
                     }
                 })
