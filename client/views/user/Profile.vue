@@ -105,7 +105,7 @@
 
 <style scoped>
     .person-view {
-        max-height: 5rem;
+        max-height: 10rem;
     }
 
 </style>
