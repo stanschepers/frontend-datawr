@@ -41,7 +41,7 @@
 
     const CardModalComponent = Vue.extend(CardModal)
 
-    const api = 'datasets/?format=json'
+    const api = 'data/';
 
     const openCardModal = (propsData = {
         visible: true

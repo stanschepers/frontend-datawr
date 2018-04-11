@@ -10,7 +10,7 @@
                                 <span class="title level-item">{{ myDataset.name }}</span>
                             </div>
                             <div class="level-item">
-                                <span class="subtitle level-item">{{ myDataset.owner.name }}</span>
+                                <span class="subtitle level-item">{{ myDataset.owner }}</span>
                             </div>
                         </div>
                     </div>
@@ -136,7 +136,7 @@
     import BestTable from '../tables/BestTable'
     import ColumnTransformations  from '../tables/ColumnTransformations'
 
-    const api = 'datasets/'
+    const api = 'data/'
 
     export default {
         name: 'dataset',
@@ -213,9 +213,9 @@
         },
         created() {
             this.isloading = true
-            this.$http.get( api + this.id + '/?format=json').then((response) => {
+            this.$http.get( api + '?dataset_id=' + this.id).then((response) => {
                 console.log(response.data)
-                this.myDataset = response.data
+                this.myDataset = response.data;
             }).catch((error) => {
                 this.error = true
             });
@@ -227,13 +227,13 @@
             }).catch((error) => {
                 window.alert("Something went wrong with getting the datasets")
             });
-
-            this.$http.get( 'data/stats/' + '?dataset_id=' + this.id+ '&type=max' + '&column=index').then((response) => {
-                console.log(response.data);
-                this.max = response.data
-            }).catch((error) => {
-                this.error = true
-            });
+            //
+            // this.$http.get( 'data/stats/' + '?dataset_id=' + this.id+ '&type=max' + '&column=index').then((response) => {
+            //     console.log(response.data);
+            //     this.max = response.data
+            // }).catch((error) => {
+            //     this.error = true
+            // });
         },
 
 
