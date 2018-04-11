@@ -136,7 +136,6 @@
     import BestTable from '../tables/BestTable'
     import ColumnTransformations  from '../tables/ColumnTransformations'
 
-
     const api = 'datasets/'
 
     export default {
@@ -235,8 +234,9 @@
             }).catch((error) => {
                 this.error = true
             });
-
         },
+
+
     }
 
 </script>

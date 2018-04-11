@@ -48,9 +48,17 @@
             <table class="table is-striped is-fullwidth is-hoverable">
                 <thead>
                 <tr>
+                    <th v-for="heading in columntypes">
+                        <div class="is-size-6-mobile" id="hist"></div>
+                    </th>
+                </tr>
+                </thead>
+                <thead>
+                <tr>
                     <th v-for="heading in columntypes">{{heading.name}}</th>
                 </tr>
                 </thead>
+
                 <tfoot>
                 </tfoot>
                 <tbody>
@@ -111,6 +119,7 @@
 <script>
 
     import Vue from 'vue';
+    import Plotly from 'plotly.js'
 
 
     export default {
@@ -124,7 +133,6 @@
         },
         data(){
             return {
-                data: null,
                 columnClicked: null,
                 entries: [],
 
@@ -133,6 +141,8 @@
                 amount: 5,
 
                 currentPage: 1,
+
+                histdata: [],
 
 
             }
@@ -220,8 +230,36 @@
                 this.error = true
             });
 
+            this.$http.get( 'data/hist/' + '?dataset_id=' + 161 + '&column_name=percentage').then((response) => {
+                this.histdata.push(response.data);
+                let layout = {
+                    autosize: false,
+                    width: 200,
+                    height: 100,
+                    margin: {
+                        l: 10,
+                        r: 10,
+                        b: 10,
+                        t: 10,
+                        pad: 4
+                    }
+                };
+                Plotly.newPlot('hist', response.data, layout);
+
+            }).catch((error) => {
+                this.error = true
+            });
+
+
 
         },
+
+        mounted() {
+
+
+
+
+        }
 
     }
 </script>
