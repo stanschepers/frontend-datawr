@@ -88,13 +88,13 @@
 
                                     <div class="file has-name is-boxed is-centered">
                                         <label class="file-label">
-                                            <input class="file-input" type="file" name="file" accept="text/csv, application/zip" ref="file" v-on:change="handleFileUpload($event)">
+                                            <input class="file-input" type="file" name="file" accept="text/csv, application/zip, application/vnd.ms-excel" ref="file" v-on:change="handleFileUpload($event)">
                                             <span class="file-cta">
                                               <span class="file-icon">
                                                 <i class="fa fa-upload"></i>
                                               </span>
                                               <span class="file-label">
-                                                Select a .csv file…
+                                                Select a csv, sql or zip file…
                                               </span>
                                             </span>
                                             <span class="file-name">
@@ -345,15 +345,16 @@
 
             manageCsvOrZip:function() {
 
+                console.log(this.file.type);
 
-                if (this.file.type === 'text/csv') {
+                if (this.file.type === 'text/csv' || this.file.type === 'application/vnd.ms-excel') {
 
                     this.dataset.zip = false;
                     this.submitFile();
                     this.activeStep = 4;
                 }
 
-                else if (this.file.type === 'application/zip') {
+                else if (this.file.type === 'application/zip' || this.file.type === 'application/x-zip-compressed'){
 
                     this.dataset.zip = true;
                     this.submitFile();
@@ -383,13 +384,8 @@
                   Make the request to the POST /single-file URL axios post request
                 */
                 this.$http.post('/data/create/',
-                    formData,
-                    {
-                        headers: {
-                            'Content-Type': 'multipart/form-data'
+                    formData
 
-                        }
-                    }
                 ).then(response => {
 
                     if (response.data['success']){
