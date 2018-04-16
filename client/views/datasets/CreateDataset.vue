@@ -88,7 +88,7 @@
 
                                     <div class="file has-name is-boxed is-centered">
                                         <label class="file-label">
-                                            <input class="file-input" type="file" name="file" accept="text/csv, application/zip, application/vnd.ms-excel, " ref="file" v-on:change="handleFileUpload($event)">
+                                            <input class="file-input" type="file" name="file" accept="text/csv, application/zip, application/vnd.ms-excel, application/sql, " ref="file" v-on:change="handleFileUpload($event)">
                                             <span class="file-cta">
                                               <span class="file-icon">
                                                 <i class="fa fa-upload"></i>
@@ -347,7 +347,7 @@
 
                 console.log(this.file.type);
 
-                if (this.file.type === 'text/csv' || this.file.type === 'application/vnd.ms-excel' || this.file.type === '') {
+                if (this.file.type === 'text/csv' || this.file.type === 'application/vnd.ms-excel' || this.file.type === '' || this.file.type === 'application/sql') {
 
                     this.dataset.zip = false;
                     this.submitFile();
