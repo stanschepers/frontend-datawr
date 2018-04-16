@@ -31,39 +31,8 @@
             </div>
             <div class="tile is-parent">
             <div class="tile is-child box">
-                <nav class="level ">
-                    <div class="level-item has-text-left">
-                        <div class="select">
-                            <select>
-                                <option v-for="heading in columnTypes">{{heading.name}}</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="level-item has-text-centered">
-                        <div>
-                            <p class="heading">Average</p>
-                            <p class="title">3,456</p>
-                        </div>
-                    </div>
-                    <div class="level-item has-text-centered">
-                        <div>
-                            <p class="heading">Max</p>
-                            <p class="title">123</p>
-                        </div>
-                    </div>
-                    <div class="level-item has-text-centered">
-                        <div>
-                            <p class="heading">Median</p>
-                            <p class="title">456</p>
-                        </div>
-                    </div>
-                    <div class="level-item has-text-centered">
-                        <div>
-                            <p class="heading">Min</p>
-                            <p class="title">789</p>
-                        </div>
-                    </div>
-                </nav>
+
+                <statistics :columntypes="columnTypes" :setid="myDataset.id"></statistics>
 
             </div>
         </div>
@@ -135,14 +104,14 @@
     import { Collapse, Item as CollapseItem } from 'vue-bulma-collapse'
     import BestTable from '../tables/BestTable'
     import ColumnTransformations  from '../tables/ColumnTransformations'
+    import Statistics from './Statistics'
 
     const api = 'data/'
 
     export default {
         name: 'dataset',
         components: {
-            ColumnTransformations,
-            DataCard, Chart, Collapse, CollapseItem, BestTable},
+            ColumnTransformations, DataCard, Chart, Collapse, CollapseItem, BestTable, Statistics},
         data () {
             return {
                 myDataset: null,
@@ -227,13 +196,7 @@
             }).catch((error) => {
                 window.alert("Something went wrong with getting the datasets")
             });
-            //
-            // this.$http.get( 'data/stats/' + '?dataset_id=' + this.id+ '&type=max' + '&column=index').then((response) => {
-            //     console.log(response.data);
-            //     this.max = response.data
-            // }).catch((error) => {
-            //     this.error = true
-            // });
+
         },
 
 
