@@ -21,14 +21,14 @@
                                        placeholder="Your Password">
                             </p>
                         </div>
-                        <div class="field">
-                            <p class="control">
-                                <label class="checkbox">
-                                    <input type="checkbox" v-model="rememberMe">
-                                    Remember me
-                                </label>
-                            </p>
-                        </div>
+                        <!--<div class="field">-->
+                            <!--<p class="control">-->
+                                <!--<label class="checkbox">-->
+                                    <!--<input type="checkbox" v-model="rememberMe">-->
+                                    <!--Remember me-->
+                                <!--</label>-->
+                            <!--</p>-->
+                        <!--</div>-->
                         <hr>
                         <p class="control is-fullwidth">
                             <button type="submit" class="button is-primary is-fullwidth">Login</button>
@@ -63,15 +63,16 @@
                 let new_axios = this.$http.create({ headers: {'Authorization': ''}})
                 new_axios.post(loginURL, qs.stringify({username: this.username, password: this.password})).then(
                     (response) => {
-                        console.log(response)
-                        localStorage.setItem('token', response.data.token)
+                        console.log(response);
+                        localStorage.setItem('token', response.data.token);
+                        setTimeout(this.$router.push('/data/all'), 3000)
                     }
                 ).catch(
                     (error) => {
                         this.error = true
                     }
                 )
-                window.setTimeout(this.$router.push('Profile'), 3000)
+
             },
             setToken(token) {
                 return new Promise()
