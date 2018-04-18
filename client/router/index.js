@@ -24,7 +24,7 @@ export default new Router({
         {
             name: 'Logout',
             path: '/logout',
-            beforeEnter(from, to, next) {
+            beforeEnter (from, to, next) {
                 localStorage.removeItem('token')
                 next({name: 'Login'})
             }
@@ -61,7 +61,7 @@ export default new Router({
             path: '*',
             redirect: '/'
         }
-    ],
+    ]
     // beforeEach: (to, from, next) => {
     //     if (true) {
     //         console.log("jij")
@@ -71,6 +71,3 @@ export default new Router({
     //     }
     // }
 })
-
-
-
