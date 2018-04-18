@@ -1,14 +1,17 @@
 <template>
     <div>
-    <nav class="level has-text-left" v-bind:class="{'is-hidden' : columnsOfType().length === 0}">
-        <div class="level-item has-text-left">
-            <div class="field">
-                <label class="label">numerical stats</label>
-                <div class="control">
-                    <div class="select">
-                        <select v-on:change="updateNumericalStats()" v-model="column1">
-                            <option v-for="heading in columnsOfType()" v-bind:selected="heading === columnsOfType()[0]">{{heading.name}}</option>
-                        </select>
+    <nav class="level" v-bind:class="{'is-hidden' : columnsOfType().length === 0}">
+
+        <div class="level-left">
+            <div class="level-item has-text-left">
+                <div class="field">
+                    <label class="label">numerical stats</label>
+                    <div class="control">
+                        <div class="select">
+                            <select v-on:change="updateNumericalStats()" v-model="column1">
+                                <option v-for="heading in columnsOfType()" v-bind:selected="heading === columnsOfType()[0]">{{heading.name}}</option>
+                            </select>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -16,25 +19,25 @@
         <div class="level-item has-text-centered">
             <div>
                 <p class="heading">Min</p>
-                <p class="title">{{min}}</p>
+                <p class="title">{{min  | maxLengthStat(min)}}</p>
             </div>
         </div>
         <div class="level-item has-text-centered">
             <div>
                 <p class="heading">Max</p>
-                <p class="title">{{max}}</p>
+                <p class="title">{{max | maxLengthStat(max)}}</p>
             </div>
         </div>
         <div class="level-item has-text-centered">
             <div>
                 <p class="heading">Median</p>
-                <p class="title">{{median}}</p>
+                <p class="title">{{median | maxLengthStat(median)}}</p>
             </div>
         </div>
         <div class="level-item has-text-centered">
             <div>
                 <p class="heading">Mean</p>
-                <p class="title">{{mean}}</p>
+                <p class="title">{{mean | maxLengthStat(mean)}}</p>
             </div>
         </div>
     </nav>
@@ -44,15 +47,17 @@
         </div>
     </nav>
     <nav class="level" v-bind:class="{'is-hidden' : columntypes.length === 0}">
-        <div class="level-item has-text-left">
-            <div class="field">
-                <label class="label">other stats</label>
-                <div class="control">
-                    <div class="select">
-                        <select v-on:change="updateStats()" v-model="column2">
-                            <option v-for="heading in columntypes">{{heading.name}}</option>
-                        </select>
-
+        <div class="level-left">
+            <div class="level-item has-text-left">
+                <div class="field">
+                    <label class="label">other stats</label>
+                    <div class="control">
+                        <div class="select">
+                            <select v-on:change="updateStats()" v-model="column2">
+                                <option v-for="heading in columntypes">{{heading.name}}</option>
+                            </select>
+    
+                        </div>
                     </div>
                 </div>
             </div>
@@ -60,19 +65,19 @@
         <div class="level-item has-text-centered">
             <div>
                 <p class="heading">Mode</p>
-                <p class="Title">{{mode}}</p>
+                <p class="title">{{mode | maxLengthStat(mode) }}</p>
             </div>
         </div>
         <div class="level-item has-text-centered">
             <div>
                 <p class="heading">Empty values</p>
-                <p class="title">{{amount_empty}}</p>
+                <p class="title">{{amount_empty | maxLengthStat(amount_empty) }}</p>
             </div>
         </div>
         <div class="level-item has-text-centered">
             <div>
                 <p class="heading">Nonempty values</p>
-                <p class="title">{{amount_nonempty}}</p>
+                <p class="title">{{amount_nonempty | maxLengthStat(amount_nonempty) }}</p>
             </div>
         </div>
     </nav>
@@ -150,10 +155,17 @@
 
 
         },
+        filters: {
+            maxLengthStat(value){
 
-        created() {
+                if (value === null || value.length < 6) { return value }
+                let truncated = value.substring(0, 10);
+                truncated += '...';
 
-        },
+                return truncated;
+
+            }
+        }
     }
 </script>
 

@@ -1,100 +1,141 @@
 <template>
-    <div>
-        <div v-if="myDataset">
-            <div class="tile is-ancestor">
-                <div class="tile is-parent is-4">
-                    <article class="tile is-child box">
-                        <div class="level is-mobile">
-                            <div class="level-left">
-                                <div class="level-item">
-                                    <span class="title level-item">{{ myDataset.name }}</span>
-                                </div>
-                                <div class="level-item">
-                                    <span class="subtitle level-item">{{ myDataset.owner }}</span>
-                                </div>
+<div>
+    <div v-if="myDataset">
+        <div class="tile is-ancestor">
+            <div class="tile is-parent is-4">
+                <article class="tile is-child box">
+                    <div class="level is-mobile">
+                        <div class="level-left">
+                            <div class="level-item">
+                                <span class="title level-item">{{ myDataset.name }}</span>
+                            </div>
+                            <div class="level-item">
+                                <span class="subtitle level-item">{{ myDataset.owner }}</span>
                             </div>
                         </div>
-                        <div class="content">
-                            <p>{{myDataset.description}}</p>
-                        </div>
-                        <div class="level is-mobile">
-                            <div class="level-left">
-                                <div class="level-item">
-                                    <a><i class="fa fa-heart"></i></a>
-                                </div>
-                                <div class="level-item">
-                                    <router-link to=""><i class="fa fa-gear"></i></router-link>
-                                </div>
+                    </div>
+                    <div class="content">
+                        <p>{{myDataset.description}}</p>
+                    </div>
+                    <div class="level is-mobile">
+                        <div class="level-left">
+                            <div class="level-item">
+                                <a><i class="fa fa-heart"></i></a>
+                            </div>
+                            <div class="level-item">
+                                <router-link to=""><i class="fa fa-gear"></i></router-link>
                             </div>
                         </div>
-                    </article>
+                    </div>
+                </article>
+            </div>
+
+            <div class="tile is-parent">
+                <div class="tile is-child box">
+
+                    <statistics :columntypes="columnTypes" :setid="myDataset.id"></statistics>
                 </div>
-                <div class="tile is-parent">
-                    <div class="tile is-child box">
+            </div>
+        </div>
+        <div class="tile is-ancestor">
+            <div class="tile is-parent">
+                <article class="tile is-child box">
 
-                        <statistics :columntypes="columnTypes" :setid="myDataset.id"></statistics>
+                    <best-table :columntypes="columnTypes" :setid="myDataset.id"></best-table>
 
+                </article>
+            </div>
+        </div>
+
+
+        <div class="tile is-ancestor">
+            <div class="tile is-parent is-two-thirds">
+                <article class="tile is-child box">
+
+                    <column-transformations :columntypes="columnTypes" :setid="myDataset.id"></column-transformations>
+
+                </article>
+            </div>
+
+
+            <div class="tile is-parent is-4">
+                <article class="tile is-child box">
+
+                    <h1 class="title">History</h1>
+
+                </article>
+            </div>
+
+        </div>
+
+
+        <div class="tile is-ancestor">
+
+
+            <div class="tile is-parent is-5">
+            <article class="tile is-child box">
+                <h4 class="title">Histogram</h4>
+                <div class="field">
+                    <div class="control">
+                        <label class="label">Select column</label>
+                        <div class="select">
+                            <select v-on:change="updateHistogram()" v-model="histColumn">
+                                <option v-for="heading in columnTypes" v-bind:value="heading">{{heading.name}}</option>
+                            </select>
+
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="tile is-ancestor">
-                <div class="tile is-parent">
-                    <article class="tile is-child box">
+                <div class="is-size-6-mobile" id="hist"></div>
 
-                        <best-table :columntypes="columnTypes" :setid="myDataset.id"></best-table>
-
-                    </article>
-                </div>
+            </article>
             </div>
 
+            <div class="tile is-parent">
+            <article class="tile is-child box">
+                <h4 class="title">Heatmap</h4>
+                <div class="field is-horizontal is-grouped">
+                    <div class="control">
+                        <label class="label">Select label</label>
+                        <div class="select">
+                            <select v-on:change="checkIfFilledIn()" v-model="column_label">
+                                <option v-for="heading in columnTypes" v-bind:value="heading">{{heading.name}}</option>
+                            </select>
 
-            <div class="tile is-ancestor">
-                <div class="tile is-parent">
-                    <article class="tile is-child box">
+                        </div>
+                    </div>
+                    <div class="control">
+                        <label class="label">Select longitude</label>
+                        <div class="select">
+                            <select v-on:change="checkIfFilledIn()" v-model="column_long">
+                                <option v-for="heading in columnTypes" v-bind:value="heading">{{heading.name}}</option>
+                            </select>
 
-                        <column-transformations :columntypes="columnTypes" :setid="myDataset.id"></column-transformations>
+                        </div>
+                    </div>
+                    <div class="control">
+                        <label class="label">Select latitude</label>
+                        <div class="select">
+                            <select v-on:change="checkIfFilledIn()" v-model="column_lat">
+                                <option v-for="heading in columnTypes" v-bind:value="heading">{{heading.name}}</option>
+                            </select>
 
-                    </article>
+                        </div>
+                    </div>
+
                 </div>
+                <div class="is-size-6-mobile" id="heat"></div>
 
+            </article>
             </div>
-
-
-            <div class="tile is-ancestor">
-
-
-                <div class="tile is-parent">
-                    <article class="tile is-child box">
-                        <h4 class="title">BARS</h4>
-                        <chart :type="'bar'" :data="seriesData" :options="options_3"></chart>
-                    </article>
-                </div>
-
-                <div class="tile is-parent">
-                    <article class="tile is-child box">
-                        <h4 class="title">LINE</h4>
-                        <chart :type="'line'" :data="seriesData" :options="options_3"></chart>
-                    </article>
-                </div>
-
-                <div class="tile is-parent">
-                    <article class="tile is-child box">
-                        <h4 class="title">PIE</h4>
-                        <chart :type="'pie'" :data="pieData" :options="options"/>
-                        <br/>
-                        <p>
-                            <router-link to="" class="button is-fullwidth is-primary is-outlined">Show more charts</router-link>
-                        </p>
-                    </article>
-                </div>
-            </div>
-        </div>
-        <div v-if="error">
-            <p class="has-text-danger">
-                There went something wrong getting your dataset.
-            </p>
         </div>
     </div>
+    <div v-if="error">
+        <p class="has-text-danger">
+            There went something wrong getting your dataset.
+        </p>
+    </div>
+</div>
 
 </template>
 
@@ -103,93 +144,126 @@
     import Chart from 'vue-bulma-chartjs'
     import { Collapse, Item as CollapseItem } from 'vue-bulma-collapse'
     import BestTable from '../tables/BestTable'
-    import ColumnTransformations from '../tables/ColumnTransformations'
+    import ColumnTransformations  from '../tables/ColumnTransformations'
     import Statistics from './Statistics'
+    import Plotly from 'plotly.js'
+
+
     const api = 'data/'
+
     export default {
-      name: 'dataset',
-      components: {
-        ColumnTransformations, DataCard, Chart, Collapse, CollapseItem, BestTable, Statistics},
-      data () {
-        return {
-          myDataset: null,
-          max: null,
-          columnTypes: [],
-          id: this.$route.params.id,
-          labels: ['Sleeping', 'Designing', 'Coding', 'Cycling'],
-          data: [3, 22, 70, 5],
-          options: {
-            segmentShowStroke: true
-          },
-          backgroundColor: [
-            '#1fc8db',
-            '#fce473',
-            '#42afe3',
-            '#ed6c63',
-            '#97cd76'
-          ],
-          error: false,
-          labels_2: ['April', 'May', 'June', 'Jule', 'August', 'September', 'October', 'November', 'December'],
-          data_2: [1, 9, 3, 4, 5, 6, 7, 8, 2].map(e => (Math.sin(e) * 25) + 25),
-          labels_3: ['May', 'June', 'Jule', 'August', 'September', 'October', 'November'],
-          data_3: [
-                    [65, 59, 90, 81, 56, 55, 40],
-                    [28, 48, 40, 19, 88, 27, 45]
-          ],
-          options_3: {
-            tooltips: {
-              mode: 'label'
-            }
-          },
-          backgroundColor_3: [
-            'rgba(31, 200, 219, 1)',
-            'rgba(151, 205, 118, 1)'
-          ],
-          series: ['Product A', 'Product B']
-        }
-      },
-      computed: {
-        pieData () {
-          return {
-            labels: this.labels,
-            datasets: [{
-              data: this.data,
-              backgroundColor: this.backgroundColor
-            }]
-          }
-        },
-        seriesData () {
-          let data = {
-            labels: this.labels_3
-          }
-          data.datasets = this.series.map((e, i) => {
+        name: 'dataset',
+        components: {
+            ColumnTransformations, DataCard, Chart, Collapse, CollapseItem, BestTable, Statistics},
+        data () {
             return {
-              data: this.data_3[i],
-              label: this.series[i],
-              borderColor: this.backgroundColor_3[i].replace(/1\)$/, '.5)'),
-              pointBackgroundColor: this.backgroundColor_3[i],
-              backgroundColor: this.backgroundColor_3[i].replace(/1\)$/, '.5)')
+                myDataset: null,
+                max: null,
+                columnTypes: [],
+                id: this.$route.params.id,
+
+                error: false,
+
+                //histogram
+                histColumn: null,
+                histdata: [],
+
+                //heatmap
+                column_long: null,
+                column_lat: null,
+                column_label: null,
+                heatdata: [],
+                heatlayout: [],
+
             }
-          })
-          return data
+        },
+
+        computed: {
+
+        },
+
+        methods: {
+
+            updateHistogram() {
+                // plots
+                this.$http.get('data/histogram/' + '?dataset_id=' + this.id + '&column_name=' + this.histColumn.name).then((response) => {
+                    this.histdata.push(response.data);
+                    let layout = {
+                        autosize: true,
+                        //width: 500,
+                        //height: 500,
+                        margin: {
+                            l: 20,
+                            r: 10,
+                            b: 100,
+                            t: 50,
+                            pad: 5
+                        },
+
+                    };
+                    Plotly.newPlot('hist', response.data, layout, {staticPlot: false});
+                })
+
+            },
+
+            updateHeatmap() {
+
+                this.$http.get('data/heatmap/' + '?dataset_id=' + this.id + '&column_long=' + this.column_long.name + '&column_lat=' + this.column_lat.name + '&column_label=' + this.column_label.name).then((response) => {
+                    this.heatdata.push(response.data[0]);
+                    this.heatlayout.push(response.data[1]);
+                    let layout = {
+                        autosize: true,
+                        //width: 500,
+                        //height: 500,
+                        margin: {
+                            l: 20,
+                            r: 10,
+                            b: 100,
+                            t: 50,
+                            pad: 5
+                        },
+
+                    };
+                    Plotly.newPlot('heat', response.data[0], response.data[1], {staticPlot: false});
+                })
+            },
+
+            checkIfFilledIn() {
+
+                if (this.column_long !== null && this.column_lat != null && this.column_label !== null) this.updateHeatmap();
+
+            }
+
+
+
+        },
+
+
+        created() {
+            this.isloading = true
+            this.$http.get(api + '?dataset_id=' + this.id).then((response) => {
+                console.log(response.data)
+                this.myDataset = response.data;
+            }).catch((error) => {
+                this.error = true
+            });
+
+            this.$http.get('data/types/' + '?dataset_id=' + this.id).then((response) => {
+                this.columnTypes = response.data;
+                console.log(response.data)
+
+            }).catch((error) => {
+                window.alert("Something went wrong with getting the datasets")
+            });
+
+
         }
-      },
-      created () {
-        this.isloading = true
-        this.$http.get(api + '?dataset_id=' + this.id).then((response) => {
-          console.log(response.data)
-          this.myDataset = response.data
-        }).catch((error) => {
-          this.error = true
-        })
-        this.$http.get('data/types/' + '?dataset_id=' + this.id).then((response) => {
-          this.columnTypes = response.data
-          console.log(response.data)
-        }).catch((error) => {
-          window.alert('Something went wrong with getting the datasets')
-        })
-      }
+
     }
+
+
+
+
 </script>
 
 <style scoped lang="scss">
