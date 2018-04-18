@@ -48,13 +48,6 @@
             <table class="table is-striped is-fullwidth is-hoverable">
                 <thead>
                 <tr>
-                    <th v-for="heading in columntypes">
-                        <div class="is-size-6-mobile" id="hist"></div>
-                    </th>
-                </tr>
-                </thead>
-                <thead>
-                <tr>
                     <th v-for="heading in columntypes">{{heading.name}}</th>
                 </tr>
                 </thead>
@@ -119,7 +112,6 @@
 <script>
 
     import Vue from 'vue';
-    import Plotly from 'plotly.js'
 
 
     export default {
@@ -142,7 +134,7 @@
 
                 currentPage: 1,
 
-                histdata: [],
+
 
 
             }
