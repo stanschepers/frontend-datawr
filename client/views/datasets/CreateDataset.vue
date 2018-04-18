@@ -88,7 +88,7 @@
 
                                     <div class="file has-name is-boxed is-centered">
                                         <label class="file-label">
-                                            <input class="file-input" type="file" name="file" accept="text/csv, application/zip, application/vnd.ms-excel" ref="file" v-on:change="handleFileUpload($event)">
+                                            <input class="file-input" type="file" name="file" accept="text/csv, application/zip, application/vnd.ms-excel, application/sql, " ref="file" v-on:change="handleFileUpload($event)">
                                             <span class="file-cta">
                                               <span class="file-icon">
                                                 <i class="fa fa-upload"></i>
@@ -216,9 +216,36 @@
 
                                 <p>
                                     <button class="button" v-on:click="incrementStep(1)">Keep all tables...</button>
-                                    <button class="button" v-on:click="selectFinalTable()">Keep only one table...</button>
+                                    <button class="button" v-on:click="modalActive = true">Keep only one table...</button>
                                 </p>
 
+                            </div>
+
+
+                            <div class="modal"
+                                    v-bind:class="{'is-active' : modalActive===true}">
+                                <div class="modal-background"></div>
+                                <div class="modal-content">
+
+                                    <p>
+                                        Select which table you want to keep (the others will be deleted)
+                                    </p>
+
+                                    <div class="select">
+                                        <select v-model="tableToKeep">
+                                            <option v-for="table in joinData" > {{table.name}}</option>
+                                        </select>
+                                    </div>
+
+                                    <p>
+                                        <button class="button" v-on:click="selectFinalTable()">Save this table</button>
+                                    </p>
+
+
+
+
+                                </div>
+                                <button class="modal-close is-large" aria-label="close"></button>
                             </div>
 
                         </div>
@@ -296,7 +323,7 @@
                     description: '',
                     name: '',
                     separator: ',',
-                    zip: false,
+                    filetype: 'csv',
                 },
 
                 // used by Join
@@ -305,6 +332,9 @@
                 selection2: null,
                 joinOn1: null,
                 joinOn2: null,
+
+                modalActive: false,
+                tableToKeep: null,
 
 
             }
@@ -349,14 +379,22 @@
 
                 if (this.file.type === 'text/csv' || this.file.type === 'application/vnd.ms-excel') {
 
-                    this.dataset.zip = false;
+                    this.dataset.filetype = 'csv';
                     this.submitFile();
                     this.activeStep = 4;
                 }
 
                 else if (this.file.type === 'application/zip' || this.file.type === 'application/x-zip-compressed'){
 
-                    this.dataset.zip = true;
+                    this.dataset.filetype = 'zip';
+                    this.submitFile();
+                    this.activeStep = 3;
+
+                }
+
+                else if (this.file.type === 'application/sql' || this.file.type === ''){
+
+                    this.dataset.filetype = 'sql';
                     this.submitFile();
                     this.activeStep = 3;
 
@@ -378,7 +416,7 @@
                 formData.append('name', this.dataset.name);
                 formData.append('description', this.dataset.description);
                 formData.append('separator', this.dataset.separator);
-                formData.append('zip', this.dataset.zip);
+                formData.append('file_type', this.dataset.filetype);
 
                 /*
                   Make the request to the POST /single-file URL axios post request
@@ -438,7 +476,39 @@
 
             selectFinalTable: function () {
 
+                for (const table of this.joinData){
 
+
+                    if(table.name !== this.tableToKeep) {
+
+                        let formData = new FormData();
+
+                        formData.append('dataset_id', table.id);
+
+                        this.$http.post('/data/delete/',
+                            formData,
+                            {
+                                headers: {
+                                    'Content-Type': 'multipart/form-data'
+                                }
+                            }
+                        ).then(response => {
+
+                            if (response.data['success']){
+
+                                console.log('SUCCESS, euy!');
+                            }
+                        })
+                            .catch(function(){
+                                console.log('FAILURE!!');
+                            });
+
+                    }
+
+                }
+
+                this.modalActive = false;
+                this.activeStep = 4;
 
             },
 

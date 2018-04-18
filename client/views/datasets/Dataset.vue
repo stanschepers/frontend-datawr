@@ -1,6 +1,5 @@
 <template>
     <div>
-
         <div v-if="myDataset">
             <div class="tile is-ancestor">
                 <div class="tile is-parent is-4">
@@ -24,7 +23,7 @@
                                     <a><i class="fa fa-heart"></i></a>
                                 </div>
                                 <div class="level-item">
-                                    <a @click="openDialog"><i class="fa fa-gear"></i></a>
+                                    <router-link to=""><i class="fa fa-gear"></i></router-link>
                                 </div>
                             </div>
                         </div>
@@ -32,44 +31,12 @@
                 </div>
                 <div class="tile is-parent">
                     <div class="tile is-child box">
-                        <nav class="level ">
-                            <div class="level-item has-text-left">
-                                <div class="select">
-                                    <select>
-                                        <option v-for="heading in columnTypes">{{heading.name}}</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="level-item has-text-centered">
-                                <div>
-                                    <p class="heading">Average</p>
-                                    <p class="title">3,456</p>
-                                </div>
-                            </div>
-                            <div class="level-item has-text-centered">
-                                <div>
-                                    <p class="heading">Max</p>
-                                    <p class="title">123</p>
-                                </div>
-                            </div>
-                            <div class="level-item has-text-centered">
-                                <div>
-                                    <p class="heading">Median</p>
-                                    <p class="title">456</p>
-                                </div>
-                            </div>
-                            <div class="level-item has-text-centered">
-                                <div>
-                                    <p class="heading">Min</p>
-                                    <p class="title">789</p>
-                                </div>
-                            </div>
-                        </nav>
+
+                        <statistics :columntypes="columnTypes" :setid="myDataset.id"></statistics>
 
                     </div>
                 </div>
             </div>
-            <edit-table />
             <div class="tile is-ancestor">
                 <div class="tile is-parent">
                     <article class="tile is-child box">
@@ -85,8 +52,7 @@
                 <div class="tile is-parent">
                     <article class="tile is-child box">
 
-                        <column-transformations :columntypes="columnTypes"
-                                                :setid="myDataset.id"></column-transformations>
+                        <column-transformations :columntypes="columnTypes" :setid="myDataset.id"></column-transformations>
 
                     </article>
                 </div>
@@ -117,8 +83,7 @@
                         <chart :type="'pie'" :data="pieData" :options="options"/>
                         <br/>
                         <p>
-                            <router-link to="" class="button is-fullwidth is-primary is-outlined">Show more charts
-                            </router-link>
+                            <router-link to="" class="button is-fullwidth is-primary is-outlined">Show more charts</router-link>
                         </p>
                     </article>
                 </div>
@@ -136,24 +101,15 @@
 <script>
     import DataCard from '../../components/data/dataCard'
     import Chart from 'vue-bulma-chartjs'
-    import {Collapse, Item as CollapseItem} from 'vue-bulma-collapse'
+    import { Collapse, Item as CollapseItem } from 'vue-bulma-collapse'
     import BestTable from '../tables/BestTable'
     import ColumnTransformations from '../tables/ColumnTransformations'
-    import EditTable from '../../components/tables/editTable'
-
+    import Statistics from './Statistics'
     const api = 'data/'
-
     export default {
       name: 'dataset',
       components: {
-        ColumnTransformations,
-        DataCard,
-        Chart,
-        Collapse,
-        CollapseItem,
-        BestTable,
-        EditTable
-      },
+        ColumnTransformations, DataCard, Chart, Collapse, CollapseItem, BestTable, Statistics},
       data () {
         return {
           myDataset: null,
@@ -162,7 +118,6 @@
           id: this.$route.params.id,
           labels: ['Sleeping', 'Designing', 'Coding', 'Cycling'],
           data: [3, 22, 70, 5],
-          dialog: false,
           options: {
             segmentShowStroke: true
           },
@@ -174,10 +129,8 @@
             '#97cd76'
           ],
           error: false,
-
           labels_2: ['April', 'May', 'June', 'Jule', 'August', 'September', 'October', 'November', 'December'],
           data_2: [1, 9, 3, 4, 5, 6, 7, 8, 2].map(e => (Math.sin(e) * 25) + 25),
-
           labels_3: ['May', 'June', 'Jule', 'August', 'September', 'October', 'November'],
           data_3: [
                     [65, 59, 90, 81, 56, 55, 40],
@@ -195,7 +148,6 @@
           series: ['Product A', 'Product B']
         }
       },
-
       computed: {
         pieData () {
           return {
@@ -230,35 +182,18 @@
         }).catch((error) => {
           this.error = true
         })
-
         this.$http.get('data/types/' + '?dataset_id=' + this.id).then((response) => {
           this.columnTypes = response.data
           console.log(response.data)
         }).catch((error) => {
           window.alert('Something went wrong with getting the datasets')
         })
-        //
-        // this.$http.get( 'data/stats/' + '?dataset_id=' + this.id+ '&type=max' + '&column=index').then((response) => {
-        //     console.log(response.data);
-        //     this.max = response.data
-        // }).catch((error) => {
-        //     this.error = true
-        // });
-      },
-      methods: {
-        openDialog () {
-          this.dialog = true
-          window.alert(this.dialog)
-        }
       }
-
     }
-
 </script>
 
 <style scoped lang="scss">
     @import "~cool-checkboxes-for-bulma.io";
-
     .table-responsive {
         display: block;
         width: 100%;
