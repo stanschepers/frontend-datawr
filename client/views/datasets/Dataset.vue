@@ -24,6 +24,9 @@
                                 <div class="level-item">
                                     <a @click="showEdit = !showEdit"><i class="fa fa-gear"></i></a>
                                 </div>
+                                <div class="level-item">
+                                    <a @click="showEdit = !showEdit"><i class="fa fa-download"></i></a>
+                                </div>
                             </div>
                         </div>
                     </article>

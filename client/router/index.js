@@ -40,15 +40,15 @@ export default new Router({
             component: require('../views/datasets/index')
         },
         {
-            name: 'Dataset',
-            path: '/data/:id',
-            component: require('../views/datasets/Dataset')
+            name: 'Create Dataset',
+            path: '/data/create',
+            component: require('../views/datasets/CreateDataset')
 
         },
         {
-            name: 'Create Dataset',
-            path: '/createdataset',
-            component: require('../views/datasets/CreateDataset')
+            name: 'Dataset',
+            path: '/data/:id',
+            component: require('../views/datasets/Dataset')
 
         },
         {

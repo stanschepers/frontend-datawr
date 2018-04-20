@@ -65,7 +65,7 @@
             }
         },
         beforeMount() {
-            this.isloading = true
+            this.isloading = true;
             this.$http.get(api1).then((response) => {
                 this.person = response.data;
             }).catch((error) => {
@@ -94,9 +94,6 @@
                         type: 'danger'
                     })
                 })
-            },
-            me: function (person2) {
-                return this.person.email === person2.email
             }
         },
         computed: {}
