@@ -28,71 +28,9 @@
                 </div>
 
                 <div class="block" title="Numerical transformations" v-bind:class="{'is-hidden' : selected !== 'numerical'}">
-                    <collapse accordion>
-                        <collapse-item title="Normalise">
-                            <div class="block">
-                                Normalise numerical columns between 0 and 1.
+                    <numerical :columntypes="columntypes" :setid="setid">
 
-                                <div class="control is-horizontal">
-                                    <div class="control-label">
-                                        <label class="label">Column</label>
-                                    </div>
-                                    <div class="control">
-                                        <div class="select is-fullwidth">
-                                            <select>
-                                                <option>registration_id</option>
-                                                <option>client_id</option>
-                                                <option>checkin_time</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="control is-horizontal">
-                                    <div class="control-label">
-                                        <label class="label">Mean</label>
-                                    </div>
-                                    <div class="control is-grouped">
-                                        <p class="control is-expanded">
-                                            <input class="input" type="number" placeholder="mean">
-                                        </p>
-                                    </div>
-                                </div>
-
-                                <div class="control is-horizontal">
-                                    <div class="control-label">
-                                        <label class="label">Standard deviation</label>
-                                    </div>
-                                    <div class="control is-grouped">
-                                        <p class="control is-expanded">
-                                        <p></p>
-                                        <input class="input" type="number" placeholder="standard deviation">
-                                        </p>
-                                    </div>
-                                </div>
-
-
-                                <div class="control is-grouped">
-                                    <div class="control-label">
-                                        <label class="label"></label>
-                                    </div>
-                                    <div class="control">
-                                        <button class="button is-primary">Normalise</button>
-                                    </div>
-                                </div>
-                            </div>
-
-
-
-
-                        </collapse-item>
-                        <collapse-item title="Discretise">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec iaculis mauris. @bulmaio. #css #responsive
-                        </collapse-item>
-                        <collapse-item title="Remove outliers">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec iaculis mauris. @bulmaio. #css #responsive
-                        </collapse-item>
-                    </collapse>
+                    </numerical>
                 </div>
 
                 <div class="block" title="Date | time parsing" v-bind:class="{'is-hidden' : selected !== 'datetime'}">
@@ -107,54 +45,18 @@
                 </div>
 
                 <div class="block" title="One-hot-encoding" v-bind:class="{'is-hidden' : selected !== 'categorical'}">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec iaculis mauris. @bulmaio. #css #responsive
+
+                    <categorical :columntypes="columntypes" :setid="setid">
+
+                    </categorical>
+
                 </div>
 
                 <div class="block" title="Find-and-replace" v-bind:class="{'is-hidden' : selected !== 'text'}">
-                    <div class="field">
-                        <p class="control">
-                            <input class="input" type="text" placeholder="Find">
-                        </p>
-                    </div>
 
-                    <div class="field">
-                        <p class="control">
-                            <input class="input" type="text" placeholder="Replace by">
-                        </p>
-                    </div>
+                    <findreplace :columntypes="columntypes" :setid="setid">
 
-                    <div class="field">
-                        <p class="control">
-
-                        <div class="field is-grouped">
-                            <div class="b-checkbox is-default is-inline">
-                                <input id="matchcase" class="styled" checked type="checkbox">
-                                <label for="matchcase">
-                                    Match case
-                                </label>
-                            </div>
-                            <div class="b-checkbox is-default is-inline">
-                                <input id="word" class="styled" checked type="checkbox">
-                                <label for="word">
-                                    Word
-                                </label>
-                            </div>
-                            <div class="b-checkbox is-default is-inline">
-                                <input id="regex" class="styled" checked type="checkbox">
-                                <label for="regex">
-                                    Regex
-                                </label>
-                            </div>
-                        </div>
-                        <div class="field is-grouped">
-                            <div class="block">
-                                <button class="button is-primary">Find</button>
-                                <button class="button is-primary is-outlined">Find & Replace</button>
-                                <button class="button is-primary is-outlined">Replace All</button>
-                            </div>
-                        </div>
-                        </p>
-                    </div>
+                    </findreplace>
 
                 </div>
 
@@ -168,9 +70,14 @@
 
     import { Collapse, Item as CollapseItem } from 'vue-bulma-collapse'
     import general  from '../transformations/General'
+    import numerical  from '../transformations/Numerical'
+    import findreplace from '../transformations/FindReplace'
+    import categorical from '../transformations/Categorical'
+
 
     export default {
-        components: {CollapseItem, Collapse, general},
+        components: {
+            CollapseItem, Collapse, general, numerical, findreplace, categorical},
         props: {
             columntypes: Array,
             setid: Number,

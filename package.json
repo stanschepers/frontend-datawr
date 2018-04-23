@@ -76,6 +76,8 @@
     "vue-nprogress": "0.1.5",
     "vue-peity": "0.5.0",
     "vue-router": "^2.3.0",
+    "vue-select": "^2.4.0",
+    "vue-tables-2": "^1.4.1",
     "vuex": "^2.2.1",
     "vuex-router-sync": "^4.1.2",
     "wysiwyg.css": "0.0.2"

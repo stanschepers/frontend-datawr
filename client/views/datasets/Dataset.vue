@@ -34,7 +34,10 @@
                 <div class="tile is-parent">
                     <div class="tile is-child box">
 
-                    <statistics :columntypes="columnTypes" :setid="myDataset.id"></statistics>
+                    <statistics :columntypes="columnTypes" :setid="myDataset.id">
+
+                    </statistics>
+
                 </div>
             </div>
         </div>
@@ -49,7 +52,16 @@
                 <div class="tile is-parent">
                     <article class="tile is-child box animate slideInLeft">
 
-                    <best-table :columntypes="columnTypes" :setid="myDataset.id"></best-table>
+                    <!--<best-table :columntypes="columnTypes" :setid="myDataset.id">
+
+                    </best-table>-->
+                    <div class="table-container">
+
+                    <vue-tables2 :columntypes="columnTypes" :setid="myDataset.id">
+
+
+                    </vue-tables2>
+                    </div>
 
                 </article>
             </div>
@@ -60,16 +72,21 @@
             <div class="tile is-parent is-two-thirds">
                 <article class="tile is-child box">
 
-                    <column-transformations :columntypes="columnTypes" :setid="myDataset.id"></column-transformations>
+                    <column-transformations :columntypes="columnTypes" :setid="myDataset.id">
+
+                    </column-transformations>
 
                 </article>
             </div>
 
 
-            <div class="tile is-parent is-4">
+            <div class="tile is-parent is-5">
                 <article class="tile is-child box">
 
-                    <h1 class="title">History</h1>
+                    <history :setid="myDataset.id">
+
+                    </history>
+
 
                 </article>
             </div>
@@ -154,7 +171,10 @@
     import BestTable from '../tables/BestTable'
     import ColumnTransformations  from '../tables/ColumnTransformations'
     import Statistics from './Statistics'
+    import History from '../tables/History'
     import Plotly from 'plotly.js'
+
+    import VueTables2 from '../tables/VueTable'
 
 
     import editTable from '../../components/tables/editTable'
@@ -164,7 +184,8 @@
     export default {
         name: 'dataset',
         components: {
-            ColumnTransformations, DataCard, Chart, Collapse, CollapseItem, BestTable, Statistics},
+            History,
+            ColumnTransformations, DataCard, Chart, Collapse, CollapseItem, BestTable, Statistics, VueTables2},
         data () {
             return {
                 showEdit: false,
@@ -225,7 +246,8 @@
                     let layout = {
                         autosize: true,
                         //width: 500,
-                        //height: 500,
+                        //height: 500
+                        // ,
                         margin: {
                             l: 20,
                             r: 10,
@@ -271,6 +293,10 @@
         }
 
     }
+
+
+
+
 </script>
 
 <style scoped lang="scss">
@@ -282,4 +308,23 @@
         min-height: .01%;
         overflow-x: auto;
     }
+
+    article {
+        margin: auto;
+        border-collapse: collapse;
+        overflow-x: auto;
+        display: block;
+        width: auto;
+        max-width: 100%;
+
+    }
+
+    .table-container {
+        display: block;
+        overflow-x: auto;
+        overflow-y: hidden;
+        min-height: .01%;
+        max-width: 100%;
+    }
+
 </style>

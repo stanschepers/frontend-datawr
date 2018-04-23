@@ -17,27 +17,37 @@
             </div>
         </div>
         <div class="level-item has-text-centered">
-            <div>
-                <p class="heading">Min</p>
-                <p class="title">{{min  | maxLengthStat(min)}}</p>
-            </div>
+                <div>
+
+                    <p class="heading">Min</p>
+                    <tooltip :label="min" placement="top" size="medium">
+                    <p class="title">{{min  | maxLengthStat(min)}}</p>
+                    </tooltip>
+
+                </div>
         </div>
         <div class="level-item has-text-centered">
             <div>
                 <p class="heading">Max</p>
+                <tooltip :label="max" placement="top" size="medium">
                 <p class="title">{{max | maxLengthStat(max)}}</p>
+                </tooltip>
             </div>
         </div>
         <div class="level-item has-text-centered">
             <div>
                 <p class="heading">Median</p>
+                <tooltip :label="median" placement="top" size="medium">
                 <p class="title">{{median | maxLengthStat(median)}}</p>
+                </tooltip>
             </div>
         </div>
         <div class="level-item has-text-centered">
             <div>
                 <p class="heading">Mean</p>
+                <tooltip :label="mean" placement="top" size="medium">
                 <p class="title">{{mean | maxLengthStat(mean)}}</p>
+                </tooltip>
             </div>
         </div>
     </nav>
@@ -65,19 +75,25 @@
         <div class="level-item has-text-centered">
             <div>
                 <p class="heading">Mode</p>
+                <tooltip :label="mode" placement="top" size="medium">
                 <p class="title">{{mode | maxLengthStat(mode) }}</p>
+                </tooltip>
             </div>
         </div>
         <div class="level-item has-text-centered">
             <div>
                 <p class="heading">Empty values</p>
+                <tooltip :label="amount_empty" placement="top" size="medium">
                 <p class="title">{{amount_empty | maxLengthStat(amount_empty) }}</p>
+                </tooltip>
             </div>
         </div>
         <div class="level-item has-text-centered">
             <div>
                 <p class="heading">Nonempty values</p>
+                <tooltip :label="amount_nonempty" placement="top" size="medium">
                 <p class="title">{{amount_nonempty | maxLengthStat(amount_nonempty) }}</p>
+                </tooltip>
             </div>
         </div>
     </nav>
@@ -87,8 +103,14 @@
 </template>
 
 <script>
+
+    import Tooltip from 'vue-bulma-tooltip'
+
     export default {
         name: "statistics",
+        components: {
+            Tooltip
+        },
         props: {
             columntypes: Array,
             setid: Number,
@@ -158,9 +180,9 @@
         filters: {
             maxLengthStat(value){
 
-                if (value === null || value.length < 6) { return value }
-                let truncated = value.substring(0, 10);
-                truncated += '...';
+                if (value === null || value.length <= 5) { return value }
+                let truncated = value.substring(0, 5);
+                truncated += '..';
 
                 return truncated;
 
@@ -170,5 +192,9 @@
 </script>
 
 <style scoped lang="scss">
+
+    .tooltip {
+        display: inherit;
+    }
 
 </style>

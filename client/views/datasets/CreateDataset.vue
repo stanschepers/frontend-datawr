@@ -421,7 +421,7 @@
                 /*
                   Make the request to the POST /single-file URL axios post request
                 */
-                this.$http.post('/data/create/',
+                this.$http.post('/data/',
                     formData
 
                 ).then(response => {
@@ -485,7 +485,7 @@
 
                         formData.append('dataset_id', table.id);
 
-                        this.$http.post('/data/delete/',
+                        this.$http.delete('/data/',
                             formData,
                             {
                                 headers: {
