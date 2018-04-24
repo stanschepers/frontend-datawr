@@ -11,7 +11,7 @@
     import Vue from 'vue';
     import {ServerTable} from 'vue-tables-2';
 
-    Vue.use(ServerTable, {}, false, 'bulma', 'footerPagination');
+    Vue.use(ServerTable, {}, false, 'bulma', 'default');
 
     window.axios = require('axios');
 
@@ -42,7 +42,6 @@
                     perPage: 5,
 
                     sortIcon: { up:'fa fa-sort-up', down:'fa fa-sort-down', is:'fa fa-sort' }
-
 
                 },
 

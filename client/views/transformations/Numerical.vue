@@ -59,11 +59,11 @@
             <div class="field is-horizontal is-grouped">
                 <div class="control">
                     <label class="label">Select lower bound</label>
-                    <input class="input" v-model="lowerbound" v-on:change="checkIfFilledInOutlier" type="number" placeholder="standard deviation">
+                    <input class="input" v-model="lowerbound" v-on:change="checkIfFilledInOutlier" type="number" placeholder="lower bound..">
                 </div>
                 <div class="control">
                     <label class="label">Select upper bound</label>
-                    <input class="input" v-model="upperbound" v-on:change="checkIfFilledInOutlier" type="number" placeholder="standard deviation">
+                    <input class="input" v-model="upperbound" v-on:change="checkIfFilledInOutlier" type="number" placeholder="upper bound..">
                 </div>
 
             </div>
@@ -71,6 +71,58 @@
             <div class="field">
                 <div class="control">
                     <button class="button is-danger" :disabled="this.nextIsVisible === false" v-on:click="removeOutliers">Remove outliers</button>
+                </div>
+            </div>
+
+        </collapse-item>
+
+        <collapse-item title="Fill">
+            <div class="field">
+                <div class="control is-grouped">
+                    <div class="control-label">
+                        <label class="label">Select column to fill</label>
+                        <span class="select">
+                                <select v-model="column">
+                                    <option v-for="heading in columnsOfType()" v-bind:value="heading">{{heading.name}}</option>
+                                </select>
+                            </span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="field has-addons">
+                <p class="control">
+                    <a class="button" v-on:click="type = 'min'" v-bind:class="{'is-primary' : type === 'min'}">
+                        <span>Min</span>
+                    </a>
+                </p>
+
+                <p class="control">
+                    <a class="button" v-on:click="type = 'max'" v-bind:class="{'is-primary' : type === 'max'}">
+                        <span>Max</span>
+                    </a>
+                </p>
+
+                <p class="control">
+                    <a class="button" v-on:click="type = 'median'" v-bind:class="{'is-primary' : type === 'median'}">
+                        <span>Median</span>
+                    </a>
+                </p>
+
+                <p class="control">
+                    <a class="button" v-on:click="type = 'mean'" v-bind:class="{'is-primary' : type === 'mean'}">
+                        <span>Mean</span>
+                    </a>
+                </p>
+            </div>
+
+            <div class="field">
+
+            </div>
+
+            <div class="field">
+                <div class="control">
+                    <button class="button" v-on:click="fill">Fill</button>
                 </div>
             </div>
 
@@ -97,11 +149,14 @@
 
                 column: {name: null, type: null},
 
-
                 //Remove Outliers
                 nextIsVisible: false,
                 lowerbound: null,
                 upperbound: null,
+
+                //Fill
+                type: null,
+                replace: null,
 
 
             }
@@ -160,7 +215,42 @@
             checkIfFilledInOutlier() {
                 if(this.lowerbound !== null && this.upperbound !== null && this.column !== null) this.nextIsVisible = true;
 
-            }
+            },
+
+
+            fill() {
+                // Calculate stats
+                this.$http.get( 'data/stats/' + '?dataset_id=' + this.setid+ '&type=' + this.type + '&column=' + this.column.name).then((response) => {
+                    this.replace = response.data
+
+
+                }).catch((error) => {
+                    this.error = true
+                });
+
+
+                let formData = new FormData();
+                formData.append('dataset_id', this.setid);
+                formData.append('type', 'fill');
+                formData.append('column', this.column.name);
+                formData.append('replace', this.replace);
+
+                console.log(formData)
+
+                this.$http.post('/data/transform/',
+                    formData,
+
+                ).then(response => {
+                    console.log('fill succesvol')
+                })
+                    .catch(function(){
+                        console.log('fill FAILURE!!');
+                    });
+
+
+
+
+            },
 
 
 

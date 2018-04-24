@@ -77,8 +77,6 @@
 
                         <article class="tile is-child">
 
-                            <div class="columns">
-                                <div class="column">
                                     <div class="content has-text-centered">
                                     <h1 class="title">Import existing table</h1>
                                         <p class="is-italic">Select a csv file or a zip file containing multiple csv's. Each file needs to
@@ -126,21 +124,7 @@
 
 
                                 </div>
-                                </div>
 
-                                <div class="is-divider-vertical" data-content="OR"></div>
-                                <div class="column">
-                                    <div class="content">
-                                        <h1 class="title">Start with an empty one</h1>
-
-                                        <p class="control is-centered">
-                                            <h1 class="title is-centered"></h1>
-                                            <button class="button is-primary" v-on:click="">Generate Empty Dataset</button>
-                                        </p>
-
-                                    </div>
-                                </div>
-                            </div>
                         </article>
 
                     </div>

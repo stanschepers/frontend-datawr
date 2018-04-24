@@ -23,41 +23,27 @@
 
                 <div class="block" title="Table changes" v-bind:class="{'is-hidden' : selected !== 'general'}">
                    <general :columntypes="columntypes" :setid="setid">
-
                    </general>
                 </div>
 
                 <div class="block" title="Numerical transformations" v-bind:class="{'is-hidden' : selected !== 'numerical'}">
                     <numerical :columntypes="columntypes" :setid="setid">
-
                     </numerical>
                 </div>
 
                 <div class="block" title="Date | time parsing" v-bind:class="{'is-hidden' : selected !== 'datetime'}">
-                    <collapse accordion>
-                        <collapse-item title="Parse date/time values">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec iaculis mauris. @bulmaio. #css #responsive
-                        </collapse-item>
-                        <collapse-item title="....">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec iaculis mauris. @bulmaio. #css #responsive
-                        </collapse-item>
-                    </collapse>
+                    <datetime :columntypes="columntypes" :setid="setid">
+                    </datetime>
                 </div>
 
                 <div class="block" title="One-hot-encoding" v-bind:class="{'is-hidden' : selected !== 'categorical'}">
-
                     <categorical :columntypes="columntypes" :setid="setid">
-
                     </categorical>
-
                 </div>
 
                 <div class="block" title="Find-and-replace" v-bind:class="{'is-hidden' : selected !== 'text'}">
-
                     <findreplace :columntypes="columntypes" :setid="setid">
-
                     </findreplace>
-
                 </div>
 
         </div>
@@ -73,11 +59,12 @@
     import numerical  from '../transformations/Numerical'
     import findreplace from '../transformations/FindReplace'
     import categorical from '../transformations/Categorical'
+    import datetime from '../transformations/DateTime'
 
 
     export default {
         components: {
-            CollapseItem, Collapse, general, numerical, findreplace, categorical},
+            CollapseItem, Collapse, general, numerical, findreplace, categorical, datetime},
         props: {
             columntypes: Array,
             setid: Number,

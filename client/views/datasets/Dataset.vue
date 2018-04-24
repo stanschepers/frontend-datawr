@@ -57,10 +57,11 @@
                     </best-table>-->
                     <div class="table-container">
 
-                    <vue-tables2 :columntypes="columnTypes" :setid="myDataset.id">
+                        <vue-tables2 :columntypes="columnTypes" :setid="myDataset.id">
 
 
-                    </vue-tables2>
+                        </vue-tables2>
+
                     </div>
 
                 </article>
@@ -255,9 +256,10 @@
                             t: 50,
                             pad: 5
                         },
-
                     };
+
                     Plotly.newPlot('heat', response.data[0], response.data[1], {staticPlot: false});
+
                 })
             },
 
@@ -266,9 +268,6 @@
                 if (this.column_long !== null && this.column_lat != null && this.column_label !== null) this.updateHeatmap();
 
             }
-
-
-
         },
 
 
@@ -289,13 +288,9 @@
                 window.alert("Something went wrong with getting the datasets")
             });
 
-
         }
 
     }
-
-
-
 
 </script>
 
@@ -309,21 +304,13 @@
         overflow-x: auto;
     }
 
-    article {
-        margin: auto;
-        border-collapse: collapse;
-        overflow-x: auto;
-        display: block;
-        width: auto;
-        max-width: 100%;
-
-    }
 
     .table-container {
+        margin: auto;
         display: block;
         overflow-x: auto;
         overflow-y: hidden;
-        min-height: .01%;
+        width: inherit;
         max-width: 100%;
     }
 
