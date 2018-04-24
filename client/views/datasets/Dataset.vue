@@ -28,7 +28,7 @@
                             <div class="level-right">
                                 <div class="level-item">
                                     <div class="select is-small">
-                                        <select >
+                                        <select v-model="quote">
                                             <option value="'"> ' </option>
                                             <option value='"'> " </option>
                                         </select>
@@ -36,7 +36,7 @@
                                 </div>
                                 <div class="level-item">
                                     <div class="select is-small">
-                                        <select>
+                                        <select v-model="delim">
                                             <option value=","> , </option>
                                             <option value=";"> ; </option>
                                             <option value="|"> | </option>
@@ -226,6 +226,10 @@
                 column_label: null,
                 heatdata: [],
                 heatlayout: [],
+
+                //download
+                quote: '"'
+                delimiter: ','
 
             }
         },
