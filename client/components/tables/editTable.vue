@@ -163,7 +163,6 @@
                 this.$http.get('/core/permission/?dataset_id=' + this.dataset.id.toString()).then((response) => {
                     this.read = response.data.read
                     this.write = response.data.write
-                    console.log('lol')
                 }).catch((error) => window.alert('Something went wrong getting the permissions'))
             },
             deleteRead(id) {

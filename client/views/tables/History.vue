@@ -1,24 +1,26 @@
 <template>
-    <div class="container">
+    <div>
         <h1 class="title">History</h1>
 
-        <table class="table is-striped is-fullwidth is-hoverable">
-            <thead>
-            <tr>
-                <th>Event</th>
-            </tr>
-            </thead>
+        <div class=" is-very-responsive">
 
-            <tfoot>
-            </tfoot>
-            <tbody>
-            <tr style="white-space:nowrap;" v-for="event in history">
-                {{event.transformation}}
-            </tr>
-            </tbody>
-        </table>
+            <table class="table is-striped is-hoverable">
+                <thead>
+                <tr>
+                    <th>Event</th>
+                </tr>
+                </thead>
 
+                <tfoot>
+                </tfoot>
+                <tbody>
+                <tr style="white-space:nowrap;" v-for="event in history">
+                    {{event.transformation}}
+                </tr>
+                </tbody>
+            </table>
 
+        </div>
 
 
     </div>
@@ -38,11 +40,25 @@
             }
         },
 
+        methods: {
+
+            update() {
+                this.$http.get('data/history/' + '?dataset_id=' + this.setid).then((response) => {
+                    this.history = response.data;
+
+                }).catch((error) => {
+                    window.alert("Something went wrong with getting the history")
+                });
+            },
+
+
+
+        },
+
         created() {
 
             this.$http.get('data/history/' + '?dataset_id=' + this.setid).then((response) => {
                 this.history = response.data;
-                console.log(response.data)
 
             }).catch((error) => {
                 window.alert("Something went wrong with getting the history")
@@ -55,11 +71,14 @@
 
 <style scoped lang="scss">
 
-    .table-responsive {
-        display: block;
-        width: 50%;
-        min-height: .01%;
+    .is-very-responsive {
         overflow-x: auto;
+        overflow-y: hidden;
+        max-width: 100%;
+
+
     }
+
+
 
 </style>

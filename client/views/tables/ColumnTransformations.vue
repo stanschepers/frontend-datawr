@@ -22,7 +22,7 @@
             </div>
 
                 <div class="block" title="Table changes" v-bind:class="{'is-hidden' : selected !== 'general'}">
-                   <general :columntypes="columntypes" :setid="setid">
+                   <general :columntypes="columntypes" :setid="setid" v-on:update="updateParent">
                    </general>
                 </div>
 
@@ -83,6 +83,12 @@
                 if(this.activeStep <= 1) this.activeStep =1;
                 if(this.activeStep >= 3) this.activeStep =3;
             },
+
+            updateParent() {
+
+                this.$emit('update');
+
+            }
 
 
         },

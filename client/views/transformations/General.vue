@@ -44,7 +44,6 @@
 
                 <span v-for="(expr, index) in expressions">
                     {{expr.column.name}} <b>{{expr.operator.value}}</b> {{expr.value}}
-                    {{ index }} / {{ expressions.length }}
                     <span v-if="index < expressions.length - 1">
                         <select class="select is-small" v-model="expr.finalop">
                             <option  v-bind:value="'AND'">AND</option>
@@ -187,7 +186,7 @@
 
                 // Change Attribute
                 typeSelected: null,
-                possibleTypes: ['bigint', 'double precision', 'text', 'date', 'boolean'],
+                possibleTypes: ['bigint', 'double precision', 'text', 'timestamp', 'date', 'boolean'],
 
                 // Remove Attribute
 
@@ -258,12 +257,15 @@
 
                 ).then(response => {
                     console.log('delete row succesvol')
+                    this.$emit('update');
+
                 })
                     .catch(function(){
                         console.log('delete row FAILURE!!');
                     });
-                console.log(final);
+
                 return final;
+
 
 
             },
@@ -280,11 +282,15 @@
 
                 ).then(response => {
                     console.log('cast succesvol')
+                    this.$emit('update');
+
                 })
                     .catch(function(){
                         console.log('cast FAILURE!!');
                     });
-            },
+
+
+                },
 
             deleteColumn() {
                 let formData = new FormData();
@@ -297,6 +303,8 @@
 
                 ).then(response => {
                     console.log('delete column succesvol')
+                    this.$emit('update');
+
                 })
                     .catch(function(){
                         console.log('delete column FAILURE!!');

@@ -101,6 +101,8 @@
                         formData,
                     ).then(response => {
                         console.log('find replace succesvol')
+                        this.$emit('update');
+
                     })
                         .catch(function () {
                             console.log('find replace FAILURE!!');
@@ -125,6 +127,8 @@
                         formData,
                     ).then(response => {
                         console.log('find replace succesvol')
+                        this.$emit('update');
+
                     })
                         .catch(function () {
                             console.log('find replace FAILURE!!');

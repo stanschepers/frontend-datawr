@@ -59,10 +59,12 @@
                 this.$http.post('/data/transform/',
                     formData,
                 ).then(response => {
-                    console.log('find replace succesvol')
+                    console.log('oneHotEncode succesvol')
+                    this.$emit('update');
+
                 })
                     .catch(function () {
-                        console.log('find replace FAILURE!!');
+                        console.log('oneHotEncode FAILURE!!');
                     });
 
             }

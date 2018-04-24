@@ -186,6 +186,8 @@
 
                 ).then(response => {
                     console.log('normalize succesvol')
+                    this.$emit('update');
+
                 })
                     .catch(function(){
                         console.log('normalize FAILURE!!');
@@ -205,10 +207,12 @@
                     formData,
 
                 ).then(response => {
-                    console.log('normalize succesvol')
+                    console.log('remove outliers succesvol')
+                    this.$emit('update');
+
                 })
                     .catch(function(){
-                        console.log('normalize FAILURE!!');
+                        console.log('remove outliers FAILURE!!');
                     });
             },
 
@@ -235,13 +239,14 @@
                 formData.append('column', this.column.name);
                 formData.append('replace', this.replace);
 
-                console.log(formData)
 
                 this.$http.post('/data/transform/',
                     formData,
 
                 ).then(response => {
                     console.log('fill succesvol')
+                    this.$emit('update');
+
                 })
                     .catch(function(){
                         console.log('fill FAILURE!!');
