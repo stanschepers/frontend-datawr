@@ -27,24 +27,25 @@
                             </div>
                             <div class="level-right">
                                 <div class="level-item">
-                                    <div class="select is-small">
-                                        <select v-model="quote">
-                                            <option value="'"> ' </option>
-                                            <option value='"'> " </option>
-                                        </select>
-                                    </div>
+                                    <!--<div class="select is-small">-->
+                                        <!--<select v-model="quote">-->
+                                            <!--<option value="'"> ' </option>-->
+                                            <!--<option value='"'> " </option>-->
+                                        <!--</select>-->
+                                    <!--</div>-->
+                                    <small> Delimiter: </small>
                                 </div>
                                 <div class="level-item">
                                     <div class="select is-small">
                                         <select v-model="delimiter">
                                             <option value=","> , </option>
-                                            <option value=";"> ; </option>
+                                            <option value="%3B"> ; </option>
                                             <option value="|"> | </option>
                                         </select>
                                     </div>
                                 </div>
                                 <div class="level-item">
-                                    <a :href="'https://api.datawr.ml/data/export/?dataset_id=' + id"><i class="fa fa-download"></i></a>
+                                    <a :href="'https://api.datawr.ml/data/export/?dataset_id=' + id + '&sep=' + delimiter"><i class="fa fa-download"></i></a>
                                 </div>
                             </div>
                         </div>
