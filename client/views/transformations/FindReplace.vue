@@ -8,7 +8,7 @@
         <div class="field">
             <div class="control is-grouped">
                 <div class="control-label">
-                    <label class="label">Select column to change</label>
+                    <label class="label">Select in which column you want to replace</label>
                     <span class="select">
                         <select v-model="column">
                             <option disabled>select...</option>
@@ -45,7 +45,7 @@
 
                 <div class="field is-grouped">
                     <div class="block">
-                        <button class="button is-primary" v-on:click="findAndReplace">Find & Replace</button>
+                        <button class="button is-primary" v-on:click="findAndReplace">Replace</button>
                     </div>
                 </div>
 
