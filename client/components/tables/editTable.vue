@@ -6,7 +6,6 @@
                     <h3 class="subtitle level-item">Edit Dataset {{ dataset.name }}</h3>
                 </div>
             </div>
-            <p> {{ dataset }} </p>
             <div class="field">
                 <div class="control">
                     <input class="input" maxlength="63" v-model="dataset.name" type="text" name="name"
@@ -23,52 +22,78 @@
                     aboutRemaingChars}} / {{ MAX_LENGTH_ABOUT}} </p>
 
             </div>
-
-            <div class="field">
-                <div class="control">
-                    <div class="tabs">
-                        <ul>
-                            <li :class="tab === 'read' ? 'is-active' : ''"><a @click="tab = 'read'">Read Permission</a>
-                            </li>
-                            <li :class="tab === 'write' ? 'is-active' : ''"><a @click="tab = 'write'">Read+Write
-                                Permission</a></li>
-                        </ul>
-                    </div>
-                    <div v-show="tab === 'read'">
-                        <p> These persons could read the dataset. They can not edit something. </p>
-                        <br/>
-                        <div class="tags has-addons">
-                            <template v-for="(person, index) in read">
-                                <span class="tag is-dark">{{ person.name }}</span>
-                                <a @click="" class="tag is-delete"></a> &nbsp;
-                            </template>
-                            <a class="tag is-success">Add</a>
-                        </div>
-                    </div>
-                    <div v-show="tab === 'write'">
-                        <p> These persons could read and edit the dataset. They also can delete the dataset. </p>
-                        <div class="tags has-addons">
-
-                            <template v-for="(person, index) in write">
-                                <span class="tag is-dark">{{ person.name }}</span>
-                                <a @click="write.splice(0, index)" class="tag is-delete"></a> &nbsp;
-                            </template>
-                            <span class="tag"> Add </span>
-                            <a @click="" class="tag is-success"> <i class="fa fa-plus"></i></a>
-                        </div>
-                    </div>
-                </div>
-            </div>
             <hr/>
             <div class="field">
                 <div class="control level is-mobile">
                     <div class="level-left">
                         <div class="control level-item">
-                            <button type="submit" class="button is-primary" :disabled="formIsNotValid">
+                            <a @click="saveChanges" class="button is-primary" :disabled="formIsNotValid">
                                 Change
-                            </button>
+                            </a>
                         </div>
                     </div>
+                </div>
+            </div>
+            <div class="field">
+                <div class="control">
+                    <table class="table is-fullwidth">
+                        <thead>
+                        <tr>
+                            <th> Name</th>
+                            <th> Permission</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <template v-for="read_person in read">
+                            <tr>
+                                <td> {{ read_person.username }}</td>
+                                <td> READ</td>
+                                <td><a class="delete" @click="deleteRead(read_person.id)"> </a></td>
+                            </tr>
+                        </template>
+                        <template v-for="write_person in write">
+                            <tr>
+                                <td> {{ write_person.username }}</td>
+                                <td> READ + WRITE</td>
+                                <td><a class="delete" @click="deleteWrite(write_person.id)"> </a></td>
+                            </tr>
+                        </template>
+                        <tr>
+                            <td>
+                                <div class="field">
+                                    <div class="control has-icons-left">
+                                        <div class="select">
+                                            <select v-model="selectedUser">
+                                                <template v-for="user in users">
+                                                    <option :value="user.id"> {{ user.username }}</option>
+                                                </template>
+                                            </select>
+                                        </div>
+                                        <div class="icon is-small is-left">
+                                            <i class="fa fa-user"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="field">
+                                    <div class="control">
+                                        <div class="select">
+                                            <select v-model="selectedPermission">
+                                                <option value="1"> Read</option>
+                                                <option value="2"> Read + Write</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <a class="button is-primary" @click="addUser">Add</a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
@@ -77,14 +102,17 @@
 </template>
 
 <script>
+    import 'qs'
+    import * as qs from "qs";
+
     export default {
         name: 'edit-table',
         props: {
             dataset: Object
         },
         created() {
-            this.getReadPermissions();
-            this.getWritePermissions();
+            this.getUsers();
+            this.getPermissions();
         },
         data() {
             return {
@@ -94,23 +122,25 @@
                 tab: 'read',
                 read: [],
                 write: [],
-                users: []
+                users: [],
+                selectedUser: null,
+                selectedPermission: 1
             }
         },
         methods: {
-            has_changed: function () {
-                this.unsaved_changed = true
-            },
-            cancel: function () {
-                // this.person.name = this.oldPerson.name
-                // this.person.email = this.oldPerson.email
-                // this.person.about = this.oldPerson.about
-            },
-            send_changes: function () {
-                this.$emit('save')
-                this.unsaved_changed = false
-                this.close()
-            },
+            // has_changed: function () {
+            //     this.unsaved_changed = true
+            // },
+            // cancel: function () {
+            //     // this.person.name = this.oldPerson.name
+            //     // this.person.email = this.oldPerson.email
+            //     // this.person.about = this.oldPerson.about
+            // },
+            // send_changes: function () {
+            //     this.$emit('save')
+            //     this.unsaved_changed = false
+            //     this.close()
+            // },
             close: function () {
                 if (this.unsaved_changed) {
                     window.alert('There are unsaved fields')
@@ -119,22 +149,47 @@
                 }
             },
             getUsers() {
-                this.users = [
-                    {name: 'John', id: 13}, {name: 'Len', id: 10}, {name: 'Laurens', id: 12}, {
-                        name: 'Mats',
-                        id: 4
-                    },
-
-                ]
+                this.$http.get('/core/profiles/').then((response) => {
+                    this.users = response.data
+                }).catch((error) => window.alert('Something went wrong getting the persons'))
             },
-            getReadPermissions() {
-                this.read = [{name: 'John', id: 13}, {name: 'Len', id: 10}, {name: 'Laurens', id: 12}, {
-                    name: 'Mats',
-                    id: 4
-                }];
+            getPermissions() {
+                this.$http.get('/core/permission/?dataset_id=' + this.dataset.id.toString()).then((response) => {
+                    this.read = response.data.read
+                    this.write = response.data.write
+                    console.log('lol')
+                }).catch((error) => window.alert('Something went wrong getting the permissions'))
             },
-            getWritePermissions() {
-                this.write = [{name: 'Stan', id: 1}, {name: 'Luckas', id: 2}];
+            deleteRead(id) {
+                this.$http.delete('/core/permission/?dataset_id=' + this.dataset.id.toString() + '&user_id=' + id.toString()).then(
+                    (response) => {
+                        this.write = this.write.filter(function (obj) {
+                            return obj.id !== id;
+                        });
+                    }
+                )
+            },
+            deleteWrite(id) {
+                this.$http.delete('/core/permission/?dataset_id=' + this.dataset.id.toString() + '&user_id=' + id.toString()).then(
+                    (response) => {
+                        this.write = this.write.filter(function (obj) {
+                            return obj.id !== id;
+                        });
+                    }
+                )
+            },
+            addUser() {
+                this.$http.post('/core/permission/', qs.stringify({
+                    user_id: this.selectedUser,
+                    dataset_id: this.dataset.id,
+                    permission_id: this.selectedPermission
+                }));
+                getPermissions();
+            },
+            saveChanges() {
+                this.$http.put('/data/',  qs.stringify(this.dataset)).then((response) => {
+                    console.log('lol')
+                }).catch((error) => window.alert('Something went wrong getting saving the dataset'))
             }
 
         },
@@ -151,9 +206,9 @@
             aboutIsOutOfRange: function () {
                 return this.aboutIsEmpty || this.MAX_LENGTH_ABOUT < this.dataset.description.length
             },
-            formIsNotValid: function () {
-                return this.nameIsEmpty || this.aboutIsOutOfRange || !this.unsaved_changed
-            }
+                formIsNotValid: function () {
+                    return this.nameIsEmpty || this.aboutIsOutOfRange
+                }
         }
     }
 

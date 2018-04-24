@@ -10,16 +10,20 @@ import * as filters from './filters'
 import { TOGGLE_SIDEBAR } from 'vuex-store/mutation-types'
 
 router.beforeEach((to, from, next) => {
-  if(!!!localStorage.getItem('token') && to.name !== 'Login'  && to.name !== 'Home'){
-    next('/login')
-  } else {
-    next()
-  }
+    if (!localStorage.getItem('token') && to.name !== 'Login') {
+        if (to.name !== 'Home') {
+            next({name: 'login'})
+        } else {
+            next()
+        }
+    } else {
+        next()
+    }
 })
 
 Vue.router = router
 Vue.use(VueAxios, axios)
-Vue.axios.defaults.baseURL = 'http://0.0.0.0:8000/';
+Vue.axios.defaults.baseURL = 'https://api.datawr.ml/';
 Vue.axios.defaults.headers.authorization = 'Token ' + localStorage.token
 // Vue.use(VueAuth, {
 //   auth: {

@@ -7,7 +7,6 @@ import {getters} from '../auth/index'
 Vue.use(Router)
 
 export default new Router({
-    mode: 'history', // Demo is living in GitHub.io, so required!
     linkActiveClass: 'is-active',
     scrollBehavior: () => ({y: 0}),
     routes: [

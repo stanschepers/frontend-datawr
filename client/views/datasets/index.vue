@@ -35,22 +35,12 @@
 <script>
     import DataCard from '../../components/data/dataCard'
     import vbSwitch from 'vue-bulma-switch'
-    import CardModal from '../components/modals/CardModal'
     import Vue from 'vue';
 
 
-    const CardModalComponent = Vue.extend(CardModal)
 
     const api = 'data/';
 
-    const openCardModal = (propsData = {
-        visible: true
-    }) => {
-        return new CardModalComponent({
-            el: document.createElement('div'),
-            propsData
-        })
-    }
 
     export default {
         components: {DataCard, vbSwitch},
@@ -69,13 +59,7 @@
             changeOrdening() {
                 this.view.ordeningList = !this.view.ordeningList
             },
-            openModalCard () {
-                const cardModal = this.cardModal || (this.cardModal = openCardModal({
-                    title: 'Modal title',
-                    url: this.$store.state.pkg.homepage
-                }))
-                cardModal.$children[0].active()
-            }
+
         },
         created() {
             this.$http.get(api).then((response) => {

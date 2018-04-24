@@ -44,7 +44,7 @@
         <div class="tile is-ancestor" v-if="showEdit">
             <div class="tile is-parent">
                 <article class="tile is-child box">
-                        <edit-table :dataset="myDataset"/>
+                    <edit-table :dataset="myDataset"></edit-table>
                     </article>
                 </div>
             </div>
@@ -185,7 +185,7 @@
         name: 'dataset',
         components: {
             History,
-            ColumnTransformations, DataCard, Chart, Collapse, CollapseItem, BestTable, Statistics, VueTables2},
+            ColumnTransformations, DataCard, Chart, Collapse, CollapseItem, BestTable, Statistics, VueTables2, editTable},
         data () {
             return {
                 showEdit: false,
