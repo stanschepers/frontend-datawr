@@ -228,7 +228,7 @@
                 heatlayout: [],
 
                 //download
-                quote: '"'
+                quote: '"',
                 delimiter: ','
 
             }
