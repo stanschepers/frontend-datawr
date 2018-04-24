@@ -39,7 +39,8 @@ const webpackConfig = merge(baseWebpackConfig, {
       'screw-ie8': true,
       sourceMap: true,
       compress: {
-        warnings: false
+        warnings: false,
+          comparisons: false,
       },
       output: {
         comments: false
