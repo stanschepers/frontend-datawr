@@ -64,15 +64,14 @@
                 new_axios.post(loginURL, qs.stringify({username: this.username, password: this.password})).then(
                     (response) => {
                         console.log(response);
-                        localStorage.setItem('token', response.data.token).then();
-                        setTimeout(this.$router.replace('/'), 3000)
+                        localStorage.setItem('token', response.data.token);
+                        setTimeout(this.$router.push('/'), 3000)
                     }
                 ).catch(
                     (error) => {
-                        this.error = true
+                        this.error = error
                     }
                 )
-
             },
             setToken(token) {
                 return new Promise()

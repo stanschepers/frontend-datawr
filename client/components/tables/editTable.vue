@@ -1,9 +1,14 @@
 <template>
-    <form>
+    <div>
         <div class="block">
+            <form @change="saveChanges">
+
             <div class="level is-mobile">
                 <div class="level-left">
                     <h3 class="subtitle level-item">Edit Dataset {{ dataset.name }}</h3>
+                </div>
+                <div class="level-right">
+                    <a @click="$emit('close')" class="delete"> </a>
                 </div>
             </div>
             <div class="field">
@@ -22,18 +27,19 @@
                     aboutRemaingChars}} / {{ MAX_LENGTH_ABOUT}} </p>
 
             </div>
-            <hr/>
-            <div class="field">
-                <div class="control level is-mobile">
-                    <div class="level-left">
-                        <div class="control level-item">
-                            <a @click="saveChanges" class="button is-primary" :disabled="formIsNotValid">
-                                Change
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        </form>
+            <!--<hr/>-->
+            <!--<div class="field">-->
+                <!--<div class="control level is-mobile">-->
+                    <!--<div class="level-left">-->
+                        <!--<div class="control level-item">-->
+                            <!--<a @click="saveChanges" class="button is-primary" :disabled="formIsNotValid">-->
+                                <!--Change-->
+                            <!--</a>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
             <div class="field">
                 <div class="control">
                     <table class="table is-fullwidth">
@@ -97,7 +103,7 @@
                 </div>
             </div>
         </div>
-    </form>
+    </div>
 
 </template>
 
@@ -163,7 +169,7 @@
             deleteRead(id) {
                 this.$http.delete('/core/permission/?dataset_id=' + this.dataset.id.toString() + '&user_id=' + id.toString()).then(
                     (response) => {
-                        this.write = this.write.filter(function (obj) {
+                        this.read = this.read.filter(function (obj) {
                             return obj.id !== id;
                         });
                     }
@@ -183,12 +189,16 @@
                     user_id: this.selectedUser,
                     dataset_id: this.dataset.id,
                     permission_id: this.selectedPermission
-                }));
-                getPermissions();
+                })).then( (res) => {
+                    this.getPermissions();
+                })
+
+
+
             },
             saveChanges() {
-                this.$http.put('/data/',  qs.stringify(this.dataset)).then((response) => {
-                    console.log('lol')
+                this.$http.put('/data/?dataset_id=' + this.dataset.id + '&name=' + this.dataset.name + '&description' + this.dataset.description).then((response) => {
+                    console.log('Saved')
                 }).catch((error) => window.alert('Something went wrong getting saving the dataset'))
             }
 

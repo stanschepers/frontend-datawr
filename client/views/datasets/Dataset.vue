@@ -16,7 +16,7 @@
                         </div>
                         <p>{{myDataset.description}}</p>
                         <hr/>
-                        <div class="level is-mobileis-fixed-bottom">
+                        <div class="level is-mobile is-fixed-bottom">
                             <div class="level-left">
                                 <div class="level-item">
                                     <a><i class="fa fa-heart"></i></a>
@@ -24,8 +24,27 @@
                                 <div class="level-item">
                                     <a @click="showEdit = !showEdit"><i class="fa fa-gear"></i></a>
                                 </div>
+                            </div>
+                            <div class="level-right">
                                 <div class="level-item">
-                                    <a @click="showEdit = !showEdit"><i class="fa fa-download"></i></a>
+                                    <div class="select is-small">
+                                        <select >
+                                            <option value="'"> ' </option>
+                                            <option value='"'> " </option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="level-item">
+                                    <div class="select is-small">
+                                        <select>
+                                            <option value=","> , </option>
+                                            <option value=";"> ; </option>
+                                            <option value="|"> | </option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="level-item">
+                                    <a :href="'https://api.datawr.ml/data/export/?dataset_id=' + id"><i class="fa fa-download"></i></a>
                                 </div>
                             </div>
                         </div>
@@ -44,7 +63,7 @@
         <div class="tile is-ancestor" v-if="showEdit">
             <div class="tile is-parent">
                 <article class="tile is-child box">
-                    <edit-table :dataset="myDataset"></edit-table>
+                    <edit-table :dataset="myDataset" v-on:close="showEdit=false"> </edit-table>
                     </article>
                 </div>
             </div>
@@ -216,7 +235,6 @@
         },
 
         methods: {
-
             updateHistogram() {
                 // plots
                 this.$http.get('data/histogram/' + '?dataset_id=' + this.id + '&column_name=' + this.histColumn.name).then((response) => {

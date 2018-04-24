@@ -2,6 +2,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import store from '../store/index'
+import axios from 'axios'
 import {getters} from '../auth/index'
 
 Vue.use(Router)
@@ -23,9 +24,15 @@ export default new Router({
         {
             name: 'Logout',
             path: '/logout',
-            beforeEnter (from, to, next) {
-                localStorage.removeItem('token')
-                next({name: 'Login'})
+            beforeEnter(from, to, next) {
+                axios.get('/logout/').then((res) => {
+                    localStorage.removeItem('token')
+                    next({name: 'Login'})
+                }).catch((error) => {
+                    localStorage.removeItem('token')
+                    next({name: 'Login'})
+                })
+
             }
         },
         {
