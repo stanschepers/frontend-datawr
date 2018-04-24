@@ -42,13 +42,13 @@
 
                 <h3>Expression:</h3>
 
-                <span v-for="expr in expressions">
+                <span v-for="(expr, index) in expressions">
                     {{expr.column.name}} <b>{{expr.operator.value}}</b> {{expr.value}}
-                    <span>
+                    {{ index }} / {{ expressions.length }}
+                    <span v-if="index < expressions.length - 1">
                         <select class="select is-small" v-model="expr.finalop">
-                            <option v-bind:value="'AND'">AND</option>
+                            <option  v-bind:value="'AND'">AND</option>
                             <option v-bind:value="'OR'">OR</option>
-
                         </select>
                     </span>
 
@@ -180,7 +180,7 @@
                 }],
 
 
-                expression: {column: null, operator: null, value: null, finalop: null},
+                expression: {column: null, operator: null, value: null, finalop: 'AND'},
                 expressions: [],
 
                 column: {name: null, type: null},
