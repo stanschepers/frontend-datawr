@@ -36,7 +36,7 @@
                                 </div>
                                 <div class="level-item">
                                     <div class="select is-small">
-                                        <select v-model="delim">
+                                        <select v-model="delimiter">
                                             <option value=","> , </option>
                                             <option value=";"> ; </option>
                                             <option value="|"> | </option>
