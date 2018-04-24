@@ -242,8 +242,6 @@
                 for (let i = 0; i < this.expressions.length; i++) {
                     final.push([this.expressions[i].column.name, this.expressions[i].operator.key, this.expressions[i].value])
                     final.push(this.expressions[i].finalop)
-
-
                 }
 
                 final.pop();
