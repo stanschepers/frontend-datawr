@@ -87,22 +87,6 @@
         created() {
 
 
-            this.$http.get('data/view/' + '?dataset_id=' + this.setid + '&offset=' + this.offset + '&amount=' + this.amount).then((response) => {
-                this.entries = response.data;
-
-            }).catch((error) => {
-                window.alert("Something went wrong with getting the datasets")
-            });
-
-            this.isloading = true
-            this.$http.get( 'data/entries/' + '?dataset_id=' + this.setid).then((response) => {
-                this.amountOfEntries = response.data
-
-            }).catch((error) => {
-                this.error = true
-            });
-
-
         },
 
         mounted() {

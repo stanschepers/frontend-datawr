@@ -1,10 +1,6 @@
 <template>
     <collapse accordion>
 
-        <collapse-item title="Parse date/time">
-
-        </collapse-item>
-
         <collapse-item title="Extract">
             <div class="field">
                 <div class="control is-grouped">

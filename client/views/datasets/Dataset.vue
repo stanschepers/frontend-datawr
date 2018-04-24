@@ -76,7 +76,7 @@
 
                     </best-table>-->
 
-                    <vue-tables2 ref="heyheyhey" :columntypes="columnTypes" :setid="myDataset.id" >
+                    <vue-tables2 ref="vuetables2" :columntypes="columnTypes" :setid="myDataset.id" >
 
 
                     </vue-tables2>
@@ -102,7 +102,7 @@
             <div class="tile is-parent is-5 is-tablet">
                 <article class="tile is-child box">
 
-                    <history ref="hoihoihoi" :setid="myDataset.id">
+                    <history ref="historyref" :setid="myDataset.id">
 
                     </history>
 
@@ -293,8 +293,15 @@
 
             updateParent() {
 
-                this.$refs['heyheyhey'].update()
-                this.$refs['hoihoihoi'].update()
+                this.$http.get('data/types/' + '?dataset_id=' + this.id).then((response) => {
+                    this.columnTypes = response.data;
+
+                }).catch((error) => {
+                    window.alert("Something went wrong with getting the datasets")
+                });
+
+                this.$refs['vuetables2'].update()
+                this.$refs['historyref'].update()
 
             }
 
