@@ -7,10 +7,10 @@
                         <i aria-hidden="true" class="fa fa-line-chart"></i>
                       </span>&nbsp;View
         </card-footer-item>
-        <card-footer-item class="has-text-dark" slot="footer" element='link' :to="{name: 'Dataset', params:{id: item.id}}">
+        <card-footer-item class="has-text-danger" slot="footer" element='link' :to="{name: 'Dataset', params:{id: item.id}}">
                   <span class="icon is-small">
-                    <i aria-hidden="true" class="fa fa-gear"></i>
-                  </span>&nbsp;&nbsp;Settings
+                    <i aria-hidden="true" class="fa fa-heart"></i>
+                  </span>&nbsp;&nbsp;Favorite
         </card-footer-item>
     </base-card>
 </template>

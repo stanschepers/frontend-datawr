@@ -14,7 +14,6 @@
                     <input disabled class="input" maxlength="63" v-model="person.username" type="text" name="name"
                            placeholder="First Name"/>
                 </div>
-                <p class="help is-danger" v-if="firstNameIsEmpty">First Name can not be empty</p>
             </div>
             <div class="field">
                 <div class="control">
@@ -77,13 +76,15 @@
 
             },
             save() {
-                this.$http.put('/core/profile/', qs.stringify(this.person)).then(
-                    (response) => {
-                        console.log('yeeey')
-                    }
-                ).catch((err) => {
-                    console.log('ooooh')
-                })
+                if (!this.formIsNotValid) {
+                    this.$http.put('/core/profile/', qs.stringify(this.person)).then(
+                        (response) => {
+                            console.log('yeeey')
+                        }
+                    ).catch((err) => {
+                        console.log('ooooh')
+                    })
+                }
             }
             // deleteAccount () {
             //     this.$http.delete(api1)
@@ -114,7 +115,7 @@
                 return this.aboutIsEmpty || this.MAX_LENGTH_ABOUT < this.person.about.length
             },
             formIsNotValid: function () {
-                this.aboutIsOutOfRange || this.emailIsEmpty
+                this.aboutIsOutOfRange || this.emailIsEmpty || this.firstNameIsEmpty || this.lastNameIsEmpty
             }
         }
     }

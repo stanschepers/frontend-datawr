@@ -3,7 +3,7 @@
         <figure class="media-left">
             <p class="image is-64x64">
                 <img class="profile_pic"
-                     src="https://images.unsplash.com/photo-1504455583697-3a9b04be6397?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=84156decc9820febd8d1910d77658cf6&auto=format&fit=crop&h=256&w=256&q=70"/>
+                     src=""/>
             </p>
         </figure>
         <div class="media-content">
