@@ -359,7 +359,6 @@
 
             manageCsvOrZip:function() {
 
-                console.log(this.file.type);
 
                 if (this.file.type === 'text/csv' || this.file.type === 'application/vnd.ms-excel') {
 
@@ -412,15 +411,12 @@
 
                     if (response.data['success']){
 
-                        console.log('SUCCESS, euy!');
                     }
                     else {
-                        console.log('Not good, boo!');
                         this.joinData = response.data;
                     }
                 })
                     .catch(function(){
-                        console.log('FAILURE!!');
                     });
 
             },
@@ -448,7 +444,6 @@
                 else selection = this.selection2;
 
                 if(selection === null) return null;
-                console.log(selection);
 
                 if(type === 'col'){
                     return this.joinData[this.joinData.findIndex(table => table.name === selection)].columns
@@ -480,11 +475,9 @@
 
                             if (response.data['success']){
 
-                                console.log('SUCCESS, euy!');
                             }
                         })
                             .catch(function(){
-                                console.log('FAILURE!!');
                             });
 
                     }
@@ -517,16 +510,13 @@
 
                     if (response.data['success']){
 
-                        console.log('SUCCESS, euy!');
                     }
                     else {
-                        console.log('Not good, boo!');
                         this.joinData.push(response.data);
 
                     }
                 })
                     .catch(function(){
-                        console.log('FAILURE!!');
                     });
 
             }

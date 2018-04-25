@@ -75,14 +75,12 @@
                     <!--<best-table :columntypes="columnTypes" :setid="myDataset.id">
 
                     </best-table>-->
-                    <div class="table-container">
 
-                        <vue-tables2 :columntypes="columnTypes" :setid="myDataset.id">
+                    <vue-tables2 ref="vuetables2" :columntypes="columnTypes" :setid="myDataset.id" >
 
 
-                        </vue-tables2>
+                    </vue-tables2>
 
-                    </div>
 
                 </article>
             </div>
@@ -93,7 +91,7 @@
             <div class="tile is-parent is-two-thirds">
                 <article class="tile is-child box">
 
-                    <column-transformations :columntypes="columnTypes" :setid="myDataset.id">
+                    <column-transformations :columntypes="columnTypes" :setid="myDataset.id" v-on:update="updateParent">
 
                     </column-transformations>
 
@@ -101,10 +99,10 @@
             </div>
 
 
-            <div class="tile is-parent is-5">
+            <div class="tile is-parent is-5 is-tablet">
                 <article class="tile is-child box">
 
-                    <history :setid="myDataset.id">
+                    <history ref="historyref" :setid="myDataset.id">
 
                     </history>
 
@@ -140,7 +138,8 @@
             <div class="tile is-parent">
             <article class="tile is-child box">
                 <h4 class="title">Heatmap</h4>
-                <div class="field is-horizontal is-grouped">
+
+                <div class="field">
                     <div class="control">
                         <label class="label">Select label</label>
                         <div class="select">
@@ -150,6 +149,10 @@
 
                         </div>
                     </div>
+                </div>
+
+                <div class="field is-horizontal is-grouped">
+
                     <div class="control">
                         <label class="label">Select longitude</label>
                         <div class="select">
@@ -186,18 +189,13 @@
 </template>
 
 <script>
-    import DataCard from '../../components/data/dataCard'
-    import Chart from 'vue-bulma-chartjs'
     import { Collapse, Item as CollapseItem } from 'vue-bulma-collapse'
-    import BestTable from '../tables/BestTable'
     import ColumnTransformations  from '../tables/ColumnTransformations'
     import Statistics from './Statistics'
     import History from '../tables/History'
     import Plotly from 'plotly.js'
 
     import VueTables2 from '../tables/VueTable'
-
-
     import editTable from '../../components/tables/editTable'
 
     const api = 'data/'
@@ -206,9 +204,10 @@
         name: 'dataset',
         components: {
             History,
-            ColumnTransformations, DataCard, Chart, Collapse, CollapseItem, BestTable, Statistics, VueTables2, editTable},
+            ColumnTransformations, Collapse, CollapseItem, Statistics, VueTables2, editTable},
         data () {
             return {
+
                 showEdit: false,
                 myDataset: null,
                 max: null,
@@ -242,7 +241,7 @@
         methods: {
             updateHistogram() {
                 // plots
-                this.$http.get('data/histogram/' + '?dataset_id=' + this.id + '&column_name=' + this.histColumn.name).then((response) => {
+                this.$http.get('data/histogram/' + '?dataset_id=' + this.id + '&column=' + this.histColumn.name).then((response) => {
                     this.histdata.push(response.data);
                     let layout = {
                         autosize: true,
@@ -290,14 +289,29 @@
 
                 if (this.column_long !== null && this.column_lat != null && this.column_label !== null) this.updateHeatmap();
 
+            },
+
+            updateParent() {
+
+                this.$http.get('data/types/' + '?dataset_id=' + this.id).then((response) => {
+                    this.columnTypes = response.data;
+
+                }).catch((error) => {
+                    window.alert("Something went wrong with getting the datasets")
+                });
+
+                this.$refs['vuetables2'].update()
+                this.$refs['historyref'].update()
+
             }
+
+
         },
 
 
         created() {
             this.isloading = true
             this.$http.get(api + '?dataset_id=' + this.id).then((response) => {
-                console.log(response.data)
                 this.myDataset = response.data;
             }).catch((error) => {
                 this.error = true
@@ -305,7 +319,6 @@
 
             this.$http.get('data/types/' + '?dataset_id=' + this.id).then((response) => {
                 this.columnTypes = response.data;
-                console.log(response.data)
 
             }).catch((error) => {
                 window.alert("Something went wrong with getting the datasets")
@@ -320,21 +333,9 @@
 <style scoped lang="scss">
     @import "~cool-checkboxes-for-bulma.io";
 
-    .table-responsive {
-        display: block;
-        width: 100%;
-        min-height: .01%;
-        overflow-x: auto;
-    }
+    .tile {
+        overflow-x: scroll;
 
-
-    .table-container {
-        margin: auto;
-        display: block;
-        overflow-x: auto;
-        overflow-y: hidden;
-        width: inherit;
-        max-width: 100%;
     }
 
 </style>

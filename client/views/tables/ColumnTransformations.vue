@@ -22,27 +22,27 @@
             </div>
 
                 <div class="block" title="Table changes" v-bind:class="{'is-hidden' : selected !== 'general'}">
-                   <general :columntypes="columntypes" :setid="setid">
+                   <general :columntypes="columntypes" :setid="setid" v-on:update="updateParent">
                    </general>
                 </div>
 
                 <div class="block" title="Numerical transformations" v-bind:class="{'is-hidden' : selected !== 'numerical'}">
-                    <numerical :columntypes="columntypes" :setid="setid">
+                    <numerical :columntypes="columntypes" :setid="setid" v-on:update="updateParent">
                     </numerical>
                 </div>
 
                 <div class="block" title="Date | time parsing" v-bind:class="{'is-hidden' : selected !== 'datetime'}">
-                    <datetime :columntypes="columntypes" :setid="setid">
+                    <datetime :columntypes="columntypes" :setid="setid" v-on:update="updateParent">
                     </datetime>
                 </div>
 
                 <div class="block" title="One-hot-encoding" v-bind:class="{'is-hidden' : selected !== 'categorical'}">
-                    <categorical :columntypes="columntypes" :setid="setid">
+                    <categorical :columntypes="columntypes" :setid="setid" v-on:update="updateParent">
                     </categorical>
                 </div>
 
                 <div class="block" title="Find-and-replace" v-bind:class="{'is-hidden' : selected !== 'text'}">
-                    <findreplace :columntypes="columntypes" :setid="setid">
+                    <findreplace :columntypes="columntypes" :setid="setid" v-on:update="updateParent">
                     </findreplace>
                 </div>
 
@@ -83,6 +83,12 @@
                 if(this.activeStep <= 1) this.activeStep =1;
                 if(this.activeStep >= 3) this.activeStep =3;
             },
+
+            updateParent() {
+
+                this.$emit('update');
+
+            }
 
 
         },

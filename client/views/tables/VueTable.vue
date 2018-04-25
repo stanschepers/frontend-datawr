@@ -1,8 +1,7 @@
 <template>
-        <v-server-table :url="api_url" :columns="columnnames" :options="options">
+        <v-server-table ref="table" :url="api_url" :columns="columnnames" :options="options">
 
         </v-server-table>
-
 
 </template>
 
@@ -51,6 +50,11 @@
 
         methods: {
 
+            update() {
+                console.log("Yes, ik wordt geupdate! ");
+                this.$refs.table.refresh();
+            }
+
 
         },
 
@@ -70,10 +74,9 @@
             api_url() {
 
                 let url = '/data/view/' + '?dataset_id=' + this.setid + '&offset=' + this.offset + '&amount=' + this.amount;
-                console.log(url);
 
                 return url;
-            }
+            },
 
 
 
@@ -84,64 +87,25 @@
         created() {
 
 
-            this.$http.get('data/view/' + '?dataset_id=' + this.setid + '&offset=' + this.offset + '&amount=' + this.amount).then((response) => {
-                this.entries = response.data;
-
-            }).catch((error) => {
-                window.alert("Something went wrong with getting the datasets")
-            });
-
-            this.isloading = true
-            this.$http.get( 'data/entries/' + '?dataset_id=' + this.setid).then((response) => {
-                this.amountOfEntries = response.data
-
-            }).catch((error) => {
-                this.error = true
-            });
-
-
         },
 
         mounted() {
-
-
-
-
-        }
+        },
 
     }
 </script>
 
 <style scoped type="text/css" lang="scss">
-    .table {
-        width: 40px;
-        min-height: .01%;
-        overflow-x: scroll;
-        text-align: right;
-    }
 
-    .container-content {
 
-        width: 1170px;
-        height: auto;
-        overflow-x: scroll;
-        overflow-y: visible;
 
-        .table-header {
-            width: inherit;
-            overflow: hidden;
-            div {
-                width: 100%;
-            }
-        }
-    }
 
-    .VueTables__sortable {
-        cursor: pointer;
-    }
+    .table-responsive {
+            overflow-x: auto;
+            overflow-y: hidden;
+            max-width: 100%;
 
-    .VueTables__search-field {
-        display: flex;
+
     }
 
 
