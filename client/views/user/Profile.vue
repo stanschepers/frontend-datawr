@@ -4,8 +4,7 @@
             <div v-if="person" class="tile is-child box person-view">
                 <person-view :person="person" :me="true" :showEdit="showEdit" v-on:toggleShowEdit="toggleShowEdit"/>
             </div>
-            <div v-if="showEdit" class="tile is-child box animated"
-                 :class="{ slideInLeft: showEdit, slideOutLeft: !showEdit && !firstTime }">
+            <div v-if="showEdit" class="tile is-child box animated">
                 <person-edit :person="person" v-on:close="toggleShowEdit" v-on:save="savedEdit"/>
             </div>
         </div>

@@ -2,18 +2,20 @@
     <article class="media">
         <figure class="media-left">
             <p class="image is-64x64">
-                <img class="profile_pic" src="https://images.unsplash.com/photo-1504455583697-3a9b04be6397?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=84156decc9820febd8d1910d77658cf6&auto=format&fit=crop&h=256&w=256&q=70"/>
+                <img class="profile_pic"
+                     src="https://images.unsplash.com/photo-1504455583697-3a9b04be6397?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=84156decc9820febd8d1910d77658cf6&auto=format&fit=crop&h=256&w=256&q=70"/>
             </p>
         </figure>
         <div class="media-content">
             <div class="content">
                 <p>
-                    <strong>{{ person.name }}</strong>
-                    <small>{{ person.title }}</small>
-                    <small v-if="me">(me)</small>
-                    <br>
-                     {{ person.about }}
-                    <br>
+                    <strong >{{ person.first_name }} {{ person.last_name }}</strong>
+                    <small > {{ person.username }}</small>
+
+                    <a href="https://api.datawr.ml/admin/"><small class="tag" v-if="person.is_superuser">Admin</small> </a>
+                    <br/>
+                    {{ person.about }}
+                    <br/>
                 </p>
             </div>
             <nav class="level is-mobile">
@@ -31,7 +33,7 @@
             </nav>
         </div>
         <!--<div v-if="!showEdit" class="media-right">-->
-            <!--&lt;!&ndash;<a @click="toggleShowEdit"> <span class="icon is-small has-text-success"><i class="fa fa-user-plus"></i></span> </a>&ndash;&gt;-->
+        <!--&lt;!&ndash;<a @click="toggleShowEdit"> <span class="icon is-small has-text-success"><i class="fa fa-user-plus"></i></span> </a>&ndash;&gt;-->
         <!--</div>-->
     </article>
 </template>
@@ -58,6 +60,7 @@
 
 <style lang="scss" scoped>
     @import "~bulma/sass/utilities/variables";
+
     .profile_pic {
         border-radius: 50%;
     }

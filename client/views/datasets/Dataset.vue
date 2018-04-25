@@ -45,7 +45,7 @@
                                     </div>
                                 </div>
                                 <div class="level-item">
-                                    <a :href="'https://api.datawr.ml/data/export/?dataset_id=' + id + '&sep=' + delimiter"><i class="fa fa-download"></i></a>
+                                    <a :href="'https://api.datawr.ml/data/export/?dataset_id=' + myDataset.id + '&sep=' + delimiter"><i class="fa fa-download"></i></a>
                                 </div>
                             </div>
                         </div>
@@ -144,7 +144,7 @@
                     <div class="control">
                         <label class="label">Select label</label>
                         <div class="select">
-                            <select v-on:change="checkIfFilledIn()" v-model="column_label">
+                            <select v-on:change="checkIfFilledIn" v-model="column_label">
                                 <option v-for="heading in columnTypes" v-bind:value="heading">{{heading.name}}</option>
                             </select>
 
@@ -153,7 +153,7 @@
                     <div class="control">
                         <label class="label">Select longitude</label>
                         <div class="select">
-                            <select v-on:change="checkIfFilledIn()" v-model="column_long">
+                            <select v-on:change="checkIfFilledIn" v-model="column_long">
                                 <option v-for="heading in columnTypes" v-bind:value="heading">{{heading.name}}</option>
                             </select>
 
@@ -162,7 +162,7 @@
                     <div class="control">
                         <label class="label">Select latitude</label>
                         <div class="select">
-                            <select v-on:change="checkIfFilledIn()" v-model="column_lat">
+                            <select v-on:change="checkIfFilledIn" v-model="column_lat">
                                 <option v-for="heading in columnTypes" v-bind:value="heading">{{heading.name}}</option>
                             </select>
 
