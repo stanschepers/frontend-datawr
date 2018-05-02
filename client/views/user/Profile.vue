@@ -31,25 +31,12 @@
     import PersonView from 'components/user/Person'
     import PersonEdit from '../../components/user/PersonEdit'
     import Vue from 'vue'
-    import Message from 'vue-bulma-message'
+    import {openMessage} from "../../utils";
 
-    const MessageComponent = Vue.extend(Message)
 
     const api1 = '/core/profile/'
 
-    const openMessage = (propsData = {
-        title: '',
-        message: '',
-        type: '',
-        direction: 'right',
-        duration: 1500,
-        container: '.messages'
-    }) => {
-        return new MessageComponent({
-            el: document.createElement('div'),
-            propsData
-        })
-    };
+
 
     export default {
         components: {PersonEdit, PersonView},

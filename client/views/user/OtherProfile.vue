@@ -18,24 +18,12 @@
 <script>
     /* eslint-disable indent */
     import PersonView from 'components/user/Person'
+    import {openMessage} from "../../utils";
 
-    const MessageComponent = Vue.extend(Message)
 
     const api2 = '/core/profiles/'
 
-    const openMessage = (propsData = {
-        title: '',
-        message: '',
-        type: '',
-        direction: 'right',
-        duration: 1500,
-        container: '.messages'
-    }) => {
-        return new MessageComponent({
-            el: document.createElement('div'),
-            propsData
-        })
-    }
+
 
     export default {
         components: {PersonView},

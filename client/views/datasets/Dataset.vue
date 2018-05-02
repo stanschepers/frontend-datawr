@@ -24,28 +24,32 @@
                                 <div class="level-item">
                                     <a @click="showEdit = !showEdit"><i class="fa fa-gear"></i></a>
                                 </div>
+                                <div class="level-item">
+                                    <a @click="deleteThis"><i class="fa fa-trash"></i></a>
+                                </div>
                             </div>
                             <div class="level-right">
                                 <div class="level-item">
                                     <!--<div class="select is-small">-->
-                                        <!--<select v-model="quote">-->
-                                            <!--<option value="'"> ' </option>-->
-                                            <!--<option value='"'> " </option>-->
-                                        <!--</select>-->
+                                    <!--<select v-model="quote">-->
+                                    <!--<option value="'"> ' </option>-->
+                                    <!--<option value='"'> " </option>-->
+                                    <!--</select>-->
                                     <!--</div>-->
-                                    <small> Delimiter: </small>
+                                    <small> Delimiter:</small>
                                 </div>
                                 <div class="level-item">
                                     <div class="select is-small">
                                         <select v-model="delimiter">
-                                            <option value=","> , </option>
-                                            <option value="%3B"> ; </option>
-                                            <option value="|"> | </option>
+                                            <option value=","> ,</option>
+                                            <option value="%3B"> ;</option>
+                                            <option value="|"> |</option>
                                         </select>
                                     </div>
                                 </div>
                                 <div class="level-item">
-                                    <a :href="'https://api.datawr.ml/data/export/?dataset_id=' + myDataset.id + '&sep=' + delimiter"><i class="fa fa-download"></i></a>
+                                    <a :href="'https://api.datawr.ml/data/export/?dataset_id=' + myDataset.id + '&sep=' + delimiter"><i
+                                            class="fa fa-download"></i></a>
                                 </div>
                             </div>
                         </div>
@@ -54,17 +58,17 @@
                 <div class="tile is-parent">
                     <div class="tile is-child box">
 
-                    <statistics :columntypes="columnTypes" :setid="myDataset.id">
+                        <statistics :columntypes="columnTypes" :setid="myDataset.id">
 
-                    </statistics>
+                        </statistics>
 
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="tile is-ancestor" v-if="showEdit">
-            <div class="tile is-parent">
-                <article class="tile is-child box">
-                    <edit-table :dataset="myDataset" v-on:close="showEdit=false"> </edit-table>
+            <div class="tile is-ancestor" v-if="showEdit">
+                <div class="tile is-parent">
+                    <article class="tile is-child box">
+                        <edit-table :dataset="myDataset" v-on:close="showEdit=false"></edit-table>
                     </article>
                 </div>
             </div>
@@ -72,125 +76,142 @@
                 <div class="tile is-parent">
                     <article class="tile is-child box animate slideInLeft">
 
-                    <!--<best-table :columntypes="columnTypes" :setid="myDataset.id">
+                        <!--<best-table :columntypes="columnTypes" :setid="myDataset.id">
 
-                    </best-table>-->
+                        </best-table>-->
 
-                    <vue-tables2 ref="vuetables2" :columntypes="columnTypes" :setid="myDataset.id" >
-
-
-                    </vue-tables2>
+                        <vue-tables2 ref="vuetables2" :columntypes="columnTypes" :setid="myDataset.id">
 
 
-                </article>
+                        </vue-tables2>
+
+
+                    </article>
+                </div>
+            </div>
+
+
+            <div class="tile is-ancestor">
+                <div class="tile is-parent is-two-thirds">
+                    <article class="tile is-child box">
+
+                        <column-transformations :columntypes="columnTypes" :setid="myDataset.id"
+                                                v-on:update="updateParent">
+
+                        </column-transformations>
+
+                    </article>
+                </div>
+
+
+                <div class="tile is-parent is-5 is-tablet">
+                    <article class="tile is-child box">
+
+                        <history ref="historyref" :setid="myDataset.id">
+
+                        </history>
+
+
+                    </article>
+                </div>
+
+            </div>
+
+
+            <div class="tile is-ancestor">
+
+
+                <div class="tile is-parent is-5">
+                    <article class="tile is-child box">
+                        <h4 class="title">Histogram</h4>
+                        <div class="field">
+                            <div class="control">
+                                <label class="label">Select column</label>
+                                <div class="select">
+                                    <select v-on:change="updateHistogram()" v-model="histColumn">
+                                        <option v-for="heading in columnTypes" v-bind:value="heading">{{heading.name}}
+                                        </option>
+                                    </select>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="is-size-6-mobile" id="hist"></div>
+
+                    </article>
+                </div>
+
+                <div class="tile is-parent">
+                    <article class="tile is-child box">
+                        <h4 class="title">Heatmap</h4>
+
+                        <div class="field">
+                            <div class="control">
+                                <label class="label">Select label</label>
+                                <div class="select">
+                                    <select v-on:change="checkIfFilledIn" v-model="column_label">
+                                        <option v-for="heading in columnTypes" v-bind:value="heading">{{heading.name}}
+                                        </option>
+                                    </select>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="field is-horizontal is-grouped">
+
+                            <div class="control">
+                                <label class="label">Select longitude</label>
+                                <div class="select">
+                                    <select v-on:change="checkIfFilledIn" v-model="column_long">
+                                        <option v-for="heading in columnTypes" v-bind:value="heading">{{heading.name}}
+                                        </option>
+                                    </select>
+
+                                </div>
+                            </div>
+                            <div class="control">
+                                <label class="label">Select latitude</label>
+                                <div class="select">
+                                    <select v-on:change="checkIfFilledIn" v-model="column_lat">
+                                        <option v-for="heading in columnTypes" v-bind:value="heading">{{heading.name}}
+                                        </option>
+                                    </select>
+
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="is-size-6-mobile" id="heat"></div>
+
+                    </article>
+                </div>
+            </div>
+            <div class="tile is-ancestor">
+
+                <div class="tile is-parent ">
+                    <article class="tile is-child box">
+                        <column-algoritms :my-dataset="myDataset" :column-types="columnTypes" :id="id"> </column-algoritms>
+                    </article>
+                </div>
             </div>
         </div>
-
-
-        <div class="tile is-ancestor">
-            <div class="tile is-parent is-two-thirds">
-                <article class="tile is-child box">
-
-                    <column-transformations :columntypes="columnTypes" :setid="myDataset.id" v-on:update="updateParent">
-
-                    </column-transformations>
-
-                </article>
-            </div>
-
-
-            <div class="tile is-parent is-5 is-tablet">
-                <article class="tile is-child box">
-
-                    <history ref="historyref" :setid="myDataset.id">
-
-                    </history>
-
-
-                </article>
-            </div>
-
-        </div>
-
-
-        <div class="tile is-ancestor">
-
-
-            <div class="tile is-parent is-5">
-            <article class="tile is-child box">
-                <h4 class="title">Histogram</h4>
-                <div class="field">
-                    <div class="control">
-                        <label class="label">Select column</label>
-                        <div class="select">
-                            <select v-on:change="updateHistogram()" v-model="histColumn">
-                                <option v-for="heading in columnTypes" v-bind:value="heading">{{heading.name}}</option>
-                            </select>
-
-                        </div>
-                    </div>
-                </div>
-                <div class="is-size-6-mobile" id="hist"></div>
-
-            </article>
-            </div>
-
-            <div class="tile is-parent">
-            <article class="tile is-child box">
-                <h4 class="title">Heatmap</h4>
-
-                <div class="field">
-                    <div class="control">
-                        <label class="label">Select label</label>
-                        <div class="select">
-                            <select v-on:change="checkIfFilledIn" v-model="column_label">
-                                <option v-for="heading in columnTypes" v-bind:value="heading">{{heading.name}}</option>
-                            </select>
-
-                        </div>
-                    </div>
-                </div>
-
-                <div class="field is-horizontal is-grouped">
-
-                    <div class="control">
-                        <label class="label">Select longitude</label>
-                        <div class="select">
-                            <select v-on:change="checkIfFilledIn" v-model="column_long">
-                                <option v-for="heading in columnTypes" v-bind:value="heading">{{heading.name}}</option>
-                            </select>
-
-                        </div>
-                    </div>
-                    <div class="control">
-                        <label class="label">Select latitude</label>
-                        <div class="select">
-                            <select v-on:change="checkIfFilledIn" v-model="column_lat">
-                                <option v-for="heading in columnTypes" v-bind:value="heading">{{heading.name}}</option>
-                            </select>
-
-                        </div>
-                    </div>
-
-                </div>
-                <div class="is-size-6-mobile" id="heat"></div>
-
-            </article>
-            </div>
+        <div v-if="error">
+            <p class="has-text-danger">
+                There went something wrong getting your dataset.
+            </p>
         </div>
     </div>
-    <div v-if="error">
-        <p class="has-text-danger">
-            There went something wrong getting your dataset.
-        </p>
-    </div>
-</div>
 
 </template>
 
 <script>
-    import { Collapse, Item as CollapseItem } from 'vue-bulma-collapse'
-    import ColumnTransformations  from '../tables/ColumnTransformations'
+    import {Collapse, Item as CollapseItem} from 'vue-bulma-collapse'
+    import ColumnTransformations from '../tables/ColumnTransformations'
+    import ColumnAlgoritms from '../tables/ColumnAlgoritms'
+
+    import Col from '../tables/ColumnTransformations'
+
     import Statistics from './Statistics'
     import History from '../tables/History'
     import Plotly from 'plotly.js'
@@ -204,8 +225,10 @@
         name: 'dataset',
         components: {
             History,
-            ColumnTransformations, Collapse, CollapseItem, Statistics, VueTables2, editTable},
-        data () {
+            ColumnTransformations, Collapse, CollapseItem, Statistics, VueTables2, editTable,
+            ColumnAlgoritms
+        },
+        data() {
             return {
 
                 showEdit: false,
@@ -234,9 +257,7 @@
             }
         },
 
-        computed: {
-
-        },
+        computed: {},
 
         methods: {
             updateHistogram() {
@@ -303,8 +324,15 @@
                 this.$refs['vuetables2'].update()
                 this.$refs['historyref'].update()
 
+            },
+            deleteThis() {
+                if (confirm('Delete this dataset?')) {
+                    this.$http.delete('/data/?dataset_id=' + this.id).then((response) => {
+                        console.log('Deleted')
+                        this.$router.push('/data/all');
+                    }).catch((error) => window.alert('Something went wrong getting deleting the dataset'))
+                }
             }
-
 
         },
 

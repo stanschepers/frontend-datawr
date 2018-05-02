@@ -8,6 +8,7 @@ import router from './router'
 import store from './store'
 import * as filters from './filters'
 import { TOGGLE_SIDEBAR } from 'vuex-store/mutation-types'
+import Message from 'vue-bulma-message'
 
 router.beforeEach((to, from, next) => {
     if (!localStorage.getItem('token') && to.name !== 'Login') {
@@ -42,7 +43,12 @@ Vue.axios.defaults.headers.authorization = 'Token ' + localStorage.token
 // })
 
 
-Vue.use(NProgress)
+Vue.use(NProgress);
+
+
+export const MessageComponent = Vue.extend(Message);
+
+
 
 // Enable devtools
 Vue.config.devtools = true

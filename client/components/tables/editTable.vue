@@ -102,6 +102,13 @@
                     </table>
                 </div>
             </div>
+            <!--<div class="field">-->
+                <!--<div class="control">-->
+                    <!--<small class="has-text-danger"> Danger Zone </small>-->
+                    <!--<hr>-->
+                    <!--<a @click="deleteThis" class="button is-danger">Delete </a>-->
+                <!--</div>-->
+            <!--</div>-->
         </div>
     </div>
 
@@ -196,9 +203,15 @@
 
             },
             saveChanges() {
-                this.$http.put('/data/?dataset_id=' + this.dataset.id + '&name=' + this.dataset.name + '&description' + this.dataset.description).then((response) => {
+                this.$http.put('/data/?dataset_id=' + this.dataset.id + '&name=' + this.dataset.name + '&description=' + this.dataset.description).then((response) => {
                     console.log('Saved')
                 }).catch((error) => window.alert('Something went wrong getting saving the dataset'))
+            },
+            deleteThis() {
+                this.$http.delete('/data/?dataset_id=' + this.dataset.id).then((response) => {
+                    console.log('Deleted')
+                    this.$router.push('/data/all');
+                }).catch((error) => window.alert('Something went wrong getting deleting the dataset'))
             }
 
         },
