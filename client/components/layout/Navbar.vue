@@ -2,9 +2,9 @@
     <nav class="level is-white navbar app-navbar is-mobile animated" role="navigation" aria-label="main navigation"
          :class="{ slideInDown: show, slideOutDown: !show }">
         <div class="level-item">
-                        <router-link to="/" class="has-text-centered">
-            <i class="fa fa-heart  has-text-danger"></i> &nbsp;
-            <span class="has-text-dark is-hidden-touch">Favorites</span>
+                        <router-link to="/data/create" class="has-text-centered">
+            <i class="fa fa-plus-circle fa-lg  has-text-grey-dark"></i> &nbsp;
+            <span class="has-text-dark is-hidden-touch">Add Dataset </span>
                         </router-link>
         </div>
         <div class="level-item">
@@ -27,10 +27,10 @@
                         </router-link>
         </div>
         <div class="level-item">
-                        <router-link to="/settings" class="has-text-centered">
-            <i class="fa fa-gear fa-lg has-text-grey-light"></i> &nbsp;
-            <span class="has-text-dark is-hidden-touch">Settings</span>
-                        </router-link>
+                        <a target="_blank" href="https://api.datawr.ml/admin/" class="has-text-centered">
+            <i class="fa fa-cogs fa-lg has-text-grey-light"></i> &nbsp;
+            <span class="has-text-dark is-hidden-touch">Admin</span>
+                        </a>
         </div>
     </nav>
 </template>

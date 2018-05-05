@@ -19,7 +19,8 @@
                         <div class="level is-mobile is-fixed-bottom">
                             <div class="level-left">
                                 <div class="level-item">
-                                    <a><i class="fa fa-heart"></i></a>
+                                    <a v-if="myDataset.favored" @click="dislike"><i class="fa fa-heart has-text-danger"></i></a>
+                                    <a v-else @click="like"><i class="fa fa-heart"></i></a>
                                 </div>
                                 <div class="level-item">
                                     <a @click="showEdit = !showEdit"><i class="fa fa-gear"></i></a>
@@ -30,12 +31,23 @@
                             </div>
                             <div class="level-right">
                                 <div class="level-item">
-                                    <!--<div class="select is-small">-->
-                                    <!--<select v-model="quote">-->
-                                    <!--<option value="'"> ' </option>-->
-                                    <!--<option value='"'> " </option>-->
-                                    <!--</select>-->
-                                    <!--</div>-->
+                                    <small> Null:</small>
+                                </div>
+                                <div class="level-item">
+                                    <div class="select is-small" v-if="!show_input">
+                                        <select v-model="null_value" >
+                                            <option value="empty"> &lt;empty&gt; </option>
+                                            <option value=" "> &lt;space&gt; </option>
+                                            <option value="null"> null </option>
+                                            <option value="other"> other </option>
+                                        </select>
+
+                                    </div>
+                                    <div v-else>
+                                        <input maxlength="8" class="input is-small" type="text" v-model="null_value">
+                                    </div>
+                                </div>
+                                <div class="level-item">
                                     <small> Delimiter:</small>
                                 </div>
                                 <div class="level-item">
@@ -48,7 +60,7 @@
                                     </div>
                                 </div>
                                 <div class="level-item">
-                                    <a :href="'https://api.datawr.ml/data/export/?dataset_id=' + myDataset.id + '&sep=' + delimiter"><i
+                                    <a :href="'https://api.datawr.ml/data/export/?dataset_id=' + myDataset.id + '&sep=' + delimiter + '&null=' + null_value "><i
                                             class="fa fa-download"></i></a>
                                 </div>
                             </div>
@@ -68,7 +80,7 @@
             <div class="tile is-ancestor" v-if="showEdit">
                 <div class="tile is-parent">
                     <article class="tile is-child box">
-                        <edit-table :dataset="myDataset" v-on:close="showEdit=false"></edit-table>
+                        <edit-table :dataset="myDataset" v-on:close="showEdit=false"/>
                     </article>
                 </div>
             </div>
@@ -191,7 +203,7 @@
 
                 <div class="tile is-parent ">
                     <article class="tile is-child box">
-                        <column-algoritms :my-dataset="myDataset" :column-types="columnTypes" :id="id"> </column-algoritms>
+                        <column-algorithms :my-dataset="myDataset" :column-types="columnTypes" :id="id"> </column-algorithms>
                     </article>
                 </div>
             </div>
@@ -208,7 +220,7 @@
 <script>
     import {Collapse, Item as CollapseItem} from 'vue-bulma-collapse'
     import ColumnTransformations from '../tables/ColumnTransformations'
-    import ColumnAlgoritms from '../tables/ColumnAlgoritms'
+    import ColumnAlgorithms from '../tables/ColumnAlgorithms'
 
     import Col from '../tables/ColumnTransformations'
 
@@ -226,7 +238,14 @@
         components: {
             History,
             ColumnTransformations, Collapse, CollapseItem, Statistics, VueTables2, editTable,
-            ColumnAlgoritms
+            ColumnAlgorithms
+        },
+        watch: {
+            null_value(val){
+                if(val === 'other'){
+                    this.show_input = true
+                }
+            }
         },
         data() {
             return {
@@ -251,6 +270,8 @@
                 heatlayout: [],
 
                 //download
+                null_value: '',
+                show_input: false,
                 quote: '"',
                 delimiter: ','
 
@@ -332,6 +353,28 @@
                         this.$router.push('/data/all');
                     }).catch((error) => window.alert('Something went wrong getting deleting the dataset'))
                 }
+            },
+            like(){
+                this.$http.post('/data/likes/'+ this.myDataset.id + '/').then(
+                    (response) => {
+                        this.myDataset.favored = true
+                    }
+                ).catch(
+                    (error) => {
+                        window.alert('Something went wrong with liking the dataset')
+                    }
+                )
+            },
+            dislike(){
+                this.$http.delete('/data/likes/'+ this.myDataset.id + '/').then(
+                    (response) => {
+                        this.myDataset.favored = false
+                    }
+                ).catch(
+                    (error) => {
+                        window.alert('Something went wrong with liking the dataset')
+                    }
+                )
             }
 
         },

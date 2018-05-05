@@ -3,7 +3,7 @@
         <div class="level is-mobile box">
             <div class="level-left">
                 <div class="level-item">
-                    <a @click="changeOrdening" class="icon is-medium has-text-primary"><i class="fa fa-lg" v-bind:class="[view.ordeningList? 'fa-list': 'fa-th']"></i> </a>
+                    <a @click="view.showFavo = !view.showFavo" class="icon is-medium "><i class="fa fa-lg fa-heart" v-bind:class="[view.showFavo? 'has-text-danger': 'has-text-grey']"></i> </a>
                 </div>
                 <div class="level-item">
                 </div>
@@ -24,7 +24,7 @@
             </div>
         </div>
         <div class="columns is-multiline is-mobile">
-            <div class="column is-full-mobile is-one-third-tablet is-one-third-desktop" v-for="item in items"
+            <div class="column is-full-mobile is-one-third-tablet is-one-third-desktop" v-for="item in shownItems"
                  v-if="item.name">
                 <data-card :item="item"/>
             </div>
@@ -49,16 +49,22 @@
                 items: null,
                 switchOn: false,
                 view: {
-                    ordeningList: false
+                    showFavo: false
                 },
                 cardModal: null,
 
             }
         },
+        computed: {
+            shownItems(){
+                if(this.view.showFavo){
+                    return this.items.filter(function(obj) {
+                        return obj.favored
+                    })
+                } return this.items
+            }
+        },
         methods: {
-            changeOrdening() {
-                this.view.ordeningList = !this.view.ordeningList
-            },
 
         },
         created() {
@@ -68,10 +74,5 @@
                 window.alert("Something went wrong with getting the datasets")
             })
         }
-    }
-
-
-    function getItems() {
-
     }
 </script>

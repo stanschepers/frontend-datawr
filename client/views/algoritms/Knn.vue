@@ -1,5 +1,5 @@
 <template>
-    <p> {{ chosenColumns }} </p>
+    <p> {{ numberColumnTypes }} </p>
 </template>
 
 <script>
@@ -17,6 +17,13 @@
         },
         methods: {
 
+        },
+        computed: {
+            numberColumnTypes(){
+                return this.columnTypes.prototype.filter(function (obj) {
+                    return obj.type === 'bigint' || obj.type === 'double precision'
+                })
+            }
         }
     }
 </script>

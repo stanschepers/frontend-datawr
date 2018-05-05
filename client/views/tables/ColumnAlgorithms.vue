@@ -6,7 +6,7 @@
             <div class="level is-mobile">
                 <div class="level-left">
                     <div class="level-item">
-                        <span class="title level-item">Algoritms</span>
+                        <span class="title level-item">Algorithms</span>
                     </div>
                 </div>
             </div>
@@ -20,6 +20,7 @@
 
             <div class="block" title="KNN" v-bind:class="{'is-hidden' : selected !== 'knn'}">
                 <knn :my-dataset="myDataset" :columnTypes="columnTypes" :id="id"/>
+                ID: {{ id }}
             </div>
 
             <div class="block" title="Other" v-bind:class="{'is-hidden' : selected !== 'other'}">
@@ -34,7 +35,7 @@
 <script>
     import Knn from '../algoritms/Knn'
     export default {
-        name: "column-algoritms",
+        name: "column-algorithms",
         props: {
             myDataset: Object,
             columnTypes: Array,
