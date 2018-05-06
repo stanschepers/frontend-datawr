@@ -17,6 +17,25 @@
             </div>
             <div class="field">
                 <div class="control">
+                    <input  class="input" maxlength="63" v-model="person.old_password" type="password" name="old_password"
+                           placeholder="Old Password"/>
+                </div>
+            </div>
+            <div class="field">
+                <div class="control">
+                    <input  class="input" maxlength="63" v-model="person.new_password" type="password" name="new_password"
+                            placeholder="New Password"/>
+                </div>
+            </div>
+            <div class="field">
+                <div class="control">
+                    <input  class="input" maxlength="63" v-model="person.new_password2" type="password" name="new_password2"
+                           placeholder="New Password (Repeat)"/>
+                </div>
+            </div>
+            <p class="help is-danger" v-if="passwordMatch">Passwords don't match</p>
+            <div class="field">
+                <div class="control">
                     <input class="input" maxlength="63" v-model="person.first_name" type="text" name="name"
                            placeholder="First Name"/>
                 </div>
@@ -114,8 +133,13 @@
             aboutIsOutOfRange: function () {
                 return this.aboutIsEmpty || this.MAX_LENGTH_ABOUT < this.person.about.length
             },
+            passwordMatch: function () {
+                if(this.person.old_password !== 'undefined' || this.person.old_password !== null || this.person.old_password.length !== 0){
+                    return this.person.new_password !== this.person.new_password2
+                } return false
+            },
             formIsNotValid: function () {
-                this.aboutIsOutOfRange || this.emailIsEmpty || this.firstNameIsEmpty || this.lastNameIsEmpty
+                return this.aboutIsOutOfRange || this.emailIsEmpty || this.firstNameIsEmpty || this.lastNameIsEmpty || this.passwordMatch || this.lastNameIsEmpty
             }
         }
     }

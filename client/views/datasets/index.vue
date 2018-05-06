@@ -3,7 +3,7 @@
         <div class="level is-mobile box">
             <div class="level-left">
                 <div class="level-item">
-                    <a @click="view.showFavo = !view.showFavo" class="icon is-medium "><i class="fa fa-lg fa-heart" v-bind:class="[view.showFavo? 'has-text-danger': 'has-text-grey']"></i> </a>
+                    Filter: <a @click="view.showFavo = !view.showFavo" class="icon is-medium "><i class="fa fa-lg fa-heart" v-bind:class="[view.showFavo? 'has-text-danger': 'has-text-grey']"></i> </a>
                 </div>
                 <div class="level-item">
                 </div>

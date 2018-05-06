@@ -13,7 +13,7 @@ import Message from 'vue-bulma-message'
 router.beforeEach((to, from, next) => {
     if (!localStorage.getItem('token') && to.name !== 'Login') {
         if (to.name !== 'Home') {
-            next({name: 'login'})
+            next({name: 'Login'})
         } else {
             next()
         }

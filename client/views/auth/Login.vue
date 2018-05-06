@@ -42,10 +42,6 @@
 
 <script>
     import * as qs from "qs";
-    import login from '../../auth'
-    import OBTAIN_TOKEN_URL  from '../../api/api'
-
-
 
     const loginURL = 'obtain_token/'
 
@@ -54,7 +50,7 @@
             return {
                 username: null,
                 password: null,
-                rememberMe: false,
+                rememberMe: true,
                 error: false
             }
         },
@@ -64,17 +60,17 @@
                 new_axios.post(loginURL, qs.stringify({username: this.username, password: this.password})).then(
                     (response) => {
                         console.log(response);
-                        localStorage.setItem('token', response.data.token);
-                        setTimeout(this.$router.push('/'), 3000)
+                        if(this.rememberMe){
+                            localStorage.setItem('token', response.data.token);
+                        }
+                        this.$http.defaults.headers.authorization = 'Token ' + response.data.token;
+                        this.$router.push('/data/all')
                     }
                 ).catch(
                     (error) => {
                         this.error = error
                     }
                 )
-            },
-            setToken(token) {
-                return new Promise()
             }
         }
     }
