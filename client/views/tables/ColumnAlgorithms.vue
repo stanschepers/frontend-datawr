@@ -13,14 +13,13 @@
 
             <div class="tabs ">
                 <ul>
-                    <li v-bind:class="{'is-active' : selected === 'knn'}" v-on:click="selected = 'knn'" ><a>KNN</a></li>
+                    <li v-bind:class="{'is-active' : selected === 'knn'}" v-on:click="selected = 'knn'" ><a>KNN (Best K)</a></li>
                     <li v-bind:class="{'is-active' : selected === 'other'}" v-on:click="selected = 'other'"><a>Other</a></li>
                 </ul>
             </div>
 
             <div class="block" title="KNN" v-bind:class="{'is-hidden' : selected !== 'knn'}">
                 <knn :my-dataset="myDataset" :columnTypes="columnTypes" :id="id"/>
-                ID: {{ id }}
             </div>
 
             <div class="block" title="Other" v-bind:class="{'is-hidden' : selected !== 'other'}">
@@ -33,7 +32,7 @@
 </template>
 
 <script>
-    import Knn from '../algoritms/Knn'
+    import Knn from '../algorithms/Knn'
     export default {
         name: "column-algorithms",
         props: {

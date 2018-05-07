@@ -63,11 +63,12 @@
                 </article>
             </div>
         </div>
-        <div class="tile is-ancestor">
+        <div class="tile is-ancestor" v-for="(text, index) in info.texts" :key="index">
             <div class="tile is-parent">
                 <article class="tile is-child box">
                     <div class="content">
-                        {{ info.text }}
+                        <h3> {{ text.title }} </h3>
+                        {{ text.text }}
                     </div>
                 </article>
             </div>
@@ -80,7 +81,6 @@
         data() {
             return {
                 info: {
-                    text: "Hey"
                 }
             }
         },
@@ -89,7 +89,6 @@
                 (res) => { this.info = res.data }
             )
         }
-
     }
 </script>
 
