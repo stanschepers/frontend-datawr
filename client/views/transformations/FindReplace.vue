@@ -57,6 +57,8 @@
 <script>
 
     import { Collapse, Item as CollapseItem } from 'vue-bulma-collapse'
+    import {openMessage} from "../../utils";
+
 
     export default {
         components: {CollapseItem, Collapse},
@@ -100,12 +102,18 @@
                     this.$http.post('/data/transform/',
                         formData,
                     ).then(response => {
-                        console.log('find replace succesvol')
+                        openMessage({
+                            message: 'XXX items in column ' + this.column.name + ' have been replaced',
+                            type: 'success'
+                        });
                         this.$emit('update');
 
                     })
                         .catch(function () {
-                            console.log('find replace FAILURE!!');
+                            openMessage({
+                                message: 'The items in column '+ this.column.name + 'could not be replaced, or the regex could not be parsed',
+                                type: 'danger'
+                            });
                         });
 
                 }
@@ -126,12 +134,18 @@
                     this.$http.post('/data/transform/',
                         formData,
                     ).then(response => {
-                        console.log('find replace succesvol')
+                        openMessage({
+                            message: 'XXX items in column ' + this.column.name + ' have been replaced',
+                            type: 'success'
+                        });
                         this.$emit('update');
 
                     })
                         .catch(function () {
-                            console.log('find replace FAILURE!!');
+                            openMessage({
+                                message: 'The items in column '+ this.column.name + 'could not be replaced',
+                                type: 'danger'
+                            });
                         });
                 }
 

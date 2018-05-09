@@ -133,6 +133,8 @@
 <script>
 
     import { Collapse, Item as CollapseItem } from 'vue-bulma-collapse'
+    import {openMessage} from "../../utils";
+
 
     export default {
         components: {CollapseItem, Collapse},
@@ -185,12 +187,18 @@
                     formData,
 
                 ).then(response => {
-                    console.log('normalize succesvol')
+                    openMessage({
+                        message: 'Transformation succesful: the column ' + this.column.name + 'has been normalized',
+                        type: 'success'
+                    });
                     this.$emit('update');
 
                 })
                     .catch(function(){
-                        console.log('normalize FAILURE!!');
+                        openMessage({
+                            message: 'Transformation failed: the column ' + this.column.name + 'could not be normalized',
+                            type: 'danger'
+                        });
                     });
             },
 
@@ -207,12 +215,18 @@
                     formData,
 
                 ).then(response => {
-                    console.log('remove outliers succesvol')
+                    openMessage({
+                        message: 'Transformation succesful: XXX outliers have been removed',
+                        type: 'success'
+                    });
                     this.$emit('update');
 
                 })
                     .catch(function(){
-                        console.log('remove outliers FAILURE!!');
+                        openMessage({
+                            message: 'Transformation failed: there went something wrong parsing the values',
+                            type: 'danger'
+                        });
                     });
             },
 
@@ -244,12 +258,18 @@
                     formData,
 
                 ).then(response => {
-                    console.log('fill succesvol')
+                    openMessage({
+                        message: 'Transformation succesful: XXX values in column' + this.column.name + 'have been filled',
+                        type: 'success'
+                    });
                     this.$emit('update');
 
                 })
                     .catch(function(){
-                        console.log('fill FAILURE!!');
+                        openMessage({
+                            message: 'Transformation failed: the empty values of column' + this.column.name + 'could not be filled',
+                            type: 'success'
+                        });
                     });
 
 

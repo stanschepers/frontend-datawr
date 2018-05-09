@@ -1,6 +1,6 @@
 <template>
     <div>
-    <nav class="level" v-bind:class="{'is-hidden' : columnsOfType().length === 0}">
+    <nav class="level is-mobile" v-bind:class="{'is-hidden' : columnsOfType().length === 0}">
 
         <div class="level-left">
             <div class="level-item has-text-left">
@@ -56,7 +56,7 @@
             <p><i> There are no numerical columns in this dataset.</i></p>
         </div>
     </nav>
-    <nav class="level" v-bind:class="{'is-hidden' : columntypes.length === 0}">
+    <nav class="level is-mobile" v-bind:class="{'is-hidden' : columntypes.length === 0}">
         <div class="level-left">
             <div class="level-item has-text-left">
                 <div class="field">

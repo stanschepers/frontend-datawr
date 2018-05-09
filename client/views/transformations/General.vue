@@ -137,6 +137,7 @@
 <script>
 
     import { Collapse, Item as CollapseItem } from 'vue-bulma-collapse'
+    import {openMessage} from "../../utils";
 
     export default {
         components: {CollapseItem, Collapse},
@@ -256,12 +257,18 @@
                 this.$http.post('/data/transform/', formData, {headers: { 'Content-Type': 'text/plain' }}
 
                 ).then(response => {
-                    console.log('delete row succesvol')
+                    openMessage({
+                        message: 'Transformation succesful: XXX rows have been deleted',
+                        type: 'success'
+                    });
                     this.$emit('update');
 
                 })
                     .catch(function(){
-                        console.log('delete row FAILURE!!');
+                        openMessage({
+                            message: 'The expression could not be executed',
+                            type: 'danger'
+                        });
                     });
 
                 return final;
@@ -281,12 +288,18 @@
                     formData,
 
                 ).then(response => {
-                    console.log('cast succesvol')
+                    openMessage({
+                        message: 'Attribute change succesful',
+                        type: 'success'
+                    });
                     this.$emit('update');
 
                 })
                     .catch(function(){
-                        console.log('cast FAILURE!!');
+                        openMessage({
+                            message: 'The attribute could not be changed',
+                            type: 'danger'
+                        })
                     });
 
 
@@ -302,12 +315,18 @@
                     formData,
 
                 ).then(response => {
-                    console.log('delete column succesvol')
+                    openMessage({
+                        message: 'Transformation succesful: the column ' + this.column.name + 'has been deleted',
+                        type: 'success'
+                    });
                     this.$emit('update');
 
                 })
                     .catch(function(){
-                        console.log('delete column FAILURE!!');
+                        openMessage({
+                            message: 'Transformation failed: the column ' + this.column.name + 'could not be deleted',
+                            type: 'danger'
+                        });
                     });
             },
 

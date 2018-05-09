@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div v-if="myDataset">
+        <div v-if="myDataset" v-bind:class="{'is-blurred': this.modalActive}">
             <div class="tile is-ancestor">
                 <div class="tile is-parent is-4">
                     <article class="tile is-child box">
@@ -28,39 +28,8 @@
                                 <div class="level-item">
                                     <a @click="deleteThis"><i class="fa fa-trash"></i></a>
                                 </div>
-                            </div>
-                            <div class="level-right">
                                 <div class="level-item">
-                                    <small> Null:</small>
-                                </div>
-                                <div class="level-item">
-                                    <div class="select is-small" v-if="!show_input">
-                                        <select v-model="null_value" >
-                                            <option value="empty"> &lt;empty&gt; </option>
-                                            <option value=" "> &lt;space&gt; </option>
-                                            <option value="null"> null </option>
-                                            <option value="other"> other </option>
-                                        </select>
-
-                                    </div>
-                                    <div v-else>
-                                        <input maxlength="8" class="input is-small" type="text" v-model="null_value">
-                                    </div>
-                                </div>
-                                <div class="level-item">
-                                    <small> Delimiter:</small>
-                                </div>
-                                <div class="level-item">
-                                    <div class="select is-small">
-                                        <select v-model="delimiter">
-                                            <option value=","> ,</option>
-                                            <option value="%3B"> ;</option>
-                                            <option value="|"> |</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="level-item">
-                                    <a :href="'https://api.datawr.ml/data/export/?dataset_id=' + myDataset.id + '&sep=' + delimiter + '&null=' + null_value "><i
+                                    <a v-on:click="modalActive = true"><i
                                             class="fa fa-download"></i></a>
                                 </div>
                             </div>
@@ -84,24 +53,28 @@
                     </article>
                 </div>
             </div>
+
             <div class="tile is-ancestor">
                 <div class="tile is-parent">
                     <article class="tile is-child box animate slideInLeft">
 
-                        <!--<best-table :columntypes="columnTypes" :setid="myDataset.id">
-
-                        </best-table>-->
-
-                        <vue-tables2 ref="vuetables2" :columntypes="columnTypes" :setid="myDataset.id">
-
-
-                        </vue-tables2>
-
+                        <charts :columntypes="columnTypes" :setid="myDataset.id"> </charts>
 
                     </article>
                 </div>
             </div>
 
+            <div class="tile is-ancestor">
+                <div class="tile is-parent">
+                    <article class="tile is-child box animate slideInLeft">
+
+                        <vue-tables2 ref="vuetables2" :columntypes="columnTypes" :setid="myDataset.id">
+
+                        </vue-tables2>
+
+                    </article>
+                </div>
+            </div>
 
             <div class="tile is-ancestor">
                 <div class="tile is-parent is-two-thirds">
@@ -213,6 +186,61 @@
                 There went something wrong getting your dataset.
             </p>
         </div>
+
+        <div class="modal is-vcentered"
+             v-bind:class="{'is-active' : modalActive===true}">
+
+            <div class="modal-card has-shadow">
+                <header class="modal-card-head">
+                    <p class="modal-card-title">Download Table</p>
+                    <button class="delete" aria-label="close" v-on:click="modalActive=false"></button>
+                </header>
+                <section class="modal-card-body">
+                    <div class="modal-content">
+
+                        <div class="level-right">
+                            <div class="level-item">
+                                <small> Null:</small>
+                            </div>
+                            <div class="level-item">
+                                <div class="select is-small" v-if="!show_input">
+                                    <select v-model="null_value" >
+                                        <option value="empty"> &lt;empty&gt; </option>
+                                        <option value=" "> &lt;space&gt; </option>
+                                        <option value="null"> null </option>
+                                        <option value="other"> other </option>
+                                    </select>
+
+                                </div>
+                                <div v-else>
+                                    <input maxlength="8" class="input is-small" type="text" v-model="null_value">
+                                </div>
+                            </div>
+                            <div class="level-item">
+                                <small> Delimiter:</small>
+                            </div>
+                            <div class="level-item">
+                                <div class="select is-small">
+                                    <select v-model="delimiter">
+                                        <option value=","> ,</option>
+                                        <option value="%3B"> ;</option>
+                                        <option value="|"> |</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="level-item">
+                                <a :href="'https://api.datawr.ml/data/export/?dataset_id=' + myDataset.id + '&sep=' + delimiter + '&null=' + null_value "><i
+                                        class="fa fa-download"></i></a>
+                            </div>
+                        </div>
+
+                    </div>
+                </section>
+
+            </div>
+
+            <button class="modal-close is-large" aria-label="close" v-on:click="modalActive=false"></button>
+        </div>
     </div>
 
 </template>
@@ -226,6 +254,7 @@
 
     import Statistics from './Statistics'
     import History from '../tables/History'
+    import Charts from './Charts'
     import Plotly from 'plotly.js'
 
     import VueTables2 from '../tables/VueTable'
@@ -236,6 +265,7 @@
     export default {
         name: 'dataset',
         components: {
+            Charts,
             History,
             ColumnTransformations, Collapse, CollapseItem, Statistics, VueTables2, editTable,
             ColumnAlgorithms
@@ -273,7 +303,8 @@
                 null_value: '',
                 show_input: false,
                 quote: '"',
-                delimiter: ','
+                delimiter: ',',
+                modalActive: false,
 
             }
         },
@@ -298,7 +329,7 @@
                         },
 
                     };
-                    Plotly.newPlot('hist', response.data, layout, {staticPlot: false});
+                    Plotly.newPlot('hist', response.data, layout, {staticPlot: true});
                 })
 
             },
@@ -403,10 +434,31 @@
 
 <style scoped lang="scss">
     @import "~cool-checkboxes-for-bulma.io";
+    @import '~bulma';
+
 
     .tile {
         overflow-x: scroll;
 
+    }
+
+    .is-blurred {
+
+        filter: blur(8px);
+
+        -webkit-filter: blur(8px);
+
+    }
+
+    .has-shadow {
+
+        box-shadow: 0 10px 30px rgba($black, 0.5), 0 0 0 3px rgba($black, 0.02);
+
+    }
+
+    .is-vertical-center {
+        display: flex;
+        align-items: center;
     }
 
 </style>

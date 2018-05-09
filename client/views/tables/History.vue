@@ -4,21 +4,9 @@
 
         <div class=" is-very-responsive">
 
-            <table class="table is-striped is-hoverable">
-                <thead>
-                <tr>
-                    <th>Event</th>
-                </tr>
-                </thead>
+            <v-server-table ref="historytable" :url="api_url" :columns="columnnames" :options="options">
 
-                <tfoot>
-                </tfoot>
-                <tbody>
-                <tr style="white-space:nowrap;" v-for="event in history">
-                    {{event.transformation}}
-                </tr>
-                </tbody>
-            </table>
+            </v-server-table>
 
         </div>
 
@@ -27,6 +15,15 @@
 </template>
 
 <script>
+
+    import Vue from 'vue';
+    import {ServerTable} from 'vue-tables-2';
+
+    Vue.use(ServerTable, {}, false, 'bulma', 'default');
+
+    window.axios = require('axios');
+
+
     export default {
         props: {
             setid: Number,
@@ -37,18 +34,38 @@
             return {
                 history: null,
 
+                columnnames: ['trans_type', 'trans_extra', 'editor'],
+
+                options: {
+                    clientMultiSorting: false,
+                    perPageValues: [5, 10, 25, 50],
+                    perPage: 5,
+                    filterable: false,
+                    sortable: [],
+
+                    sortIcon: { up:'fa fa-sort-up', down:'fa fa-sort-down', is:'fa fa-sort' }
+
+                },
+
+
             }
         },
 
         methods: {
 
             update() {
-                this.$http.get('data/history/' + '?dataset_id=' + this.setid).then((response) => {
-                    this.history = response.data;
+                this.$refs.historytable.refresh();
+            },
 
-                }).catch((error) => {
-                    window.alert("Something went wrong with getting the history")
-                });
+
+
+        },
+
+        computed: {
+
+            api_url() {
+
+                return '/data/history/' + '?dataset_id=' + this.setid;
             },
 
 
@@ -59,13 +76,13 @@
 
             this.$http.get('data/history/' + '?dataset_id=' + this.setid).then((response) => {
                 this.history = response.data;
+                console.log(response.data)
 
             }).catch((error) => {
                 window.alert("Something went wrong with getting the history")
             });
-
-
         }
+
     }
 </script>
 

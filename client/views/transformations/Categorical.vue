@@ -27,6 +27,7 @@
 
     import { Collapse, Item as CollapseItem } from 'vue-bulma-collapse'
 
+
     export default {
         components: {CollapseItem, Collapse},
         props: {
@@ -59,13 +60,18 @@
                 this.$http.post('/data/transform/',
                     formData,
                 ).then(response => {
-                    console.log('oneHotEncode succesvol')
+                    openMessage({
+                        message: 'The column ' + this.column.name + ' has been one-hot-encoded',
+                        type: 'success'
+                    });
                     this.$emit('update');
 
                 })
                     .catch(function () {
-                        console.log('oneHotEncode FAILURE!!');
-                    });
+                        openMessage({
+                            message: 'The one-hot-encode transformation could not be applied',
+                            type: 'danger'
+                        });                    });
 
             }
 

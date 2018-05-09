@@ -1,6 +1,14 @@
 <template>
         <v-server-table ref="table" :url="api_url" :columns="columnnames" :options="options">
 
+                <tr slot="h__{Nr}">
+                    <button type="button" class="btn btn-primary">Wheeeeeeeee</button>
+                </tr>
+
+                <tr slot="appendBody">
+                        <button type="button" class="btn btn-primary">Whee</button>
+                </tr>
+
         </v-server-table>
 
 </template>
@@ -39,7 +47,6 @@
                     clientMultiSorting: false,
                     perPageValues: [5, 10, 25, 50],
                     perPage: 5,
-
                     sortIcon: { up:'fa fa-sort-up', down:'fa fa-sort-down', is:'fa fa-sort' }
 
                 },

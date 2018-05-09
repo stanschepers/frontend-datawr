@@ -1,7 +1,7 @@
 <template>
     <div>
 
-        <div class="columns is-centered">
+        <div class="columns is-centered"  v-bind:class="{'is-blurred': this.modalActive}">
 
             <div class="column box is-two-thirds">
 
@@ -229,33 +229,6 @@
 
                                         </div>
 
-
-                                        <div class="modal"
-                                             v-bind:class="{'is-active' : modalActive===true}">
-                                            <div class="modal-background"></div>
-                                            <div class="modal-content">
-
-                                                <p>
-                                                    Select which table you want to keep (the others will be deleted)
-                                                </p>
-
-                                                <div class="select">
-                                                    <select v-model="tableToKeep">
-                                                        <option v-for="table in joinData"> {{table.name}}</option>
-                                                    </select>
-                                                </div>
-
-                                                <p>
-                                                    <button class="button" v-on:click="selectFinalTable()">Save this
-                                                        table
-                                                    </button>
-                                                </p>
-
-
-                                            </div>
-                                            <button class="modal-close is-large" aria-label="close"></button>
-                                        </div>
-
                                     </div>
 
 
@@ -309,7 +282,41 @@
                     </div>
                 </div>
             </div>
+        </div>
+        <div class="modal"
+             v-bind:class="{'is-active' : modalActive===true}">
 
+            <div class="modal-card has-shadow">
+                <header class="modal-card-head">
+                    <p class="modal-card-title">Keep table</p>
+                    <button class="delete" aria-label="close"></button>
+                </header>
+                <section class="modal-card-body">
+                    <div class="modal-content">
+
+                        <p>
+                            Select which table you want to keep (the others will be deleted)
+                        </p>
+
+                        <div class="select">
+                            <select v-model="tableToKeep">
+                                <option v-for="table in joinData"> {{table.name}}</option>
+                            </select>
+                        </div>
+
+                        <p>
+                            <button class="button" v-on:click="selectFinalTable()">Save this
+                                table
+                            </button>
+                        </p>
+
+
+                    </div>
+                </section>
+
+            </div>
+
+            <button class="modal-close is-large" aria-label="close"></button>
         </div>
     </div>
 
@@ -318,6 +325,7 @@
 
 <script>
     import Vue from 'vue'
+    import {openMessage} from "../../utils";
 
     export default {
         components: {},
@@ -434,14 +442,21 @@
                     formData
                 ).then(response => {
 
-                    if (response.data['success']) {
+                    this.joinData = response.data;
 
-                    }
-                    else {
-                        this.joinData = response.data;
-                    }
-                })
-                    .catch(function () {
+                })  .then(function(){
+                        openMessage({
+                            message: 'Dataset uploaded succesfully',
+                            type: 'success'
+
+                        })
+
+                })  .catch(function(error) {
+                        openMessage({
+                            message:'Something went wrong while uploading the datasets!',
+                            type: 'danger'
+                        })
+
                     });
 
             },
@@ -558,6 +573,21 @@
     .button {
         margin: 5px 0 0;
     }
+
+    .is-blurred {
+
+        filter: blur(8px);
+
+        -webkit-filter: blur(8px);
+
+    }
+
+    .has-shadow {
+
+        box-shadow: 0 10px 30px rgba($black, 0.5), 0 0 0 3px rgba($black, 0.02);
+
+    }
+
 
 </style>
 

@@ -42,6 +42,8 @@
 
 <script>
     import { Collapse, Item as CollapseItem } from 'vue-bulma-collapse'
+    import {openMessage} from "../../utils";
+
 
     export default {
         components: {CollapseItem, Collapse},
@@ -89,11 +91,18 @@
                     formData,
 
                 ).then(response => {
-                    console.log('extract succesvol')
-                })
-                    .catch(function(){
-                        console.log('extract FAILURE!!');
+                    openMessage({
+                        message: 'Transformation succesful: ' + this.typeSelected + ' has been extracted.',
+                        type: 'success'
                     });
+                    this.$emit('update');
+                })
+                .catch(function(){
+                    openMessage({
+                        message: 'Transformation failed: ' + this.typeSelected + ' could not be extracted.',
+                        type: 'danger'
+                    });
+                });
             },
 
 
