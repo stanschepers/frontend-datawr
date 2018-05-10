@@ -42,6 +42,7 @@
 
 <script>
     import * as qs from "qs";
+    import * as types from "../../store/mutation-types";
 
     const loginURL = 'obtain_token/'
 
@@ -60,6 +61,7 @@
                 new_axios.post(loginURL, qs.stringify({username: this.username, password: this.password})).then(
                     (response) => {
                         console.log(response);
+                        this.$store.commit(types.LOGIN, {user: response.data.user, token: response.data.token})
                         if(this.rememberMe){
                             localStorage.setItem('token', response.data.token);
                         }

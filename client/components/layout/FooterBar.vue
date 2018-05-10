@@ -10,7 +10,7 @@
                 </a>
             </p>
             <p class="content has-text-centered">
-                <router-link to="/login">Login page</router-link> • You're logged <span v-if="this.$store.getters.getLoggedIn">In </span> <span v-else>Out</span>
+                <router-link to="/login">Login page</router-link> • You're logged <span v-if="this.$store.state.auth.loggedIn">In </span> <span v-else>Out</span>
             </p>
         </div>
     </footer>

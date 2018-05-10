@@ -2,6 +2,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import store from '../store/index'
+import * as types from '../store/mutation-types'
 import axios from 'axios'
 import {getters} from '../auth/index'
 
@@ -26,9 +27,11 @@ export default new Router({
             path: '/logout',
             beforeEnter(from, to, next) {
                 axios.get('/logout/').then((res) => {
+                    store.commit(types.LOGOUT);
                     localStorage.removeItem('token')
                     next({name: 'Login'})
                 }).catch((error) => {
+                    store.commit(types.LOGOUT);
                     localStorage.removeItem('token')
                     next({name: 'Login'})
                 })

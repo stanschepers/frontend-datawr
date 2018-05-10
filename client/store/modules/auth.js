@@ -2,12 +2,13 @@ import * as types from '../mutation-types'
 
 const state = {
     user: null,
-    token: ''
+    token: '',
+    loggedIn: false
 }
 
 const getters = {
     getLoggedIn() {
-        return !!(localStorage.getItem('token'))
+        return state.loggedIn
     },
     getToken() {
         return localStorage.getItem('token')
@@ -19,12 +20,14 @@ const getters = {
 
 const mutations = {
     [types.LOGIN](state, data) {
-        // localStorage.setItem('token', data)
-        state.token = data
+       state.loggedIn = true
+        state.user = data.user
+        state.token = data.token
     },
     [types.LOGOUT](state) {
         localStorage.removeItem('token')
         state.user = null
+        state.loggedIn = false
     },
 }
 

@@ -19,7 +19,8 @@
                         <div class="level is-mobile is-fixed-bottom">
                             <div class="level-left">
                                 <div class="level-item">
-                                    <a v-if="myDataset.favored" @click="dislike"><i class="fa fa-heart has-text-danger"></i></a>
+                                    <a v-if="myDataset.favored" @click="dislike"><i
+                                            class="fa fa-heart has-text-danger"></i></a>
                                     <a v-else @click="like"><i class="fa fa-heart"></i></a>
                                 </div>
                                 <div class="level-item">
@@ -28,9 +29,14 @@
                                 <div class="level-item">
                                     <a @click="deleteThis"><i class="fa fa-trash"></i></a>
                                 </div>
-                                <div class="level-item">
-                                    <a v-on:click="modalActive = true"><i
-                                            class="fa fa-download"></i></a>
+                                <div class="level-right">
+                                    <div class="level-item">
+                                        <a @click="raw"><i class="fa fa-window-restore"></i></a>
+                                    </div>
+                                    <div class="level-item">
+                                        <a v-on:click="modalActive = true"><i
+                                                class="fa fa-download"></i></a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -58,7 +64,7 @@
                 <div class="tile is-parent">
                     <article class="tile is-child box animate slideInLeft">
 
-                        <charts :columntypes="columnTypes" :setid="myDataset.id"> </charts>
+                        <charts :columntypes="columnTypes" :setid="myDataset.id"></charts>
 
                     </article>
                 </div>
@@ -176,7 +182,8 @@
 
                 <div class="tile is-parent ">
                     <article class="tile is-child box">
-                        <column-algorithms :my-dataset="myDataset" :column-types="columnTypes" :id="id"> </column-algorithms>
+                        <column-algorithms :my-dataset="myDataset" :column-types="columnTypes"
+                                           :id="id"></column-algorithms>
                     </article>
                 </div>
             </div>
@@ -204,11 +211,11 @@
                             </div>
                             <div class="level-item">
                                 <div class="select is-small" v-if="!show_input">
-                                    <select v-model="null_value" >
-                                        <option value="empty"> &lt;empty&gt; </option>
-                                        <option value=" "> &lt;space&gt; </option>
-                                        <option value="null"> null </option>
-                                        <option value="other"> other </option>
+                                    <select v-model="null_value">
+                                        <option value="empty"> &lt;empty&gt;</option>
+                                        <option value=" "> &lt;space&gt;</option>
+                                        <option value="null"> null</option>
+                                        <option value="other"> other</option>
                                     </select>
 
                                 </div>
@@ -271,8 +278,8 @@
             ColumnAlgorithms
         },
         watch: {
-            null_value(val){
-                if(val === 'other'){
+            null_value(val) {
+                if (val === 'other') {
                     this.show_input = true
                 }
             }
@@ -312,6 +319,17 @@
         computed: {},
 
         methods: {
+            raw() {
+              this.$http.get("/data/raw/?dataset_id=" + this.myDataset.id).then(
+                  (res) => {
+                      if(confirm('Do you want to go to the new raw dataset?')){
+                          this.$router.push('/data/' + res.data.id)
+                      } else {
+                          window.alert('Created new raw dataset')
+                      }
+                  }
+              )
+            },
             updateHistogram() {
                 // plots
                 this.$http.get('data/histogram/' + '?dataset_id=' + this.id + '&column=' + this.histColumn.name).then((response) => {
@@ -380,13 +398,12 @@
             deleteThis() {
                 if (confirm('Delete this dataset?')) {
                     this.$http.delete('/data/?dataset_id=' + this.id).then((response) => {
-                        console.log('Deleted')
                         this.$router.push('/data/all');
                     }).catch((error) => window.alert('Something went wrong getting deleting the dataset'))
                 }
             },
-            like(){
-                this.$http.post('/data/likes/'+ this.myDataset.id + '/').then(
+            like() {
+                this.$http.post('/data/likes/' + this.myDataset.id + '/').then(
                     (response) => {
                         this.myDataset.favored = true
                     }
@@ -396,8 +413,8 @@
                     }
                 )
             },
-            dislike(){
-                this.$http.delete('/data/likes/'+ this.myDataset.id + '/').then(
+            dislike() {
+                this.$http.delete('/data/likes/' + this.myDataset.id + '/').then(
                     (response) => {
                         this.myDataset.favored = false
                     }
@@ -435,7 +452,6 @@
 <style scoped lang="scss">
     @import "~cool-checkboxes-for-bulma.io";
     @import '~bulma';
-
 
     .tile {
         overflow-x: scroll;
