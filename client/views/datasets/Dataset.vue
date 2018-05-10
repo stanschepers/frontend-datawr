@@ -187,7 +187,7 @@
             </p>
         </div>
 
-        <div class="modal is-vcentered"
+        <div class="modal modal-dialog-center"
              v-bind:class="{'is-active' : modalActive===true}">
 
             <div class="modal-card has-shadow">
@@ -459,6 +459,12 @@
     .is-vertical-center {
         display: flex;
         align-items: center;
+    }
+
+    .modal-dialog-center {
+        left: 50%;
+        top: 20%;
+        transform: translate(-50%, -50%);
     }
 
 </style>

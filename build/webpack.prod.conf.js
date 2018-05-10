@@ -8,8 +8,8 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const baseWebpackConfig = require('./webpack.base.conf')
 const config = require('../config')
 const utils = require('./utils')
-const env = process.env.NODE_ENV === 'testing'
-  ? require('../config/test.env')
+const env = process.env.NODE_ENV === 'production'
+  ? require('../config/prod.env')
   : config.build.env
 const isELECTRON = process.env.NODE_ELECTRON === 'true'
 
