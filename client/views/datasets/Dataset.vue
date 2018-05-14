@@ -323,7 +323,7 @@
               this.$http.get("/data/raw/?dataset_id=" + this.myDataset.id).then(
                   (res) => {
                       if(confirm('Do you want to go to the new raw dataset?')){
-                          this.$router.push('/data/' + res.data.id)
+                          this.$router.push('/data/' + res.data.dataset_id)
                       } else {
                           window.alert('Created new raw dataset')
                       }
