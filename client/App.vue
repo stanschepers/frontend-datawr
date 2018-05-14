@@ -52,13 +52,14 @@ export default {
 @import '~bulma';
 @import '~bulma/sass/utilities/variables';
 
-@import '~wysiwyg.css/wysiwyg.sass';
+/*@import '~wysiwyg.css/wysiwyg.sass';*/
 
 $fa-font-path: '~font-awesome/fonts/';
 @import '~font-awesome/scss/font-awesome';
 
 html {
   background-color: $light;
+  height: 100%;
 }
 
 .nprogress-container {

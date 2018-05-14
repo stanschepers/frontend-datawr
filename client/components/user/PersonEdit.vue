@@ -1,72 +1,55 @@
 <template>
-    <form @change="save">
-        <div class="block">
-            <div class="level is-mobile">
-                <div class="level-left">
-                    <h3 class="subtitle level-item">Edit your profile </h3>
+    <div>
+        <form @change="save">
+            <div class="block">
+                <div class="level is-mobile">
+                    <div class="level-left">
+                        <h3 class="subtitle level-item">Edit your profile </h3>
+                    </div>
+                    <div class="level-right">
+                        <a class="delete is-small level-item" @click="close"></a>
+                    </div>
                 </div>
-                <div class="level-right">
-                    <a class="delete is-small level-item" @click="close"></a>
+                <div class="field">
+                    <div class="control">
+                        <input disabled class="input" maxlength="63" v-model="person.username" type="text" name="name"
+                               placeholder="First Name"/>
+                    </div>
                 </div>
-            </div>
-            <div class="field">
-                <div class="control">
-                    <input disabled class="input" maxlength="63" v-model="person.username" type="text" name="name"
-                           placeholder="First Name"/>
+                <div class="field">
+                    <div class="control">
+                        <input class="input" maxlength="63" v-model="person.first_name" type="text" name="name"
+                               placeholder="First Name"/>
+                    </div>
+                    <p class="help is-danger" v-if="firstNameIsEmpty">First Name can not be empty</p>
                 </div>
-            </div>
-            <div class="field">
-                <div class="control">
-                    <input  class="input" maxlength="63" v-model="person.old_password" type="password" name="old_password"
-                           placeholder="Old Password"/>
+                <div class="field">
+                    <div class="control">
+                        <input class="input" maxlength="63" v-model="person.last_name" type="text" name="name"
+                               placeholder="Last Name"/>
+                    </div>
+                    <p class="help is-danger" v-if="lastNameIsEmpty">Last Name can not be empty</p>
                 </div>
-            </div>
-            <div class="field">
-                <div class="control">
-                    <input  class="input" maxlength="63" v-model="person.new_password" type="password" name="new_password"
-                            placeholder="New Password"/>
-                </div>
-            </div>
-            <div class="field">
-                <div class="control">
-                    <input  class="input" maxlength="63" v-model="person.new_password2" type="password" name="new_password2"
-                           placeholder="New Password (Repeat)"/>
-                </div>
-            </div>
-            <p class="help is-danger" v-if="passwordMatch">Passwords don't match</p>
-            <div class="field">
-                <div class="control">
-                    <input class="input" maxlength="63" v-model="person.first_name" type="text" name="name"
-                           placeholder="First Name"/>
-                </div>
-                <p class="help is-danger" v-if="firstNameIsEmpty">First Name can not be empty</p>
-            </div>
-            <div class="field">
-                <div class="control">
-                    <input class="input" maxlength="63" v-model="person.last_name" type="text" name="name"
-                           placeholder="Last Name"/>
-                </div>
-                <p class="help is-danger" v-if="lastNameIsEmpty">Last Name can not be empty</p>
-            </div>
-            <div class="field">
-                <div class="control">
-                    <input class="input" maxlength="63" v-model="person.email" type="email" name="email"
-                           placeholder="Email"/>
-                </div>
-                <p class="help is-danger" v-if="emailIsEmpty">Email can not be empty</p>
+                <div class="field">
+                    <div class="control">
+                        <input class="input" maxlength="63" v-model="person.email" type="email" name="email"
+                               placeholder="Email"/>
+                    </div>
+                    <p class="help is-danger" v-if="emailIsEmpty">Email can not be empty</p>
 
-            </div>
-            <div class="field">
-                <div class="control">
+                </div>
+                <div class="field">
+                    <div class="control">
                     <textarea v-bind:maxlength="MAX_LENGTH_ABOUT + 1" class="textarea" v-model="person.about"
                               placeholder="About me"></textarea>
-                </div>
-                <p class="help" :class="[aboutIsOutOfRange ? 'is-danger': 'is-info']">{{ MAX_LENGTH_ABOUT -
-                    aboutRemaingChars}} / {{ MAX_LENGTH_ABOUT}} </p>
+                    </div>
+                    <p class="help" :class="[aboutIsOutOfRange ? 'is-danger': 'is-info']">{{ MAX_LENGTH_ABOUT -
+                        aboutRemaingChars}} / {{ MAX_LENGTH_ABOUT}} </p>
 
+                </div>
             </div>
-        </div>
-    </form>
+        </form>
+    </div>
 </template>
 
 <script>
@@ -84,7 +67,12 @@
             return {
                 unsaved_changed: false,
                 MAX_LENGTH_ABOUT: 140,
-                deleted: ''
+                deleted: '',
+                pw: {
+                    new_password: '',
+                    new_password2: '',
+                    old_password: ''
+                }
             }
         },
         methods: {
@@ -96,7 +84,7 @@
             },
             save() {
                 if (!this.formIsNotValid) {
-                    this.$http.put('/core/profile/', qs.stringify(this.person)).then(
+                    this.$http.post('/core/profile/', qs.stringify(this.person)).then(
                         (response) => {
                             console.log('yeeey')
                         }
@@ -104,7 +92,7 @@
                         console.log('ooooh')
                     })
                 }
-            }
+            },
             // deleteAccount () {
             //     this.$http.delete(api1)
             //     this.$router.back()
@@ -134,12 +122,13 @@
                 return this.aboutIsEmpty || this.MAX_LENGTH_ABOUT < this.person.about.length
             },
             passwordMatch: function () {
-                if(this.person.old_password !== 'undefined' || this.person.old_password !== null || this.person.old_password.length !== 0){
-                    return this.person.new_password !== this.person.new_password2
-                } return false
+                if (this.pw.old_password !== 'undefined' || this.pw.old_password !== null || this.pw.old_password.length !== 0) {
+                    return this.pw.new_password !== this.pw.new_password2
+                }
+                return false
             },
             formIsNotValid: function () {
-                return this.aboutIsOutOfRange || this.emailIsEmpty || this.firstNameIsEmpty || this.lastNameIsEmpty || this.passwordMatch || this.lastNameIsEmpty
+                return this.aboutIsOutOfRange || this.emailIsEmpty || this.firstNameIsEmpty || this.lastNameIsEmpty || this.lastNameIsEmpty
             }
         }
     }

@@ -1,5 +1,9 @@
 <template>
-    <div class="content has-text-centered">
+    <div>
+    <div v-if="this.$store.state.loggedIn">
+        You are logged in.
+    </div>
+    <div v-else class="content has-text-centered">
         <h1 class="is-title is-bold">Login</h1>
 
         <div class="columns is-vcentered">
@@ -21,14 +25,14 @@
                                        placeholder="Your Password">
                             </p>
                         </div>
-                        <!--<div class="field">-->
-                            <!--<p class="control">-->
-                                <!--<label class="checkbox">-->
-                                    <!--<input type="checkbox" v-model="rememberMe">-->
-                                    <!--Remember me-->
-                                <!--</label>-->
-                            <!--</p>-->
-                        <!--</div>-->
+                        <div class="field">
+                            <p class="control">
+                                <label class="checkbox">
+                                    <input type="checkbox" v-model="rememberMe">
+                                    Remember me
+                                </label>
+                            </p>
+                        </div>
                         <hr>
                         <p class="control is-fullwidth">
                             <button type="submit" class="button is-primary is-fullwidth">Login</button>
@@ -37,6 +41,7 @@
                 </div>
             </div>
         </div>
+    </div>
     </div>
 </template>
 
@@ -54,6 +59,11 @@
                 rememberMe: true,
                 error: false
             }
+        },
+        mounted() {
+          if(this.$store.state.loggedIn){
+              this.$router.push('/profile')
+          }
         },
         methods: {
             login() {

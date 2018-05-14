@@ -3,7 +3,8 @@ import * as types from '../mutation-types'
 const state = {
     user: null,
     token: '',
-    loggedIn: false
+    loggedIn: false,
+    wait: true // wait for login check
 }
 
 const getters = {
@@ -28,6 +29,9 @@ const mutations = {
         localStorage.removeItem('token')
         state.user = null
         state.loggedIn = false
+    },
+    [types.WAIT](state, bool) {
+       state.wait = bool
     },
 }
 

@@ -9,3 +9,5 @@ export const SWITCH_EFFECT = 'SWITCH_EFFECT'
 export const LOGIN = 'LOGIN'
 
 export const LOGOUT = 'LOGOUT'
+
+export const WAIT = 'WAIT'
