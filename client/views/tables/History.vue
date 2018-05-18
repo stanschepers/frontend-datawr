@@ -6,6 +6,10 @@
 
             <v-server-table ref="historytable" :url="api_url" :columns="columnnames" :options="options">
 
+                <div slot="child_row">
+                    The link to yolo
+                </div>
+
             </v-server-table>
 
         </div>
@@ -18,6 +22,7 @@
 
     import Vue from 'vue';
     import {ServerTable} from 'vue-tables-2';
+    import test from './test'
 
     Vue.use(ServerTable, {}, false, 'bulma', 'default');
 
@@ -25,6 +30,8 @@
 
 
     export default {
+        components: {test},
+
         props: {
             setid: Number,
         },
@@ -42,6 +49,8 @@
                     perPage: 5,
                     filterable: false,
                     sortable: [],
+                    uniqueKey: "execution_date",
+                    childRow: 'test',
 
                     sortIcon: { up:'fa fa-sort-up', down:'fa fa-sort-down', is:'fa fa-sort' }
 
@@ -56,8 +65,6 @@
             update() {
                 this.$refs.historytable.refresh();
             },
-
-
 
         },
 
@@ -88,14 +95,22 @@
 
 <style scoped lang="scss">
 
-    .is-very-responsive {
-        overflow-x: auto;
-        overflow-y: hidden;
-        max-width: 100%;
-
-
+    .VueTables__child-row-toggler {
+        width: 16px;
+        height: 16px;
+        line-height: 16px;
+        display: block;
+        margin: auto;
+        text-align: center;
     }
 
+    .VueTables__child-row-toggler--closed::before {
+        content: "+";
+    }
+
+    .VueTables__child-row-toggler--open::before {
+        content: "-";
+    }
 
 
 </style>

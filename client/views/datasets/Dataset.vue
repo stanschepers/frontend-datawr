@@ -1,3 +1,16 @@
+__    __     _                            _
+/ / /\ \ \___| | ___ ___  _ __ ___   ___  | |_ ___
+\ \/  \/ / _ \ |/ __/ _ \| '_ ` _ \ / _ \ | __/ _ \
+\  /\  /  __/ | (_| (_) | | | | | |  __/ | || (_) |
+\/  \/ \___|_|\___\___/|_| |_| |_|\___|  \__\___/
+
+__                   _          _   _   _                    _     _
+/ _\_ __   __ _  __ _| |__   ___| |_| |_(_)_      _____  _ __| | __| |
+\ \| '_ \ / _` |/ _` | '_ \ / _ \ __| __| \ \ /\ / / _ \| '__| |/ _` |
+_\ \ |_) | (_| | (_| | | | |  __/ |_| |_| |\ V  V / (_) | |  | | (_| |
+\__/ .__/ \__,_|\__, |_| |_|\___|\__|\__|_| \_/\_/ \___/|_|  |_|\__,_|
+|_|          |___/
+
 <template>
     <div>
         <div v-if="myDataset" v-bind:class="{'is-blurred': this.modalActive}">
@@ -203,45 +216,57 @@
                     <button class="delete" aria-label="close" v-on:click="modalActive=false"></button>
                 </header>
                 <section class="modal-card-body">
-                    <div class="modal-content">
 
-                        <div class="level-right">
-                            <div class="level-item">
-                                <small> Null:</small>
-                            </div>
-                            <div class="level-item">
-                                <div class="select is-small" v-if="!show_input">
-                                    <select v-model="null_value">
-                                        <option value="empty"> &lt;empty&gt;</option>
-                                        <option value=" "> &lt;space&gt;</option>
-                                        <option value="null"> null</option>
-                                        <option value="other"> other</option>
-                                    </select>
+                        <div class="field is-horizontal">
+                            <div class="field-body">
+
+                                <div class="field is-grouped">
+                                    <p class="control-label">
+                                       <label class="label">Null value</label>
+                                    </p>
+                                    <p class="control">
+                                       <div class="select is-small" v-if="!show_input">
+                                          <select v-model="null_value" >
+                                               <option value="empty"> &lt;empty&gt; </option>
+                                                <option value=" "> &lt;space&gt; </option>
+                                                <option value="null"> null </option>
+                                                <option value="other"> other </option>
+                                            </select>
+                                     </div>
+                                    <div v-else>
+                                        <input maxlength="8" class="input is-small" type="text" v-model="null_value">
+                                    </div>
+                                    </p>
 
                                 </div>
-                                <div v-else>
-                                    <input maxlength="8" class="input is-small" type="text" v-model="null_value">
+
+                                <div class="field is-grouped">
+                                <div class="control-label">
+                                    <label class="label">Delimiter</label>
                                 </div>
-                            </div>
-                            <div class="level-item">
-                                <small> Delimiter:</small>
-                            </div>
-                            <div class="level-item">
-                                <div class="select is-small">
-                                    <select v-model="delimiter">
-                                        <option value=","> ,</option>
-                                        <option value="%3B"> ;</option>
-                                        <option value="|"> |</option>
-                                    </select>
+                                <p class="control">
+                                    <div class="select is-small">
+                                        <select v-model="delimiter">
+                                            <option value=","> ,</option>
+                                            <option value="%3B"> ;</option>
+                                            <option value="|"> |</option>
+                                        </select>
+                                    </div>
+                                </p>
+
                                 </div>
-                            </div>
-                            <div class="level-item">
-                                <a :href="'https://api.datawr.ml/data/export/?dataset_id=' + myDataset.id + '&sep=' + delimiter + '&null=' + null_value "><i
-                                        class="fa fa-download"></i></a>
+
+                                <div class="field">
+                                    <div class="control">
+                                        <div class="button">
+                                            <a :href="'https://api.datawr.ml/data/export/?dataset_id=' + myDataset.id + '&sep=' + delimiter + '&null=' + null_value "><i
+                                                    class="fa fa-download"></i> Export</a>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
-                    </div>
                 </section>
 
             </div>
@@ -267,7 +292,7 @@
     import VueTables2 from '../tables/VueTable'
     import editTable from '../../components/tables/editTable'
 
-    const api = 'data/'
+    const api = 'data/';
 
     export default {
         name: 'dataset',
@@ -332,44 +357,32 @@
             },
             updateHistogram() {
                 // plots
-                this.$http.get('data/histogram/' + '?dataset_id=' + this.id + '&column=' + this.histColumn.name).then((response) => {
+                this.$http.get('data/histogram/' + '?dataset_id=' + this.myDataset.id + '&column=' + this.histColumn.name).then((response) => {
                     this.histdata.push(response.data);
                     let layout = {
                         autosize: true,
                         //width: 500,
                         //height: 500,
                         margin: {
-                            l: 20,
-                            r: 10,
-                            b: 100,
-                            t: 50,
+                            l: 30,
+                            r: 5,
+                            b: 40,
+                            t: 30,
                             pad: 5
                         },
 
                     };
-                    Plotly.newPlot('hist', response.data, layout, {staticPlot: true});
+                    Plotly.newPlot('hist', response.data, layout, {staticPlot: false});
                 })
 
             },
 
             updateHeatmap() {
 
-                this.$http.get('data/heatmap/' + '?dataset_id=' + this.id + '&column_long=' + this.column_long.name + '&column_lat=' + this.column_lat.name + '&column_label=' + this.column_label.name).then((response) => {
+                this.$http.get('data/heatmap/' + '?dataset_id=' + this.myDataset.id + '&column_long=' + this.column_long.name + '&column_lat=' + this.column_lat.name + '&column_label=' + this.column_label.name).then((response) => {
                     this.heatdata.push(response.data[0]);
                     this.heatlayout.push(response.data[1]);
-                    let layout = {
-                        autosize: true,
-                        //width: 500,
-                        //height: 500
-                        // ,
-                        margin: {
-                            l: 20,
-                            r: 10,
-                            b: 100,
-                            t: 50,
-                            pad: 5
-                        },
-                    };
+
 
                     Plotly.newPlot('heat', response.data[0], response.data[1], {staticPlot: false});
 
@@ -384,7 +397,7 @@
 
             updateParent() {
 
-                this.$http.get('data/types/' + '?dataset_id=' + this.id).then((response) => {
+                this.$http.get('data/types/' + '?dataset_id=' + this.myDataset.id).then((response) => {
                     this.columnTypes = response.data;
 
                 }).catch((error) => {
@@ -397,7 +410,7 @@
             },
             deleteThis() {
                 if (confirm('Delete this dataset?')) {
-                    this.$http.delete('/data/?dataset_id=' + this.id).then((response) => {
+                    this.$http.delete('/data/?dataset_id=' + this.myDataset.id).then((response) => {
                         this.$router.push('/data/all');
                     }).catch((error) => window.alert('Something went wrong getting deleting the dataset'))
                 }

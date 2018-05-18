@@ -31,7 +31,7 @@
 
             <div class="field">
                 <div class="control">
-                    <button class="button" v-on:click="extract">Extract</button>
+                    <button class="button is-info" v-on:click="extract">Extract</button>
                 </div>
             </div>
 

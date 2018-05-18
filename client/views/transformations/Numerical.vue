@@ -19,7 +19,7 @@
 
                 <div class="field">
                     <div class="control">
-                        <button class="button" v-on:click="normalise">Normalise</button>
+                        <button class="button is-info" v-on:click="normalise">Normalise</button>
                     </div>
                 </div>
 
@@ -122,7 +122,7 @@
 
             <div class="field">
                 <div class="control">
-                    <button class="button" v-on:click="fill">Fill</button>
+                    <button class="button is-info" v-on:click="fill">Fill</button>
                 </div>
             </div>
 

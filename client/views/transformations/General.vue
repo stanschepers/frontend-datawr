@@ -4,30 +4,31 @@
         <collapse-item title="Remove rows">
 
 
-            <div class="field is-horizontal is-grouped">
-                    <div class="control">
-                        <span class="select">
+            <div class="field is-horizontal is-grouped is-mobile">
+                <div class="field-body">
+                    <div class="field">
+                        <p class="select is-narrow">
                         <select v-model="expression.column">
                             <option disabled>select...</option>
                             <option v-for="heading in columntypes" v-bind:value="heading">{{heading.name}}</option>
                         </select>
-                        </span>
+                        </p>
                     </div>
 
-                    <div class="control">
-                        <span class="select">
+                    <div class="field">
+                        <p class="select is-narrow">
                         <select v-model="expression.operator">
                             <option disabled>select...</option>
                             <option v-for="heading2 in operators" v-bind:value="heading2">{{heading2.value}}</option>
                         </select>
-                        </span>
+                        </p>
                     </div>
 
-                    <div class="control">
+                    <div class="field">
                         <input class="input" v-model="expression.value" placeholder="values to find">
                     </div>
 
-                    <div class="control">
+                    <div class="field">
                         <a class="button is-primary is-rounded" v-on:click="addExpression">
                             <span>add </span>
                             <span class="icon">
@@ -35,6 +36,9 @@
                             </span>
                         </a>
                      </div>
+
+                </div>
+
 
             </div>
 
@@ -57,7 +61,7 @@
 
             <div class="field">
                 <div class="block">
-                    <button class="button is-danger" v-on:click="executeExpression">Delete rows</button>
+                    <button class="button is-danger" v-on:click="executeExpression" v-if="expressions.length > 0">Delete rows</button>
                 </div>
             </div>
 
@@ -97,7 +101,7 @@
 
             <div class="field">
                 <div class="block">
-                    <button class="button" v-on:click="updateAttribute">Update Attribute</button>
+                    <button class="button is-info" v-on:click="updateAttribute">Update Attribute</button>
                 </div>
             </div>
 

@@ -45,7 +45,7 @@
 
                 <div class="field is-grouped">
                     <div class="block">
-                        <button class="button is-primary" v-on:click="findAndReplace">Replace</button>
+                        <button class="button is-info" v-on:click="findAndReplace">Replace</button>
                     </div>
                 </div>
 

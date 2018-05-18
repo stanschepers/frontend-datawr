@@ -1,14 +1,6 @@
 <template>
         <v-server-table ref="table" :url="api_url" :columns="columnnames" :options="options">
 
-                <tr slot="h__{Nr}">
-                    <button type="button" class="btn btn-primary">Wheeeeeeeee</button>
-                </tr>
-
-                <tr slot="appendBody">
-                        <button type="button" class="btn btn-primary">Whee</button>
-                </tr>
-
         </v-server-table>
 
 </template>

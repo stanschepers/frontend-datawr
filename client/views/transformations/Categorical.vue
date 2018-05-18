@@ -16,7 +16,7 @@
 
         <div class="field">
             <div class="control">
-                <button class="button" v-on:click="oneHotEncode">One Hot Encode</button>
+                <button class="button is-info" v-on:click="oneHotEncode">One Hot Encode</button>
             </div>
         </div>
 

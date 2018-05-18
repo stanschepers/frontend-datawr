@@ -398,14 +398,12 @@
 
                     this.dataset.filetype = 'csv';
                     this.submitFile();
-                    this.activeStep = 4;
                 }
 
                 else if (this.file.type === 'application/zip' || this.file.type === 'application/x-zip-compressed') {
 
                     this.dataset.filetype = 'zip';
                     this.submitFile();
-                    this.activeStep = 3;
 
                 }
 
@@ -413,7 +411,6 @@
 
                     this.dataset.filetype = 'sql';
                     this.submitFile();
-                    this.activeStep = 3;
 
                 }
 
@@ -425,6 +422,7 @@
                   Initialize the form data
                 */
                 let formData = new FormData();
+                let type = this.dataset.filetype;
 
                 /*
                     Add the form data we need to submit
@@ -444,16 +442,18 @@
 
                     this.joinData = response.data;
 
-                })  .then(function(){
+                })  .then(() => {
                         openMessage({
                             message: 'Dataset uploaded succesfully',
                             type: 'success'
+                    });
+                    if(type === 'csv') this.activeStep = 4;
+                    else this.activeStep = 3;
 
-                        })
 
                 })  .catch(function(error) {
                         openMessage({
-                            message:'Something went wrong while uploading the datasets!',
+                            message:'Something went wrong while uploading the datasets!' + error.toString(),
                             type: 'danger'
                         })
 
@@ -500,22 +500,10 @@
 
                     if (table.name !== this.tableToKeep) {
 
-                        let formData = new FormData();
+                        this.$http.delete('/data/?dataset_id=' + table.id)
 
-                        formData.append('dataset_id', table.id);
+                            .then(response => {
 
-                        this.$http.delete('/data/',
-                            formData,
-                            {
-                                headers: {
-                                    'Content-Type': 'multipart/form-data'
-                                }
-                            }
-                        ).then(response => {
-
-                            if (response.data['success']) {
-
-                            }
                         })
                             .catch(function () {
                             });
