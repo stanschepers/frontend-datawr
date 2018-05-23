@@ -13,11 +13,11 @@
                 <span v-if="this.$store.state.auth.loggedIn"> <router-link :to="{name: 'Logout'}">Logout</router-link>
   </span> <span v-else><router-link to="/login">Login page</router-link> </span>  <span
                     v-if="this.$store.state.auth.loggedIn"> • Welcome {{ $store.state.auth.user.username }} </span>
-                • <a href="http://localhost:8000" target="_blank">
+                •
                 <span v-if="backend === 0" class="has-text-warning">Status</span>
                 <span v-if="backend === 1" class="has-text-success">Status</span>
                 <span v-if="backend === 2" class="has-text-danger">Status</span>
-            </a>
+
             </p>
         </div>
     </footer>
