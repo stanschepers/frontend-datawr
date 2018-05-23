@@ -216,7 +216,7 @@
 
                 ).then(response => {
                     openMessage({
-                        message: 'Transformation succesful: XXX outliers have been removed',
+                        message: 'Transformation succesful: '+ response.data.amount + ' outliers have been removed',
                         type: 'success'
                     });
                     this.$emit('update');
@@ -272,7 +272,7 @@
 
                 ).then(response => {
                     openMessage({
-                        message: 'Transformation succesful: XXX values in column' + this.column.name + 'have been filled',
+                        message: 'Transformation succesful: ' + response.data.amount + ' values in column' + this.column.name + 'have been filled',
                         type: 'success'
                     });
                     this.$emit('update');

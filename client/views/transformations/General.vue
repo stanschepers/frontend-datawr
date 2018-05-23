@@ -160,7 +160,7 @@
             operators: [
                 {
                     key: 'EQ',
-                    value: '='
+                    value: '=='
                 },
                 {
                     key: 'NE',
@@ -262,7 +262,7 @@
 
                 ).then(response => {
                     openMessage({
-                        message: 'Transformation succesful: XXX rows have been deleted',
+                        message: 'Transformation succesful: ' + response.data.amount + ' rows have been deleted',
                         type: 'success'
                     });
                     this.$emit('update');

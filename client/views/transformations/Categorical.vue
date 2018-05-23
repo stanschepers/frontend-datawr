@@ -61,7 +61,7 @@
                     formData,
                 ).then(response => {
                     openMessage({
-                        message: 'The column ' + this.column.name + ' has been one-hot-encoded',
+                        message: 'The column ' + this.column.name + ' has been encoded',
                         type: 'success'
                     });
                     this.$emit('update');

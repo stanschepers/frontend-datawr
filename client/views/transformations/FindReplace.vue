@@ -103,7 +103,7 @@
                         formData,
                     ).then(response => {
                         openMessage({
-                            message: 'XXX items in column ' + this.column.name + ' have been replaced',
+                            message: response.data.amount + ' items in column ' + this.column.name + ' have been replaced',
                             type: 'success'
                         });
                         this.$emit('update');
@@ -135,7 +135,7 @@
                         formData,
                     ).then(response => {
                         openMessage({
-                            message: 'XXX items in column ' + this.column.name + ' have been replaced',
+                            message:  response.data.amount + ' items in column ' + this.column.name + ' have been replaced',
                             type: 'success'
                         });
                         this.$emit('update');
