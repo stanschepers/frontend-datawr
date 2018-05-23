@@ -13,7 +13,7 @@
             </div>
             <div class="field">
                 <div class="control">
-                    <input class="input" maxlength="63" v-model="dataset.name" type="text" name="name"
+                    <input class="input" maxlength="30" v-model="dataset.name" type="text" name="name"
                            placeholder="Name"/>
                 </div>
                 <p class="help is-danger" v-if="nameIsEmpty">Name can not be empty</p>

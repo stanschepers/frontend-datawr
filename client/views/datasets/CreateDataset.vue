@@ -48,7 +48,7 @@
                                                 <p></p>
                                                 <label class="label is-centered">Dataset Name</label>
                                                 <p class="control">
-                                                    <input class="input" v-model="dataset.name" type="text"
+                                                    <input maxlength="30" class="input" v-model="dataset.name" type="text"
                                                            placeholder="e.g. My Dataset"
                                                            v-bind:class="{'is-danger': dataset.wrongInput}">
                                                     <span v-if="dataset.wrongInput" class="help is-danger">This field is required</span>
@@ -58,7 +58,7 @@
                                                 </p>
                                                 <label class="label">Dataset description</label>
                                                 <p class="control">
-                                        <textarea class="textarea" v-model="dataset.description"
+                                        <textarea maxlength="140" class="textarea" v-model="dataset.description"
                                                   placeholder="e.g. This dataset contains information about the correlation between the sales of eggs and the amount of toothbrushes sold each month"
                                                   v-bind:class="{'is-danger': dataset.wrongInput}">
                                         </textarea>

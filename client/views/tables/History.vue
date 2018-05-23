@@ -2,7 +2,7 @@
     <div>
         <h1 class="title">History</h1>
 
-        <div class=" is-very-responsive">
+        <div class=" is-very-responsive has-text-centered">
 
             <v-server-table ref="historytable" :url="api_url" :columns="columnnames" :options="options">
 
@@ -11,6 +11,13 @@
                 </div>
 
             </v-server-table>
+
+            <a class="button is-danger is-small is-centered" v-on:click="undo">
+                <span class="icon is-small">
+                  <i class="fa fa-undo"></i>
+                </span>
+                <span>Undo last transformation</span>
+            </a>
 
         </div>
 
@@ -22,7 +29,8 @@
 
     import Vue from 'vue';
     import {ServerTable} from 'vue-tables-2';
-    import test from './test'
+    import {openMessage} from "../../utils";
+
 
     Vue.use(ServerTable, {}, false, 'bulma', 'default');
 
@@ -30,7 +38,7 @@
 
 
     export default {
-        components: {test},
+        components: {},
 
         props: {
             setid: Number,
@@ -65,6 +73,39 @@
             update() {
                 this.$refs.historytable.refresh();
             },
+
+            undo() {
+
+                let formData = new FormData();
+                formData.append('dataset_id', this.setid);
+
+                this.$http.post('/data/undo/',
+                    formData,
+                ).then(response => {
+
+                    console.log(response.data.success)
+                    if(response.data.success) {
+                        openMessage({
+                            message: response.data.msg,
+                            type: 'success'
+                        });
+                    }
+                    else {
+                        openMessage({
+                            message: response.data.msg,
+                            type: 'danger'
+                        });
+                    }
+                    this.$emit('update');
+                    this.update()
+
+                })
+                    .catch(function (error) {
+                        openMessage({
+                            message: 'The last transformation could not be reverted',
+                            type: 'danger'
+                        });                    });
+            }
 
         },
 
