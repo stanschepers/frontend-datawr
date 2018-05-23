@@ -83,7 +83,6 @@
                     formData,
                 ).then(response => {
 
-                    console.log(response.data.success)
                     if(response.data.success) {
                         openMessage({
                             message: response.data.msg,
@@ -124,7 +123,6 @@
 
             this.$http.get('data/history/' + '?dataset_id=' + this.setid).then((response) => {
                 this.history = response.data;
-                console.log(response.data)
 
             }).catch((error) => {
                 window.alert("Something went wrong with getting the history")

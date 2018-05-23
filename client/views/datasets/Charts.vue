@@ -40,16 +40,6 @@
                 // plots
                 this.$http.get('data/charts/' + '?dataset_id=' + this.setid).then((response) => {
                     this.chartdata = response.data;
-                    console.log(response.data)
-                    let index = 0;
-
-
-                    for(let currentchart in this.chartdata) {
-
-
-                    }
-
-
                 })
             },
 

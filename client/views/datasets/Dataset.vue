@@ -147,7 +147,7 @@ _\ \ |_) | (_| | (_| | | | |  __/ |_| |_| |\ V  V / (_) | |  | | (_| |
 
                 <div class="tile is-parent">
                     <article class="tile is-child box">
-                        <h4 class="title">Heatmap</h4>
+                        <h4 class="title">Map</h4>
 
                         <div class="field">
                             <div class="control">
@@ -196,7 +196,7 @@ _\ \ |_) | (_| | (_| | | | |  __/ |_| |_| |\ V  V / (_) | |  | | (_| |
                 <div class="tile is-parent ">
                     <article class="tile is-child box">
                         <column-algorithms :my-dataset="myDataset" :column-types="columnTypes"
-                                           :id="id"></column-algorithms>
+                                           :id="myDataset.id"></column-algorithms>
                     </article>
                 </div>
             </div>
@@ -259,7 +259,7 @@ _\ \ |_) | (_| | (_| | | | |  __/ |_| |_| |\ V  V / (_) | |  | | (_| |
                                 <div class="field">
                                     <div class="control">
                                         <div class="button">
-                                            <a :href="'https://api.datawr.ml/data/export/?dataset_id=' + myDataset.id + '&sep=' + delimiter + '&null=' + null_value "><i
+                                            <a :href="'https://api.datawr.ml/data/export/?dataset_id=' + this.routeid + '&sep=' + this.delimiter + '&null=' + this.null_value "><i
                                                     class="fa fa-download"></i> Export</a>
                                         </div>
                                     </div>
@@ -316,7 +316,7 @@ _\ \ |_) | (_| | (_| | | | |  __/ |_| |_| |\ V  V / (_) | |  | | (_| |
                 myDataset: null,
                 max: null,
                 columnTypes: [],
-                id: this.$route.params.id,
+                routeid: this.$route.params.id,
 
                 error: false,
 
@@ -450,13 +450,13 @@ _\ \ |_) | (_| | (_| | | | |  __/ |_| |_| |\ V  V / (_) | |  | | (_| |
 
         created() {
             this.isloading = true
-            this.$http.get(api + '?dataset_id=' + this.id).then((response) => {
+            this.$http.get(api + '?dataset_id=' + this.routeid).then((response) => {
                 this.myDataset = response.data;
             }).catch((error) => {
                 this.error = true
             });
 
-            this.$http.get('data/types/' + '?dataset_id=' + this.id).then((response) => {
+            this.$http.get('data/types/' + '?dataset_id=' + this.routeid).then((response) => {
                 this.columnTypes = response.data;
 
             }).catch((error) => {
