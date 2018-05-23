@@ -291,6 +291,8 @@ _\ \ |_) | (_| | (_| | | | |  __/ |_| |_| |\ V  V / (_) | |  | | (_| |
 
     import VueTables2 from '../tables/VueTable'
     import editTable from '../../components/tables/editTable'
+    import {openMessage} from "../../utils";
+
 
     const api = 'data/';
 
@@ -347,10 +349,13 @@ _\ \ |_) | (_| | (_| | | | |  __/ |_| |_| |\ V  V / (_) | |  | | (_| |
             raw() {
               this.$http.get("/data/raw/?dataset_id=" + this.myDataset.id).then(
                   (res) => {
-                      if(confirm('Do you want to go to the new raw dataset?')){
+                      if(confirm('Do you want to create a new raw dataset?')){
                           this.$router.push('/data/' + res.data.dataset_id)
-                      } else {
-                          window.alert('Created new raw dataset')
+                          openMessage({
+                              message: 'Created a new raw dataset',
+                              type: 'success'
+                          })
+
                       }
                   }
               ).catch((error) => {
@@ -419,7 +424,10 @@ _\ \ |_) | (_| | (_| | | | |  __/ |_| |_| |\ V  V / (_) | |  | | (_| |
                 if (confirm('Delete this dataset?')) {
                     this.$http.delete('/data/?dataset_id=' + this.myDataset.id).then((response) => {
                         this.$router.push('/data/all');
-                    }).catch((error) => window.alert('Something went wrong getting deleting the dataset'))
+                    }).catch((error) => openMessage({
+                        message: 'Could not delete dataset',
+                        type: 'danger'
+                    }))
                 }
             },
             like() {
@@ -429,7 +437,10 @@ _\ \ |_) | (_| | (_| | | | |  __/ |_| |_| |\ V  V / (_) | |  | | (_| |
                     }
                 ).catch(
                     (error) => {
-                        window.alert('Something went wrong with liking the dataset')
+                        openMessage({
+                            message: 'Could not like dataset',
+                            type: 'danger'
+                        })
                     }
                 )
             },
@@ -440,7 +451,10 @@ _\ \ |_) | (_| | (_| | | | |  __/ |_| |_| |\ V  V / (_) | |  | | (_| |
                     }
                 ).catch(
                     (error) => {
-                        window.alert('Something went wrong with liking the dataset')
+                        openMessage({
+                            message: 'Could not dislike dataset',
+                            type: 'danger'
+                        })
                     }
                 )
             }
@@ -460,7 +474,10 @@ _\ \ |_) | (_| | (_| | | | |  __/ |_| |_| |\ V  V / (_) | |  | | (_| |
                 this.columnTypes = response.data;
 
             }).catch((error) => {
-                window.alert("Something went wrong with getting the datasets")
+                openMessage({
+                    message: 'There went something wrong getting the dataset.',
+                    type: 'danger'
+                })
             });
 
         }
