@@ -141,6 +141,12 @@
 
         methods: {
 
+            update() {
+                console.log("Yes, ik wordt geupdate in de stats! ");
+                if (this.max != null) this.updateNumericalStats();
+                if (this.mode != null) this.updateStats();
+            },
+
             updateNumericalStats() {
                 this.$http.get( 'data/stats/' + '?dataset_id=' + this.setid+ '&type=' + 'all_numerical_stats' + '&column=' + this.column1).then((response) => {
                     this.max = response.data['max']

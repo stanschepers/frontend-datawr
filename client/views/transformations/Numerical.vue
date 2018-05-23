@@ -238,14 +238,27 @@
 
             fill() {
                 // Calculate stats
+                let lol = null
                 this.$http.get( 'data/stats/' + '?dataset_id=' + this.setid+ '&type=' + this.type + '&column=' + this.column.name).then((response) => {
                     this.replace = response.data
+                    this.realfill();
 
+                    lol = response.data
 
                 }).catch((error) => {
-                    this.error = true
-                });
+                    openMessage({
+                        message: 'Transformation failed: could not compute ' + this.type + 'of this column',
+                        type: 'danger'
+                    });                });
 
+
+
+            },
+
+
+            realfill() {
+
+                console.log(this.type, this.replace);
 
                 let formData = new FormData();
                 formData.append('dataset_id', this.setid);
@@ -272,10 +285,7 @@
                         });
                     });
 
-
-
-
-            },
+            }
 
 
 

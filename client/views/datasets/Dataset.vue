@@ -36,14 +36,14 @@ _\ \ |_) | (_| | (_| | | | |  __/ |_| |_| |\ V  V / (_) | |  | | (_| |
                                             class="fa fa-heart has-text-danger"></i></a>
                                     <a v-else @click="like"><i class="fa fa-heart"></i></a>
                                 </div>
-                                <div class="level-item">
+                                <div class="level-item" v-if="myDataset.write">
                                     <a @click="showEdit = !showEdit"><i class="fa fa-gear"></i></a>
                                 </div>
-                                <div class="level-item">
+                                <div class="level-item" v-if="myDataset.write">
                                     <a @click="deleteThis"><i class="fa fa-trash"></i></a>
                                 </div>
                                 <div class="level-right">
-                                    <div class="level-item">
+                                    <div class="level-item" v-if="myDataset.write">
                                         <a @click="raw"><i class="fa fa-window-restore"></i></a>
                                     </div>
                                     <div class="level-item">
@@ -58,7 +58,7 @@ _\ \ |_) | (_| | (_| | | | |  __/ |_| |_| |\ V  V / (_) | |  | | (_| |
                 <div class="tile is-parent">
                     <div class="tile is-child box">
 
-                        <statistics :columntypes="columnTypes" :setid="myDataset.id">
+                        <statistics ref="statistics" :columntypes="columnTypes" :setid="myDataset.id">
 
                         </statistics>
 
@@ -96,7 +96,7 @@ _\ \ |_) | (_| | (_| | | | |  __/ |_| |_| |\ V  V / (_) | |  | | (_| |
             </div>
 
             <div class="tile is-ancestor">
-                <div class="tile is-parent is-two-thirds">
+                <div class="tile is-parent is-two-thirds" v-if="myDataset.write">
                     <article class="tile is-child box">
 
                         <column-transformations :columntypes="columnTypes" :setid="myDataset.id"
@@ -108,7 +108,7 @@ _\ \ |_) | (_| | (_| | | | |  __/ |_| |_| |\ V  V / (_) | |  | | (_| |
                 </div>
 
 
-                <div class="tile is-parent is-5 is-tablet">
+                <div class="tile is-parent is-tablet">
                     <article class="tile is-child box">
 
                         <history ref="historyref" :setid="myDataset.id">
@@ -191,7 +191,7 @@ _\ \ |_) | (_| | (_| | | | |  __/ |_| |_| |\ V  V / (_) | |  | | (_| |
                     </article>
                 </div>
             </div>
-            <div class="tile is-ancestor">
+            <div class="tile is-ancestor" v-if="myDataset.write">
 
                 <div class="tile is-parent ">
                     <article class="tile is-child box">
@@ -353,8 +353,14 @@ _\ \ |_) | (_| | (_| | | | |  __/ |_| |_| |\ V  V / (_) | |  | | (_| |
                           window.alert('Created new raw dataset')
                       }
                   }
-              )
-            },
+              ).catch((error) => {
+                  openMessage({
+                      message: 'You have no write permission on this dataset',
+                      type: 'danger'
+                  });
+              });
+
+              },
             updateHistogram() {
                 // plots
                 this.$http.get('data/histogram/' + '?dataset_id=' + this.myDataset.id + '&column=' + this.histColumn.name).then((response) => {
@@ -405,6 +411,7 @@ _\ \ |_) | (_| | (_| | | | |  __/ |_| |_| |\ V  V / (_) | |  | | (_| |
                 });
 
                 this.$refs['vuetables2'].update()
+                this.$refs['statistics'].update()
                 this.$refs['historyref'].update()
 
             },
