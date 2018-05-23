@@ -26,7 +26,7 @@
 <script>
 
     import { Collapse, Item as CollapseItem } from 'vue-bulma-collapse'
-
+    import {openMessage} from "../../utils";
 
     export default {
         components: {CollapseItem, Collapse},
@@ -67,7 +67,7 @@
                     this.$emit('update');
 
                 })
-                    .catch(function () {
+                    .catch(function (error) {
                         openMessage({
                             message: 'The one-hot-encode transformation could not be applied',
                             type: 'danger'

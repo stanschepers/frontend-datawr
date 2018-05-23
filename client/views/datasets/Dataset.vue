@@ -111,7 +111,7 @@ _\ \ |_) | (_| | (_| | | | |  __/ |_| |_| |\ V  V / (_) | |  | | (_| |
                 <div class="tile is-parent is-tablet">
                     <article class="tile is-child box">
 
-                        <history ref="historyref" :setid="myDataset.id">
+                        <history ref="historyref" :setid="myDataset.id" v-on:update="updateParent">
 
                         </history>
 
