@@ -27,7 +27,7 @@ _\ \ |_) | (_| | (_| | | | |  __/ |_| |_| |\ V  V / (_) | |  | | (_| |
                                 </div>
                             </div>
                         </div>
-                        <p>{{myDataset.description}}</p>
+                        <p><span class="fa fa-user-circle"></span>  <span><b>{{myDataset.owner_username}}</b> • {{myDataset.description}}</span></p>
                         <hr/>
                         <div class="level is-mobile is-fixed-bottom">
                             <div class="level-left">
