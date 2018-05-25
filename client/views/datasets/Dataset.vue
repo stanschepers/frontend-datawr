@@ -108,17 +108,25 @@ _\ \ |_) | (_| | (_| | | | |  __/ |_| |_| |\ V  V / (_) | |  | | (_| |
                 </div>
 
 
-                <div class="tile is-parent is-tablet">
+                <div class="tile is-parent is-tablet" v-if="minimized">
                     <article class="tile is-child box">
 
-                        <history ref="historyref" :setid="myDataset.id" v-on:update="updateParent">
+                        <history ref="historyref" :setid="myDataset.id" :min="true" v-on:update="updateParent" v-on:toggle="toggleHistory">
 
                         </history>
-
 
                     </article>
                 </div>
 
+            </div>
+
+            <div class="tile is-ancestor" v-if="!minimized">
+                <div class="tile is-parent">
+                    <article class="tile is-child box">
+                        <history ref="historyref" :setid="myDataset.id" :min="false" v-on:update="updateParent" v-on:toggle="toggleHistory">
+                        </history>
+                    </article>
+                </div>
             </div>
 
 
@@ -148,8 +156,9 @@ _\ \ |_) | (_| | (_| | | | |  __/ |_| |_| |\ V  V / (_) | |  | | (_| |
                 <div class="tile is-parent">
                     <article class="tile is-child box">
                         <h4 class="title">Map</h4>
+                        <div class="field is-horizontal is-grouped">
 
-                        <div class="field">
+
                             <div class="control">
                                 <label class="label">Select label</label>
                                 <div class="select">
@@ -160,9 +169,6 @@ _\ \ |_) | (_| | (_| | | | |  __/ |_| |_| |\ V  V / (_) | |  | | (_| |
 
                                 </div>
                             </div>
-                        </div>
-
-                        <div class="field is-horizontal is-grouped">
 
                             <div class="control">
                                 <label class="label">Select longitude</label>
@@ -340,6 +346,9 @@ _\ \ |_) | (_| | (_| | | | |  __/ |_| |_| |\ V  V / (_) | |  | | (_| |
                 delimiter: ',',
                 modalActive: false,
 
+                //historyToggle
+                minimized: true,
+
             }
         },
 
@@ -457,6 +466,11 @@ _\ \ |_) | (_| | (_| | | | |  __/ |_| |_| |\ V  V / (_) | |  | | (_| |
                         })
                     }
                 )
+            },
+            toggleHistory() {
+
+                this.minimized = !this.minimized;
+
             }
 
         },

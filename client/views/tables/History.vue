@@ -1,14 +1,19 @@
 <template>
     <div>
-        <h1 class="title">History</h1>
+
+        <div class="level is-mobile">
+            <div class="level-left">
+                <h1 class="title level-item">History</h1>
+            </div>
+            <div class="level-right">
+                <a @click="toggle" class="button is-primary is-small">toggle</a>
+            </div>
+        </div>
 
         <div class=" is-very-responsive has-text-centered">
 
             <v-server-table ref="historytable" :url="api_url" :columns="columnnames" :options="options">
 
-                <div slot="child_row">
-                    The link to yolo
-                </div>
 
             </v-server-table>
 
@@ -42,14 +47,13 @@
 
         props: {
             setid: Number,
+            min: Boolean,
         },
         name: "history",
 
         data() {
             return {
                 history: null,
-
-                columnnames: ['trans_type', 'trans_extra', 'editor'],
 
                 options: {
                     clientMultiSorting: false,
@@ -58,7 +62,6 @@
                     filterable: false,
                     sortable: [],
                     uniqueKey: "execution_date",
-                    childRow: 'test',
 
                     sortIcon: { up:'fa fa-sort-up', down:'fa fa-sort-down', is:'fa fa-sort' }
 
@@ -69,6 +72,12 @@
         },
 
         methods: {
+
+            toggle() {
+
+                this.$emit('toggle');
+
+            },
 
             update() {
                 this.$refs.historytable.refresh();
@@ -114,6 +123,18 @@
 
                 return '/data/history/' + '?dataset_id=' + this.setid;
             },
+
+            minimized() {
+
+                return this.min
+            },
+
+            columnnames() {
+
+                if (this.minimized) return ['trans_type', 'trans_extra']
+                else return ['trans_type', 'trans_extra', 'execution_date', 'editor', 'trans_query']
+
+            }
 
 
 

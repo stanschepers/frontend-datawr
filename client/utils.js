@@ -5,7 +5,7 @@ export const openMessage = (propsData = {
     message: '',
     type: '',
     direction: 'right',
-    duration: 1500,
+    duration: 3000,
     container: '.messages'
 }) => {
     return new MessageComponent({
