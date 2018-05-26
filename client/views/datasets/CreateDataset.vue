@@ -240,8 +240,7 @@
                                     <div class="content">
                                         <h1>Import complete</h1>
                                         <p>
-                                            Congratulations! Your dataset(s) have been imported. Errors will be
-                                            displayed soon.
+                                            Congratulations! Your dataset(s) have been imported.
                                         </p>
                                         <p>
                                             <router-link :to="{name: 'Datasets'}" class="has-text-centered">
