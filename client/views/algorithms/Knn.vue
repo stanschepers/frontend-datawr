@@ -15,12 +15,12 @@
                                     v-bind:value="heading.name">{{heading.name}}</option>
                         </select>
                         </span>
-                    </p>
-                    <a class="button is-primary" v-on:click="chosenColumns.push(selectedColumn)">
-                    <span class="icon">
+                        <a class="button is-primary" v-on:click="chosenColumns.push(selectedColumn)">
+                            <span class="icon">
                                 <i class="fa fa-heading fa-plus"></i>
                             </span>
-                    </a>
+                        </a>
+                    </p>
                 </div>
             </div>
         </div>
@@ -61,10 +61,15 @@
                 <label class="label">Start K Value</label>
             </div>
             <div class="field-body">
-                <input class="input" type="number" value="1">
-                <div v-if="" class="help-text is-danger"> The start K Value must be larger than 1 and smaller than the End K
-                    value
+                <div class="field">
+                    <div class="control">
+                        <input class="input" type="number" value="1"/>
+                        <div v-if="" class="help-text is-danger"> The start K Value must be larger than 1 and smaller than the End K
+                            value
+                        </div>
+                    </div>
                 </div>
+
             </div>
 
         </div>
@@ -75,12 +80,12 @@
             </div>
             <div class="field-body">
                 <div class="field">
-                    <p class="control">
+                    <div class="control">
                         <input min="2" class="input" type="number" value="20"/>
-                    <div class="help-text is-danger"> The End K Value must be larger than 2 and larger than the
-                        Start K value
+                        <div class="help-text is-danger"> The End K Value must be larger than 2 and larger than the
+                            Start K value
+                        </div>
                     </div>
-                    </p>
                 </div>
             </div>
         </div>
