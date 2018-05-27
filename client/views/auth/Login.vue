@@ -1,6 +1,6 @@
 <template>
     <div>
-    <div v-if="this.$store.state.loggedIn">
+    <div v-if="this.$store.state.auth.loggedIn">
         You are logged in.
     </div>
     <div v-else class="content has-text-centered">
@@ -61,7 +61,7 @@
             }
         },
         mounted() {
-          if(this.$store.state.loggedIn){
+          if(this.$store.state.auth.loggedIn){
               this.$router.push('/profile')
           }
         },

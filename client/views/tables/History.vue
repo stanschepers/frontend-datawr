@@ -6,7 +6,12 @@
                 <h1 class="title level-item">History</h1>
             </div>
             <div class="level-right">
-                <a @click="toggle" class="button is-primary is-small">toggle</a>
+                <div class="b-checkbox is-info is-circular">
+                <input @click="toggle" id="checkbox" class="styled" :checked="!min"  type="checkbox">
+                <label for="checkbox">
+                    Show Extra
+                </label>
+            </div>
             </div>
         </div>
 
@@ -154,6 +159,7 @@
 </script>
 
 <style scoped lang="scss">
+    @import '~cool-checkboxes-for-bulma.io';
 
     .VueTables__child-row-toggler {
         width: 16px;

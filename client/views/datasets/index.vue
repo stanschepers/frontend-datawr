@@ -34,7 +34,6 @@
 
 <script>
     import DataCard from '../../components/data/dataCard'
-    import vbSwitch from 'vue-bulma-switch'
     import Vue from 'vue';
 
 
@@ -43,7 +42,7 @@
 
 
     export default {
-        components: {DataCard, vbSwitch},
+        components: {DataCard},
         data() {
             return {
                 items: null,

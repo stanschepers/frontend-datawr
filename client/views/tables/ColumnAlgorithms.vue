@@ -13,7 +13,7 @@
 
             <div class="tabs ">
                 <ul>
-                    <li v-bind:class="{'is-active' : selected === 'knn'}" v-on:click="selected = 'knn'" ><a>KNN (Best K)</a></li>
+                    <li v-bind:class="{'is-active' : selected === 'knn'}" v-on:click="selected = 'knn'" ><a>KNN</a></li>
                     <li v-bind:class="{'is-active' : selected === 'other'}" v-on:click="selected = 'other'"><a>Other</a></li>
                 </ul>
             </div>

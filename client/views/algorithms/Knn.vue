@@ -1,134 +1,168 @@
 <template>
     <div>
-        <p></p>
-        <div class="field is-horizontal">
-            <div class="field-label is-normal">
-                <label class="label">Choose the fields: </label>
-            </div>
-            <div class="field-body">
-                <div class="field">
-                    <p class="control">
-                <span class="select">
-                        <select v-model="selectedColumn">
-                            <option disabled>Select...</option>
-                            <option v-for="heading in numberColumnTypes"
-                                    v-bind:value="heading.name">{{heading.name}}</option>
-                        </select>
-                        </span>
-                        <a class="button is-primary" v-on:click="chosenColumns.push(selectedColumn)">
-                            <span class="icon">
-                                <i class="fa fa-heading fa-plus"></i>
-                            </span>
-                        </a>
-                    </p>
-                </div>
-            </div>
-        </div>
-        <div class="field">
-            <div class="control">
-                <span class="tags">
-                    <span class="tag is-medium" v-for="(c, index) in chosenColumns"> {{ c }} &nbsp; <button
-                            @click="chosenColumns.splice(index, 1)" class="delete"></button></span>
-                    <span v-if="chosenColumns.length !== 0">
-                    <span class="tag is-medium is-danger is-outlined"> Delete All &nbsp; <button
-                            @click="chosenColumns = []"
-                            class="delete"></button> </span>
-                </span>
-                </span>
-            </div>
-        </div>
-        <div class="field is-horizontal">
-            <div class="field-label is-normal">
-                <label class="label">Column to predict: </label>
-            </div>
-            <div class="field-body">
-                <div class="field">
-                    <p class="control">
-                <span class="select">
-                        <select v-model="prediction">
-                            <option selected disabled>Select...</option>
-                            <option v-for="heading in columnTypes"
-                                    v-bind:value="heading.name">{{heading.name}}</option>
-                        </select>
-                        </span>
-                    </p>
-                </div>
+        <div class="columns is-centered">
 
-            </div>
-        </div>
-        <div class="field is-horizontal">
-            <div class="field-label is-normal">
-                <label class="label">Start K Value</label>
-            </div>
-            <div class="field-body">
-                <div class="field">
-                    <div class="control">
-                        <input class="input" type="number" value="1"/>
-                        <div v-if="" class="help-text is-danger"> The start K Value must be larger than 1 and smaller than the End K
-                            value
+            <div class="column">
+                Stap 1: Kies een target column <br/>
+                Stap 2: Toon alle rows met die column leeg & kies een een target row <br/>
+                Stap 3: Kies andere trainings columns & kies K & kies distance fx <br/>
+                Stap 4: Zie het resultaat van KNN met de distance & Laat goed keuren <br/>
+                Stap 5: Waarde in de database <br/>
+                <hr/>
+
+                <div class="steps" id="steps">
+                    <div class="step-item"
+                         v-bind:class="{ 'is-active': activeStep<=0, 'is-completed': activeStep > 0 }">
+                        <div class="step-marker">0</div>
+                        <div class="step-details"></div>
+                    </div>
+
+                    <div class="step-item"
+                         v-bind:class="{ 'is-active': activeStep===1, 'is-completed': activeStep > 1 }">
+                        <div class="step-marker">1</div>
+                        <div class="step-details"></div>
+                    </div>
+
+                    <div class="step-item"
+                         v-bind:class="{ 'is-active': activeStep===2, 'is-completed': activeStep > 2  }">
+                        <div class="step-marker">2</div>
+                        <div class="step-details"></div>
+                    </div>
+
+                    <div class="step-item"
+                         v-bind:class="{ 'is-active': activeStep===3, 'is-completed': activeStep > 3 }">
+                        <div class="step-marker">3</div>
+                        <div class="step-details"></div>
+                    </div>
+
+                    <div class="step-item"
+                         v-bind:class="{ 'is-active': activeStep===4 , 'is-completed': activeStep > 4 }">
+                        <div class="step-marker">4</div>
+                        <div class="step-details"></div>
+                    </div>
+
+                    <div class="step-item"
+                         v-bind:class="{ 'is-active': activeStep>=5 }">
+                        <div class="step-marker">5</div>
+                        <div class="step-details"></div>
+                    </div>
+
+                    <div class="steps-content" :class="showHidden(0)" v-if="showHiddenBool(0)">
+                        <div class="content has-text-centered">
+                            <h3 class="title">Welcome to KNN</h3>
                         </div>
                     </div>
-                </div>
 
-            </div>
-
-        </div>
-
-        <div class="field is-horizontal">
-            <div class="field-label is-normal">
-                <label id="max" class="label">End K Value</label>
-            </div>
-            <div class="field-body">
-                <div class="field">
-                    <div class="control">
-                        <input min="2" class="input" type="number" value="20"/>
-                        <div class="help-text is-danger"> The End K Value must be larger than 2 and larger than the
-                            Start K value
+                    <div class="steps-content" :class="showHidden(1)" v-if="showHiddenBool(1)">
+                        <div class="content has-text-centered">
+                            <h5 class="subtitle">Select a <b>target column </b></h5>
+                            <div class="field">
+                                <p class="control">
+                                <div class="select">
+                                    <select v-model="send.target_column">
+                                        <option v-for="c of get.column_empty_value" :key="c" :value="c" selected> {{ c
+                                            }}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </div>
-        </div>
 
-        <div class="field">
-            <div class="control">
-                <div class="level">
-                    <div class="level-right level-item">
-                        <button class="button is-primary" @click="calculate"> Calculate</button>
+                    <div class="steps-content" :class="showHidden(2)" v-if="showHiddenBool(2)">
+                        <div class="content has-text-centered">
+                            <h5 class="subtitle">Select a <b>target row </b></h5>
+
+                            <table class="table is-striped is-narrow is-hoverable">
+                                <thead>
+                                <tr>
+                                    <th> Target Row</th>
+                                    <th v-for="c of get.rows.columns" :key="c"> {{ c }}</th>
+                                </tr>
+
+                                </thead>
+                                <tbody>
+                                <tr v-for="r of get.rows.data" :key="r[0]">
+                                    <td>
+                                        <div class="control">
+                                            <input type="radio" name="answer" v-model="send.target_row_index"
+                                                   :value="r[0]">
+                                        </div>
+                                    </td>
+                                    <td v-for="rc of r"> {{ rc }}</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
+
+                    <div class="steps-content" :class="showHidden(3)" v-if="showHiddenBool(3)">
+                        <div class="content has-text-centered">
+                            <h5 class="subtitle">Select <b>trainings columns </b></h5>
+                            <div class="field">
+                                <p class="control">
+                                <div class="select">
+                                    <select v-model="sel">
+                                        <option v-for="c in get.target_columns_not_empty" :key="c" :value="c" selected>
+                                            {{ c }}
+                                        </option>
+                                    </select>
+                                </div>
+                                <a class="button is-primary is-rounded" @click="appendTrainColumns(sel)"> Add Train Column </a>
+                                </p>
+                                <p class="control">
+                                <div class="tags">
+                                <span class="tag is-large" v-for="c in send.train_columns" :key="c"> {{ c }} &nbsp;
+                                    <button class="delete" @click="deleteTrainColumns(c)"> </button>
+                                </span>
+                                </div>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="steps-content" :class="showHidden(4)" v-if="showHiddenBool(4)">
+                        <div class="content has-text-centered">
+                            <h3 class="title">Welcome to KNN</h3>
+                        </div>
+                    </div>
+
+                    <div class="steps-content" :class="showHidden(5)" v-if="showHiddenBool(5)">
+                        <div v-if="success" class="content has-text-centered">
+                            <h3 class="title"> Succesfull updated! </h3>
+                        </div>
+                    </div>
+
+                    <div class="steps-actions">
+
+                        <div class="steps-action" @click="reset">
+                            <a class="button is-outlined is-grey">Reset</a>
+                        </div>
+                        <div class="steps-action" :class="nextButton">
+                            <button @click="nextStep" :disabled="nextDisabled" class="button is-primary"
+                                    :class="stepLoading ? 'is-loading' : ''">Next
+                            </button>
+                        </div>
+
+                    </div>
+
                 </div>
-            </div>
-        </div>
-        <div class="field" v-if="answer">
-            <div class="control">
-                <table class="table is-fullwidth is-bordered">
-                    <tr>
-                        <th> K Values with Max Error Rate</th>
-                        <th> K Values with Min Error Rate</th>
-                    </tr>
-                    <tr>
-                        <td> {{ answer.max }}</td>
-                        <td> {{ answer.min }}</td>
-                    </tr>
-
-                    <tr>
-                        <th> K Value</th>
-                        <th> Error Rate</th>
-                    </tr>
-
-                    <tr v-for="(value, key, index) of answer" :key="index">
-                        <template v-if="[key !== 'max' || key !== 'min]"
-                        <th> {{ key }}</th>
-                        <td> {{ value }}</td>
-                    </tr>
-                    </tbody>
-                </table>
             </div>
         </div>
     </div>
 </template>
 
 <script>
+    import {openMessage} from "../../utils";
+
+    /*
+   KNN:
+        Stap 1: Kies een target column
+        Stap 2: Toon alle rows met die column leeg & kies een een target row
+        Stap 3: Kies andere trainings columns & kies K & kies distance fx
+        Stap 4: Zie het resultaat van KNN met de distance & Laat goed keuren
+        Stap 5: Waarde in de database
+     */
     export default {
         name: "knn",
         props: {
@@ -138,42 +172,195 @@
         },
         data() {
             return {
-                selectedColumn: null,
-                chosenColumns: [],
-                prediction: null,
-                answer: null
+                success: false,
+                get: {
+                    column_empty_value: ['test', 'test2'],
+                    rows: null,
+                    target_columns_not_empty: []
+
+                },
+                send: {
+                    target_column: '',
+                    target_row_index: 0,
+                    train_columns: [],
+                    dist_fx: 'euclidean',
+                    k: 1,
+                },
+                dist_fxs: [
+                    'euclidean',
+                    'cityblock',
+                    'cosine',
+                ],
+                activeStep: 0,
+                stepValid: true,
+                stepLoading: false,
+                sel: ''
             }
         },
         methods: {
-            deleteItem(index) {
-                console.log(index);
-                console.log(this.chosenColumns)
+            appendTrainColumns(c) {
+                this.get.target_columns_not_empty = this.get.target_columns_not_empty.filter(e => e !== c);
+
+                this.send.train_columns.push(c);
             },
-            calculate() {
-                let url = '/data/knn/?dataset_id=' + this.myDataset.id + '&prediction=' + this.prediction
-                for (const c of this.chosenColumns) {
-                    url += '&columns=';
-                    url += c
-                }
-                this.$http.get(url).then(
+            deleteTrainColumns(name) {
+                this.send.train_columns = this.send.train_columns.filter(e => e !== name);
+                this.get.target_columns_not_empty.push(name);
+            },
+            reset() {
+                console.log('reset');
+                this.activeStep = 0
+            },
+            openError(msg) {
+                openMessage(
+                    {
+                        message: 'Something went wrong with KNN' + msg.toString(),
+                        type: 'danger'
+                    }
+                )
+            },
+            step1() {
+                this.$http.get('/data/knn/1/?dataset_id=' + this.id).then(
                     (res) => {
-                        this.answer = res.data
+                        this.get.column_empty_value = res.data.data;
+                        this.stepLoading = false;
+
+                    }
+                ).catch(
+                    (err) => {
+                        this.openError(err)
+                        this.stepLoading = false;
+
                     }
                 )
 
-            }
+            },
+            step2() {
+                this.$http.get('/data/knn/2/?dataset_id=' + this.id + '&target_column=' + this.send.target_column + '&orient=split').then(
+                    (res) => {
+                        this.get.rows = res.data;
+                        this.stepLoading = false;
 
+                    }
+                ).catch(
+                    (err) => {
+                        this.openError(err)
+                        this.stepLoading = false;
+
+                    }
+                )
+            },
+            step3() {
+                this.$http.get('/data/knn/3/?dataset_id=' + this.id + '&target_row_index=' + this.send.target_row_index).then(
+                    (res) => {
+                        this.get.target_columns_not_empty = res.data.data;
+                        this.stepLoading = false;
+
+                    }
+                ).catch(
+                    (err) => {
+                        this.openError(err)
+                        this.stepLoading = false;
+
+                    }
+                )
+            },
+            step4() {
+                let url = '/data/knn/4/?dataset_id=' + this.id + '&target_row_index=' + this.send.target_row_index + '&target_column=' + this.send.target_column;
+                for (const train_column of this.send.train_columns) {
+                    url = url + '&train_columns=' + train_column.toString()
+                }
+                url = url + '&k=' + this.send.k;
+                url = url + '&dist_fx=' + this.send.dist_fx;
+                this.$http.get(url).then(
+                    (res) => {
+                        this.get.prediction = res.data.prediction;
+                        this.stepLoading = false;
+
+                    }
+                ).catch(
+                    (err) => {
+                        this.openError(err)
+                        this.stepLoading = false;
+
+                    }
+                )
+            },
+             step5() {
+
+                this.$http.get('/data/knn/5/?dataset_id=' + this.id + '&target_row_index=' + this.send.target_row_index + '&target_column=' + this.send.target_column + '&prediction=' + this.get.prediction).then(
+                    (res) => {
+                        this.success = res.data.success;
+                        this.$emit('update')
+                        this.stepLoading = false;
+
+                    }
+                ).catch(
+                    (err) => {
+                        this.openError(err)
+                        this.stepLoading = false;
+
+                    }
+                )
+            },
+            nextStep() {
+                if (this.stepValid) {
+                    if (this.activeStep === 0) {
+                        this.step1();
+                        this.stepValid = true;
+                    }
+                    if (this.activeStep === 1) {
+                        this.step2();
+                        this.stepValid = true;
+                    }
+                    else if (this.activeStep === 2) {
+                        this.step3();
+                        this.stepValid = true;
+                    }
+                    else if (this.activeStep === 3) {
+                        this.step4();
+                        this.stepValid = true;
+                    }
+                    else if (this.activeStep === 4) {
+                        this.step5();
+                        this.stepValid = true;
+                    }
+
+                    this.activeStep = this.activeStep + 1;
+                }
+
+
+            },
+            showHidden(stepNumber) {
+                if (this.activeStep === stepNumber) {
+                    return 'is-active'
+                }
+                return 'is-hidden'
+            },
+            showHiddenBool(stepNumber) {
+                return this.activeStep === stepNumber;
+
+            }
         },
         computed: {
-            numberColumnTypes() {
-                return this.columnTypes.filter(function (obj) {
-                    return obj.type === 'bigint' || obj.type === 'double precision'
-                })
+            nextButton() {
+                if (this.activeStep === 5) {
+                    return 'is-hidden'
+                } else return ''
+            },
+            get_column_empty_value() {
+                return this.column_empty_value | ['a', 'v']
+            },
+            nextDisabled() {
+                return !this.stepValid
             }
+
         }
     }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+    @import '~bulma';
+    @import '~bulma-steps';
 
 </style>

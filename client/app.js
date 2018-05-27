@@ -16,36 +16,39 @@ Vue.use(VueAxios, axios);
 Vue.axios.defaults.baseURL = localStorage.getItem('apiURL') || 'https://api.datawr.ml'
 Vue.axios.defaults.headers.authorization = 'Token ' + localStorage.getItem('token')
 
-
+store.commit(types.WAIT, true);
 // request to check cred. (only if there is a token)
 console.log('token', !!localStorage.getItem('token'));
 if (!!localStorage.getItem('token')) {
+    console.log('in if');
+    store.commit(types.WAIT, false);
     Vue.axios.get('/core/profile/').then(
         (res) => {
             console.log('first', res);
-            store.commit(types.LOGIN, {user: res.data})
-            // store.commit(types.WAIT, false);
+            store.commit(types.LOGIN, {user: res.data});
+            store.commit(types.WAIT, false);
 
         }
     ).catch(
         (err) => {
-            console.log('first err', err)
-            // store.commit(types.WAIT, false);
+            console.log('first err', err);
+            store.commit(types.WAIT, false);
             next({name: 'Login'})
         }
     )
 } else {
+    console.log('in else');
     // store.commit(types.WAIT, false);
 }
 
 // before every route change check if is logged in otherwise go to login
 router.beforeEach((to, from, next) => {
-    console.log('state', store.state.auth.loggedIn);
-    // while (store.state.wait) {
-    //     setTimeout(() => {console.log('waiting...')}, 10)
+    console.log('state', store.state.auth.loggedIn, store.state.auth.wait);
+    // while (store.state.auth.wait) {
+    //
     // }
-    // console.log('stop wait');
-    if (!store.state.auth.loggedIn && to.name !== 'Login') {
+    console.log('stop wait');
+    if (!localStorage.getItem('token') && to.name !== 'Login') {
         if (to.name !== 'Home') {
             next({name: 'Login'})
         } else {
