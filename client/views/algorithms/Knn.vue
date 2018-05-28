@@ -3,11 +3,7 @@
         <div class="columns is-centered">
 
             <div class="column">
-                Stap 1: Kies een target column <br/>
-                Stap 2: Toon alle rows met die column leeg & kies een een target row <br/>
-                Stap 3: Kies andere trainings columns & kies K & kies distance fx <br/>
-                Stap 4: Zie het resultaat van KNN met de distance & Laat goed keuren <br/>
-                Stap 5: Waarde in de database <br/>
+
                 <hr/>
 
                 <div class="steps" id="steps">
@@ -50,6 +46,13 @@
                     <div class="steps-content" :class="showHidden(0)" v-if="showHiddenBool(0)">
                         <div class="content has-text-centered">
                             <h3 class="title">Welcome to KNN</h3>
+                            <p>
+                                Stap 1: Kies een target column <br/>
+                                Stap 2: Toon alle rows met die column leeg & kies een een target row <br/>
+                                Stap 3: Kies andere trainings columns & kies K & kies distance fx <br/>
+                                Stap 4: Zie het resultaat van KNN met de distance & Laat goed keuren <br/>
+                                Stap 5: Waarde in de database <br/>
+                            </p>
                         </div>
                     </div>
 
@@ -97,33 +100,43 @@
                     </div>
 
                     <div class="steps-content" :class="showHidden(3)" v-if="showHiddenBool(3)">
-                        <div class="content has-text-centered">
+                        <div class="content">
                             <h5 class="subtitle">Select <b>trainings columns </b></h5>
                             <div class="field">
                                 <p class="control">
-                                <div class="select">
-                                    <select v-model="sel">
+                                <div class="select is-multiple">
+                                    <select v-model="send.train_columns" multiple>
                                         <option v-for="c in get.target_columns_not_empty" :key="c" :value="c" selected>
                                             {{ c }}
                                         </option>
                                     </select>
                                 </div>
-                                <a class="button is-primary is-rounded" @click="appendTrainColumns(sel)"> Add Train Column </a>
-                                </p>
-                                <p class="control">
-                                <div class="tags">
-                                <span class="tag is-large" v-for="c in send.train_columns" :key="c"> {{ c }} &nbsp;
-                                    <button class="delete" @click="deleteTrainColumns(c)"> </button>
-                                </span>
+                            </div>
+                            <div class="field">
+                                <label class="label">K</label>
+                                <div class="control">
+                                    <input class="input" type="number" v-model="send.k">
                                 </div>
-                                </p>
+                            </div>
+
+                            <div class="field">
+                                <label class="label">Distance Function</label>
+                                <div class="control">
+                                    <div class="select">
+                                        <select v-model="send.dist_fx">
+                                            <option v-for="c in dist_fxs" :key="c" :value="c" selected>
+                                                {{ c }}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
 
                     <div class="steps-content" :class="showHidden(4)" v-if="showHiddenBool(4)">
                         <div class="content has-text-centered">
-                            <h3 class="title">Welcome to KNN</h3>
+                            <h3 class="title">The predicted value is {{ get.prediction }}</h3>
                         </div>
                     </div>
 
@@ -176,8 +189,8 @@
                 get: {
                     column_empty_value: ['test', 'test2'],
                     rows: null,
-                    target_columns_not_empty: []
-
+                    target_columns_not_empty: [],
+                    prediction: ''
                 },
                 send: {
                     target_column: '',
@@ -286,12 +299,12 @@
                     }
                 )
             },
-             step5() {
+            step5() {
 
                 this.$http.get('/data/knn/5/?dataset_id=' + this.id + '&target_row_index=' + this.send.target_row_index + '&target_column=' + this.send.target_column + '&prediction=' + this.get.prediction).then(
                     (res) => {
                         this.success = res.data.success;
-                        this.$emit('update')
+                        this.$emit('update');
                         this.stepLoading = false;
 
                     }
